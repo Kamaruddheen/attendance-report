@@ -24,3 +24,12 @@ Then, Go to: https://localhost:8000 or http://127.0.0.1:8000
  - #### Admin Account(type 1)
     - username : testadmin
     - password : testpass
+ - #### Hod Account(type 2)
+    - username : hod1
+    - password : Testpass123
+ - #### Staff Account(type 3)
+    - username : teacher1
+    - password : Testpass123
+ - #### Student Account(type 4)
+    - username : stud1
+    - password : Testpass123
