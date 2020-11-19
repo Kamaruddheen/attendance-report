@@ -5,7 +5,7 @@ from django.conf import settings
 
 class ClassroomModel(models.Model):
 	course = models.CharField(max_length=50)
-	year = models.CharField(choices=((1,'I'),(2,'II'),(3,'III')),max_length=5)
+	year = models.PositiveSmallIntegerField(choices=((1,'I'),(2,'II'),(3,'III')))
 	sec = models.CharField(choices=(('a','A'),('b','B')),null=True,max_length=5)
 	tutor = models.ForeignKey(
 		settings.AUTH_USER_MODEL,
