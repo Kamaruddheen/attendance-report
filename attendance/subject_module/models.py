@@ -11,13 +11,13 @@ class Subject(models.Model):
 	handled_by = models.ForeignKey(
 		settings.AUTH_USER_MODEL,
 		on_delete = models.PROTECT,
-		limit_choices_to=models.Q(user_type=2)|models.Q(user_type=3))
+		limit_choices_to=models.Q(user_type=2))
 	classroom = models.ForeignKey(
 		ClassroomModel,
 		on_delete = models.CASCADE)
 	students = models.ManyToManyField(
 		settings.AUTH_USER_MODEL,
-		limit_choices_to={'user_type':4},
+		limit_choices_to={'user_type':3},
 		related_name = "students",
 		blank=True)
 

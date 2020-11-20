@@ -10,4 +10,4 @@ class ClassroomModel(models.Model):
 	tutor = models.ForeignKey(
 		settings.AUTH_USER_MODEL,
 		on_delete = models.PROTECT,
-		limit_choices_to=models.Q(user_type=2)|models.Q(user_type=3))
+		limit_choices_to={'user_type':2})
