@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user_module',
     'classroom',
     'subject_module',
+    'timetable',
 ]
 
 MIDDLEWARE = [
