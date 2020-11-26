@@ -12,5 +12,6 @@ class TimetableModel(models.Model):
 	classroom = models.ForeignKey(ClassroomModel,on_delete=models.CASCADE)
 	
 	class Meta:
+		db_table = 'timetable'
 		verbose_name = 'Timetable'
 		verbose_name_plural = 'Timetables'

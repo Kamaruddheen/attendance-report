@@ -13,5 +13,6 @@ class ClassroomModel(models.Model):
 		limit_choices_to={'user_type':2})
 
 	class Meta:
+		db_table = 'classroom'
 		verbose_name = 'Classroom'
 		verbose_name_plural = 'Classrooms'
