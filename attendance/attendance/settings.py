@@ -38,10 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'user_module',
-    'classroom',
-    'subject',
-    'timetable',
+    'user_module'
 ]
 
 MIDDLEWARE = [
