@@ -2,8 +2,8 @@ from django.db import models
 from django.conf import settings
 from classroom.models import ClassroomModel
 
-# Create your models here.
 
+# Create your models here.
 class SubjectModel(models.Model):
     hour_name = models.CharField(max_length=50)
     sub_name = models.CharField(max_length=50)
@@ -27,5 +27,6 @@ class SubjectModel(models.Model):
             models.UniqueConstraint(
                 fields=['sub_name', 'classroom'], name="unique_sub_per_class")
         ]
-    verbose_name = 'Subject'
-    verbose_name_plural = 'Subjects'
+        db_table = 'subject'
+        verbose_name = 'Subject'
+        verbose_name_plural = 'Subjects'

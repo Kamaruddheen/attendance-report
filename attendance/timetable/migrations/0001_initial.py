@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('classroom', '0003_remove_classroommodel_timetable'),
-        ('subject_module', '0004_subject_students'),
+        ('subject', '0004_subject_students'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('hour', models.PositiveSmallIntegerField()),
                 ('day', models.CharField(max_length=15)),
                 ('classroom', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='classroom.classroommodel')),
-                ('sub', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='subject_module.subject')),
+                ('sub', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='subject.subject')),
             ],
         ),
     ]

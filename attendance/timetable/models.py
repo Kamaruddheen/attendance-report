@@ -1,5 +1,5 @@
 from django.db import models
-from subject_module.models import SubjectModel
+from subject.models import SubjectModel
 from classroom.models import ClassroomModel
 
 # Create your models here.

@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('subject_module', '0006_auto_20201125_0935'),
+        ('subject', '0006_auto_20201125_0935'),
         ('classroom', '0005_auto_20201120_1922'),
         ('timetable', '0001_initial'),
     ]

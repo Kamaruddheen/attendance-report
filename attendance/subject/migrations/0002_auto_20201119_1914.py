@@ -6,12 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('subject_module', '0001_initial'),
+        ('subject', '0001_initial'),
     ]
 
     operations = [
         migrations.AddConstraint(
             model_name='subject',
-            constraint=models.UniqueConstraint(fields=('sub_name', 'classroom'), name='unique_sub_per_class'),
+            constraint=models.UniqueConstraint(
+                fields=('sub_name', 'classroom'), name='unique_sub_per_class'),
         ),
     ]
