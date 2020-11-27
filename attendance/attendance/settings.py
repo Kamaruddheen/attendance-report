@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'classroom',
     'subject',
     'timetable',
+    'attendancess',
 ]
 
 MIDDLEWARE = [
