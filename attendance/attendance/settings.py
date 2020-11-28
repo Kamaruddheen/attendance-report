@@ -129,6 +129,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR/"static/", ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     #Development Only
+
+# EMAIL_HOST = '<smtp.host>'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = '<username>'
+# EMAIL_HOST_PASSWORD = '<password>'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = "admin@sams.in"
+
 from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
