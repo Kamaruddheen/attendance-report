@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import ugettext_lazy as _
 
-from .models import User, StaffModel
+from .models import *
 
 # Register your models here.
 
@@ -28,8 +28,8 @@ class UserAdmin(DjangoUserAdmin):
     ordering = ('username', 'user_type', )
 
 
-class StaffModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'is_hod']
+# class StaffModelAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'user', 'is_hod']
 
 
-admin.site.register(StaffModel, StaffModelAdmin)
+# admin.site.register(StaffModel, StaffModelAdmin)
