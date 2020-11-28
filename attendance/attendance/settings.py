@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'attendancess',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -126,3 +128,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR/"static/", ]
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'text-info',
+    messages.INFO: 'text-info',
+    messages.SUCCESS: 'text-success',
+    messages.WARNING: 'text-warning',
+    messages.ERROR: 'text-danger',
+}
+
+LOGIN_REDIRECT_URL = "homepage"
+LOGOUT_REDIRECT_URL = "homepage"

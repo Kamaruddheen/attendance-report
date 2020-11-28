@@ -1,0 +1,29 @@
+<div class="container">
+	{% for message in messages %}
+		<div class="modal fadex" id="{{ forloop.counter }}">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--Modal Header -->
+					<div class="modal-header">
+						<h5 class="{{ message.tags }}">{{ message }}</h5>
+						<button type="button" class="close" data-dismiss="modal">&times</button>
+					</div>
+					<!-- Modal Body -->
+					<!-- <div class="modal-body">
+						<p class="text-secondary"></p>
+					</div> -->
+					<!-- Modal Footer -->
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		{% for message in messages %}
+		$('#{{ forloop.counter }}').modal('toggle');
+		{% endfor %}
+	});
+</script>

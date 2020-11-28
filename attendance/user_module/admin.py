@@ -28,8 +28,8 @@ class UserAdmin(DjangoUserAdmin):
     ordering = ('username', 'user_type', )
 
 
-# class StaffModelAdmin(admin.ModelAdmin):
-#     list_display = ['id', 'user', 'is_hod']
+class StaffModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'is_hod']
 
 
-# admin.site.register(StaffModel, StaffModelAdmin)
+admin.site.register(StaffModel, StaffModelAdmin)
