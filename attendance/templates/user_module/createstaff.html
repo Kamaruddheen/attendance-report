@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<section class="container my-3">
+	<h1 class="text-center">Staff Creation Form</h1>
+
+	<form method="POST" novalidate>
+
+		{% csrf_token %}
+		{{ form|crispy }}
+
+		<input type="submit" value="Create Staff" class="btn btn-success" />
+	</form>
+</section>
+
+{% endblock %}

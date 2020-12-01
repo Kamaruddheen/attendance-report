@@ -25,11 +25,12 @@ class StaffModel(models.Model):
 		verbose_name = 'Staff'
 		verbose_name_plural = 'Staffs'
 
-# @receiver(post_save, sender=User)
-# def create_user_staffmodel(sender, instance, created, **kwargs):
-#     if created:
-#         StaffModel.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def create_user_staffmodel(sender, instance, created, **kwargs):
+    if created and instance.user_type == 2:
+        StaffModel.objects.create(user=instance)
 
-# @receiver(post_save, sender=User)
-# def save_user_staffmodel(sender, instance, **kwargs):
-#     instance.staffmodel.save()
+@receiver(post_save, sender=User)
+def save_user_staffmodel(sender, instance, **kwargs):
+	if instance.user_type == 2:
+		instance.staffmodel.save()
