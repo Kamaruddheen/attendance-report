@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="container">
+	<h2 class="text-center my-3">Manage All Staffs</h2>
+
+	<table class="table table-dark table-hover table-responsive-md">
+		<tr>
+			<th>ID</th>
+			<th>Username</th>
+			<th>Name</th>
+			<th>Email ID</th>
+		</tr>
+		{% for staff in staffs %}
+		<tr onclick="window.location='{% url 'staff_detail' staff.id %}'">
+			<td> {{ staff.user.id }} </td>
+			<td> {{ staff.user.username }} </td>
+			<td> {{ staff.user.first_name }} </td>
+			<td> {{ staff.user.email }} </td>
+		</tr>
+		{% endfor %}
+	</table>
+</section>
+
+{% endblock %}

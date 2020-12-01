@@ -14,5 +14,7 @@ urlpatterns = [
 	path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 	#View url patters
 	path('create/staff/',createstaffview,name='create_staff'),
+	path('manage/staff/',managestaffview,name='manage_staff'),
+	path('manage/staff/<int:id>',staffdetailview,name='staff_detail'),
 
 ]
