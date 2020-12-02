@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 from .forms import CreateSubjectForm
 from .models import SubjectModel
@@ -6,13 +6,17 @@ from .models import SubjectModel
 # Create your views here.
 
 def SubjectListView(request):
-	context = {}
+	sub_obj = SubjectModel.objects.all()
+	context = {
+		'subjects':sub_obj,
+	}
 	return render(request,'subject/subject_list.html',context=context)
 
 def SubjectCreateView(request):
 	myForm = CreateSubjectForm(request.POST or None)
 	if myForm.is_valid():
-		pass
+		myForm.save()
+		return redirect('subject_list')
 	context = {
 		'form':myForm,
 	}
