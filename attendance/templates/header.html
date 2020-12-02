@@ -1,0 +1,18 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg bg_d_blue">
+    <div class="container-fluid justify-content-between">
+        <!-- * Brand Logo -->
+        <a class="navbar-brand d-flex" href="{% url 'homepage' %}" style="min-width: 7rem"><img
+                src="{% static 'img/profile.png' %}" width="40" />
+            <h6 class="my-auto ml-3 text_l_bluish_white arvo" style="font-size: 2.1rem;">SAMS</h6>
+        </a>
+        <div>
+            {% if user.is_authenticated %}
+            <a class="btn bg_l_bluish_white text_d_blue font-weight-bold" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="btn bg_l_bluish_white text_d_blue font-weight-bold" href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

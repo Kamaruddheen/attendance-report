@@ -1,4 +1,34 @@
-/* Testing weather static css working or not  */
 body {
-    background-color:#fff098 !important ;
+    background-color:#daeaf6;
+    font-family: 'Karla', sans-serif !important;
+}
+
+/* Font Family */
+
+.karla {
+    font-family: 'Karla', sans-serif;
+}
+
+.arvo {
+    font-family: 'Arvo', serif;
+}
+
+/* Colors */
+
+/* Background Colors */
+.bg_d_blue {
+    background-color: #062743;
+}
+
+.bg_l_bluish_white {
+    background-color: #daeaf6;
+}
+
+/* Text Colors */
+.text_d_blue{
+    color: #062743;
+}
+
+.text_l_bluish_white{
+    color: #daeaf6 !important;
 }
