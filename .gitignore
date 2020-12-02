@@ -1,3 +1,9 @@
 # Python bytecode files can be omitted
 *.pyc
+# Vscode custome settings
 .vscode
+# Scss folder will be omitted
+attendance/static/scss
+# node_modules
+attendance/node_modules
+package-lock.json
