@@ -24,7 +24,8 @@ from .views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('user_module.urls')),
-    path('', homepage, name="homepage")
+    path('', homepage, name="homepage"),
+    path('attendance/', include('attendancess.urls'))
 ]
 
 # urlpatterns += staticfiles_urlpatterns()

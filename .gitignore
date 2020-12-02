@@ -1,2 +1,3 @@
 # Python bytecode files can be omitted
 *.pyc
+.vscode
