@@ -20,7 +20,7 @@ class SubjectModel(models.Model):
         settings.AUTH_USER_MODEL,
         limit_choices_to={'user_type': 3},
         related_name="students",
-        blank=True)
+        blank=True) #null=True is not required for manytomany field, just blank will do
 
     class Meta:
         constraints = [

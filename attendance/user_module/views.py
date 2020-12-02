@@ -4,12 +4,10 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import CreateStaffForm, EditStaffForm
 from .models import StaffModel
-from .decorators import is_hod,is_hod_or_self
 
 # Create your views here.
 
 @login_required
-@is_hod
 def createstaffview(request):
 	myForm = CreateStaffForm(request.POST or None)
 	if myForm.is_valid():
@@ -24,7 +22,6 @@ def createstaffview(request):
 	return render(request,'user_module/createstaff.html',context=context)
 
 @login_required
-@is_hod
 def managestaffview(request):
 	staff_obj = StaffModel.objects.filter(is_hod=False)
 	context = {
@@ -33,7 +30,6 @@ def managestaffview(request):
 	return render(request,'user_module/managestaff.html',context=context)
 
 @login_required
-@is_hod_or_self
 def staffdetailview(request,id):
 	staff_obj = get_object_or_404(StaffModel,id=id)
 	myForm = EditStaffForm(request.POST or None,instance=staff_obj.user)
