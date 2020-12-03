@@ -11,7 +11,7 @@
             <ul>
                 <li>{{class.hour}}</li>
                 <li>{{class.subject}}</li>
-                <li>{{class.set_name.classroom.year}} {{class.set_name.classroom.course}} {{class.set_name.classroom.sec|upper}}</li>
+                <li>{{class.set_name.classroom.get_year_display}} {{class.set_name.classroom.course}} {{class.set_name.classroom.sec|upper}}</li>
             </ul>
 
         {% endfor %}

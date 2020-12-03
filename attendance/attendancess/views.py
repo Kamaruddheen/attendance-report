@@ -32,20 +32,8 @@ class ClassesView(LoginRequiredMixin, View):
 
         classes = TimetableModel.objects.filter(set_name__in = time_table_sets, day=day, subject__in=subjects)
 
-        for clas in classes:
-            year = clas.set_name.classroom.year 
-            if year == 1:
-                clas.set_name.classroom.year = "I"
-            elif year == 2:
-                clas.set_name.classroom.year = "II"
-            elif year == 3:
-                clas.set_name.classroom.year = "III"
-            else:
-                clas.set_name.classroom.year = "error"
-
         date = date.strftime("%Y-%m-%d")
         
-
         context = {
             "classes" : classes,
             "date" : date
