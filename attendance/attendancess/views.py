@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse, Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 import datetime
 from subject.models import SubjectModel
@@ -8,7 +9,7 @@ from timetable.models import TimetablesetModel, TimetableModel
 
 # Create your views here.
 
-class ClassesView(View):
+class ClassesView(LoginRequiredMixin, View):
     def get(self, request):
         date = request.GET.get('date',0)
         
