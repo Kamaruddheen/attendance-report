@@ -60,7 +60,7 @@
         <div class="row row-cols-3"><!--no of column in each row is three because of row-cols-3-->
             {% for class in all_classrooms %}
             <div class="col my-3">
-            <div class="card">
+            <div class="card cards">
                
                 <img src="{% static 'img/img1.jpg' %}" style="height:400px">
                 <div class="card-img-overlay">
@@ -183,7 +183,7 @@
 
             $("#search-class").keyup(function(){
                 var value=$(this).val().toLowerCase()
-                $(".card").filter(function(){
+                $(".cards").filter(function(){
                     $(this).parent().toggle( $(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });

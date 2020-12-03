@@ -9,13 +9,13 @@ def CreateClass(request):
         if ClassroomObject.is_valid():
             ClassroomObject.save()
             #tuple is faster than lists
-            all_classrooms=tuple(ClassroomModel.objects.all())
+            all_classrooms=ClassroomModel.objects.all()
             messages.success(request,"Classroom created")
             return render(request,'classroom/ClassRoom.html',{'all_classrooms':all_classrooms})
-        all_classrooms=tuple(ClassroomModel.objects.all())
+        all_classrooms=ClassroomModel.objects.all()
         errors="having"
         return render(request,'classroom/ClassRoom.html',{'all_classrooms':all_classrooms,'form':ClassroomObject,'errors':errors})
     else:
-        all_classrooms=tuple(ClassroomModel.objects.all())
+        all_classrooms=ClassroomModel.objects.all()
         ClassroomObject=ClassroomForm()
         return render(request,'classroom/ClassRoom.html',{'form':ClassroomObject,'all_classrooms':all_classrooms})
