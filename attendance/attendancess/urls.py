@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import AttendanceView
+from .views import ClassesView
 
 app_name = "attendance"
 urlpatterns = [
-    path('', AttendanceView.as_view(), name="attendance")
+    path('', ClassesView.as_view(), name="classes")
 ]

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4>Hello world</h4>
+    <form action={% url 'attendance:classes' %}>
+        <input type="date" value={{date}} name="date">
+        <input type="submit" value="Go">
+    </form>
+    {% if classes %}
+        {% for class in classes %}
+            <ul>
+                <li>{{class.hour}}</li>
+                <li>{{class.subject}}</li>
+                <li>{{class.set_name.classroom.year}} {{class.set_name.classroom.course}} {{class.set_name.classroom.sec|upper}}</li>
+            </ul>
+
+        {% endfor %}
+    {% else %}
+        <h2>No classes today.</h2>
+    {% endif %}
+{% endblock %}
