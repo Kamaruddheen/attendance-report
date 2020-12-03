@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+	<title>SAMS</title>
+{% endblock %}
+{% block head %}	
+<style>
+   #delete-more-button,#search-class-input-group{
+        border: none;
+        background: none;
+   } 
+   label{
+       font-weight:700;
+   }
+</style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="toast mx-auto mt-2">
+            <div class="toast-body">
+               <h5 class="{{ message.tags }}">{{ message }}</h5>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="row my-4">
+            <div class="col-2">
+                <button id="create-class-button" type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static" class="btn btn-primary shadow-lg pl-3 pr-4" style="border-radius:30px"><h4>+   <small style="font-weight:500">   Create</small></h4></button>
+            </div>
+            <div class="col-8">
+            <div class="input-group" style="box-shadow: 4px 4px 20px 0 rgba(0, 0, 0, 0.2), 4px 4px 20px 0 rgba(0, 0, 0, 0.19);height:45px">
+                <div class="input-group-prepend">
+                    <i class="fa fa-search input-group-text pt-2" aria-hidden="true" style="border:none;background:none"></i>
+                </div>
+                <input type="text" class="form-control" placeholder="Search for class . . . ." id="search-class" style="border:none;">
+            </div>
+            </div>
+            <div class="col-1">
+                <button type="button" class="mt-2" id="delete-more-button" disabled><i class="fa fa-trash" aria-hidden="true" style="font-size:25px;" data-toggle="tooltip" title="Delete more classes at once" data-placement="bottom" id="delete-more"></i></button>
+            </div>
+        </div>
+
+        {% if all_classrooms|length == 0 %}
+        <div>
+            <h5>No classrooms created yet</h5>
+        </div>
+        {% else %}
+        <div class="form-check m-3">
+            <input type="checkbox" class="form-check-input" id="select-all">
+            <label class="form-check-label" for="select-all">
+                Select all
+            </label>
+        </div>
+        
+        <div class="row row-cols-3"><!--no of column in each row is three because of row-cols-3-->
+            {% for class in all_classrooms %}
+            <div class="col my-3">
+            <div class="card">
+               
+                <img src="{% static 'img/img1.jpg' %}" style="height:400px">
+                <div class="card-img-overlay">
+                   <div class="card-body">
+                    
+                    <div class="float-right">
+                        <input type="checkbox" class="form-check-input class-check" style="width:20px;height:20px">
+                    </div>
+                    
+                    <div>
+                        <h5>Tutor :</h5>
+                        <p>{{class.tutor}}</p>
+                    </div>
+
+                    <div>
+                        <h5>Course :</h5>
+                        <p>{{class.course}}</p>
+                    </div>
+
+                    <div>
+                        <h5>Year :</h5>
+                        <p>{{class.year}}</p>
+                    </div>
+
+                    <div>
+                        <h5>Section :</h5>
+                        <p>{{class.sec}}</p>
+                    </div>
+                    <button type="button" class="btn btn-danger float-right m-2">Delete</button>
+                </div>
+                </div>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="modal fade" id="create-class-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4>Create a class</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'classroom:createclass' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="course">Course Name<span class="text-danger">*</span></label>
+                            {{form.course}}
+                            <p class="text-danger">{{form.course.errors}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year<span class="text-danger">*</span></label>
+                            {{form.year}}
+                        </div>
+                        <div class="form-group">
+                            <label for="section">Section<span class="text-danger">*</span></label>
+                            {{form.sec}}
+                        </div>
+                        <div class="form-group">
+                            <label for="tutor">Tutor Name<span class="text-danger">*</span></label>
+                            {{form.tutor}}
+                        </div>
+                        <input type="submit" class="btn btn-success float-right mx-2">
+                        <button type="button" class="btn btn-danger float-right" id="close-modal-button">Back</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#delete-more").tooltip();
+            $(".toast").toast({delay:2000}).toast({autohide:false}).toast('show');
+
+            var errors="{{errors}}";
+            if(errors.length!=0){
+                $("#create-class-modal").modal('show');
+            }
+            $(".class-check").change(function(){
+                if(this.checked){
+                    $("#delete-more-button").prop("disabled",false);
+                }
+                else{
+                    var decide=false;
+                    $(".class-check").each(function(){
+                        if(this.checked){
+                            decide=true;
+                        }
+                    });
+                    if(decide==false){
+                       //decide is false when no anyone of the checkbox is checked
+                        $("#delete-more-button").prop("disabled",true)
+                        if($("#select-all").prop("checked")==true){
+                            $("#select-all").prop("checked",false)
+                        }
+                    }
+                    else if(decide==true){
+                        $("#delete-more-button").prop("disabled",false)
+                    }
+                }
+            });
+
+            $("#select-all").change(function(){
+                if(this.checked){
+                    $(".class-check").prop("checked",true)
+                    $("#delete-more-button").prop("disabled",false)
+                }
+                else{
+                    $(".class-check").prop("checked",false)
+                    $("#delete-more-button").prop("disabled",true)
+                }
+            });
+
+            $("#close-modal-button").click(function(){
+                $("#create-class-modal").modal('hide');
+            });
+
+            $("#search-class").keyup(function(){
+                var value=$(this).val().toLowerCase()
+                $(".card").filter(function(){
+                    $(this).parent().toggle( $(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        });
+    </script>
+
+{% endblock %}
+    

@@ -27,6 +27,7 @@ urlpatterns = [
     path('', homepage, name="homepage"),
     path('attendance/', include('attendancess.urls')),
     path('subjects/', include('subject.urls')),
+    path('classroom/',include('classroom.urls')),
 ]
 
 # urlpatterns += staticfiles_urlpatterns()
