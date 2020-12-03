@@ -19,15 +19,6 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        {% if messages %}
-        {% for message in messages %}
-        <div class="toast mx-auto mt-2">
-            <div class="toast-body">
-               <h5 class="{{ message.tags }}">{{ message }}</h5>
-            </div>
-        </div>
-        {% endfor %}
-        {% endif %}
         <div class="row my-4">
             <div class="col-2">
                 <button id="create-class-button" type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static" class="btn btn-primary shadow-lg pl-3 pr-4" style="border-radius:30px"><h4>+   <small style="font-weight:500">   Create</small></h4></button>
@@ -90,6 +81,7 @@
                         <p>{{class.sec}}</p>
                     </div>
                     <button type="button" class="btn btn-danger float-right m-2">Delete</button>
+                    <button type="button" class="btn btn-info float-right m-2 edit-button">Edit</button>
                 </div>
                 </div>
             </div>
@@ -98,7 +90,8 @@
         </div>
         {% endif %}
     </div>
-
+    
+    <!--Modal to display create class form-->
     <div class="modal fade" id="create-class-modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -111,7 +104,7 @@
                         <div class="form-group">
                             <label for="course">Course Name<span class="text-danger">*</span></label>
                             {{form.course}}
-                            <p class="text-danger">{{form.course.errors}}</p>
+                            <p class="text-danger errors">{{form.course.errors}}</p>
                         </div>
                         <div class="form-group">
                             <label for="year">Year<span class="text-danger">*</span></label>
@@ -187,9 +180,17 @@
                     $(this).parent().toggle( $(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
-
+            
+            $("#create-class-button").click(function(){
+                $(".identify").val(" ");
+                $(".errorlist").addClass("d-none");
+            });
         });
     </script>
 
 {% endblock %}
-    
+
+<!--User defined classes:
+1.identify : to identify all the input tag 
+  in the create classroom form
+2.errorlist : it is the predefined class to show the error-->
