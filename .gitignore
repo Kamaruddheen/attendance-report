@@ -7,3 +7,4 @@ attendance/static/scss
 # node_modules
 attendance/node_modules
 package-lock.json
+ignore/kamar
