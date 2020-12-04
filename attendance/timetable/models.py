@@ -1,6 +1,7 @@
 from django.db import models
 from classroom.models import ClassroomModel
 
+from subject.models import SubjectModel
 # Create your models here.
 
 class TimetablesetModel(models.Model):
@@ -17,9 +18,9 @@ class TimetablesetModel(models.Model):
 
 
 class TimetableModel(models.Model):
-	hour = models.PositiveSmallIntegerField()
+	hour = models.CharField(max_length=3)
 	day = models.CharField(max_length=15)
-	subject = models.CharField(max_length=50)
+	subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE)
 	set_name = models.ForeignKey(TimetablesetModel,on_delete=models.CASCADE)	
 	
 	class Meta:
