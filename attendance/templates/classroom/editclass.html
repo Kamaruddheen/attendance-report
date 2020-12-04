@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>SAMS</title>
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h5>Classroom Id :<small>{{get_obj.id}}</small></h5>
+            <h5>Course :<small>{{get_obj.course}}</small></h5>
+            <h5>Year :<small>{{get_obj.year}}</small></h5>
+            <h5>Section :<small>{{get_obj.sec}}</small></h5>
+            <h5>Tutor :<small>{{get_obj.tutor}}</small></h5>
+        </div>
+        <div class="card-footer">
+            <button type="button" data-toggle="modal" data-target="#edit-modal" data-backdrop="static" class="btn btn-info float-right mx-2">Edit</button>
+            <a href="{% url 'classroom:createclass' %}" class="btn btn-secondary float-right">Back</a>
+        </div>
+    </div>
+    <div class="modal fade" id="edit-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Edit a modal</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url 'classroom:editclass' get_obj.id %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id">Classroom Id:</label>
+                            {{editclass.id}}
+                        </div>
+                        <div class="form-group">
+                            <label for="course">Course :</label>
+                            {{editclass.course}}
+                            <p>{{editclass.course.errors}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            {{editclass.year}}
+                        </div>
+                        <div class="form-group">
+                            <label for="section">Section :</label>
+                            {{editclass.sec}}
+                        </div>
+                        <div class="form-group">
+                            <label for="tutor">Tutor :</label>
+                            {{editclass.tutor}}
+                        </div>
+                        <input type="submit" class="btn btn-success float-right mx-2">
+                        <a href="{% url 'classroom:editclass' get_obj.id %}" class="btn btn-secondary float-right">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            {% if editclass.errors %}
+            //modal backdrop using js should be coded 
+            //before initialize or show the modal like below
+                $("#edit-modal").modal({backdrop:'static'});
+                $("#edit-modal").modal('show');
+            {% endif %}
+        });
+    </script>
+{% endblock %}

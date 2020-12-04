@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.contrib import messages
 from .forms import ClassroomForm
 from .models import ClassroomModel
@@ -8,7 +8,6 @@ def CreateClass(request):
         ClassroomObject=ClassroomForm(request.POST)
         if ClassroomObject.is_valid():
             ClassroomObject.save()
-            #tuple is faster than lists
             all_classrooms=ClassroomModel.objects.all()
             messages.success(request,"Classroom created")
             return render(request,'classroom/ClassRoom.html',{'all_classrooms':all_classrooms})
@@ -19,3 +18,11 @@ def CreateClass(request):
         all_classrooms=ClassroomModel.objects.all()
         ClassroomObject=ClassroomForm()
         return render(request,'classroom/ClassRoom.html',{'form':ClassroomObject,'all_classrooms':all_classrooms})
+
+def editclass(request,id):
+    get_obj=get_object_or_404(ClassroomModel,id=id)
+    editclass=ClassroomForm(request.POST or None,instance=get_obj)
+    if request.method=='POST':
+        if editclass.is_valid():
+            editclass.save()
+    return render(request,'classroom/editclass.html',{'get_obj':get_obj,'editclass':editclass})
