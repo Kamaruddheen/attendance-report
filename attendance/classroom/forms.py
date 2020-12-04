@@ -2,7 +2,7 @@ from django import forms
 from .models import ClassroomModel
 
 class ClassroomForm(forms.ModelForm):
-    id=forms.CharField(max_length=10)
+    id=forms.CharField(max_length=10,required=False)
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['id'].widget.attrs.update({'class':'form-control','id':'id','readonly':True})
