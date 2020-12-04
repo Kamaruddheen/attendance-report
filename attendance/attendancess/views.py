@@ -19,9 +19,6 @@ class ClassesView(LoginRequiredMixin, View):
             date = datetime.datetime.strptime(date,"%Y-%m-%d").date()
 
         day = date.strftime("%A")
-        # Get all the subjects of the current user.
-        subjects = SubjectModel.objects.filter(handled_by=request.user).values_list('hour_name', flat=True)
-        print(subjects)
 
         # Get all the active time tables and extract the classes
         active_sets = []
@@ -30,7 +27,7 @@ class ClassesView(LoginRequiredMixin, View):
             if set.from_date <= date <= set.to_date:
                 active_sets.append(set)
 
-        classes = TimetableModel.objects.filter(set_name__in = time_table_sets, day=day, subject__in=subjects)
+        classes = TimetableModel.objects.filter(set_name__in = time_table_sets, day=day, subject__handled_by = request.user)
 
         date = date.strftime("%Y-%m-%d")
         

@@ -30,3 +30,6 @@ class SubjectModel(models.Model):
         db_table = 'subject'
         verbose_name = 'Subject'
         verbose_name_plural = 'Subjects'
+
+        def __str__(self):
+            return self.hour_name
