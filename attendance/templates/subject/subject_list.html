@@ -13,7 +13,7 @@
 				<div>Sub Name : {{ sub.sub_name }}</div>
 				<div>Staff Name : {{ sub.handled_by.username }}</div>
 				<div>Classroom : {{ sub.classroom.course }}</div>
-				<a href="{% url 'subject_detail' sub.id %}" class="stretched-link"></a>
+				<a href="{% url 'subject:subject_detail' sub.id %}" class="stretched-link"></a>
 			</div>
 		</div>
 		{% endfor %}
