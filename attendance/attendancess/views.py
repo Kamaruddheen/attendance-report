@@ -27,7 +27,7 @@ class ClassesView(LoginRequiredMixin, View):
             if set.from_date <= date <= set.to_date:
                 active_sets.append(set)
 
-        classes = TimetableModel.objects.filter(set_name__in = time_table_sets, day=day, subject__handled_by = request.user)
+        classes = TimetableModel.objects.filter(set_name__in = time_table_sets, day=day, subject__handled_by = request.user).order_by('hour')
 
         date = date.strftime("%Y-%m-%d")
         
@@ -36,3 +36,14 @@ class ClassesView(LoginRequiredMixin, View):
             "date" : date
         }
         return render(request, 'attendance/classes.html', context)
+
+
+class AttendanceView(LoginRequiredMixin, View):
+    def get(self, request, subject_id):
+
+        students = SubjectModel.objects.get(id=subject_id).students.all()
+        print(students)
+        context = {
+            'students' : students
+        }
+        return render(request, 'attendance/attendance.html', context)

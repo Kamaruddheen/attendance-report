@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1> Welcome to attendance page!!!</h1>
+    {% for student in students %}
+        <ul>
+            <li>{{ student.username }}</li>
+        </ul>
+    {% endfor %}
+{% endblock %}

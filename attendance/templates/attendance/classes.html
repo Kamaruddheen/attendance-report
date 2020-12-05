@@ -8,14 +8,15 @@
     </form>
     {% if classes %}
         {% for class in classes %}
-            <ul>
-                <li>{{class.hour}} hour</li>
-                <li>{{class.subject.sub_name}}</li>
-                <li>{{class.set_name.classroom.get_year_display}} {{class.set_name.classroom.course}} {{class.set_name.classroom.sec|upper}}</li>
-            </ul>
-
+            <div class="card">
+                <div class="card-body">                
+                    <p>{{class.hour}} hour</p>
+                    <a href="{% url 'attendance:attendance' class.subject.id %}" class="card-link"><p>{{class.subject.sub_name}}</p></a>
+                    <p>{{class.set_name.classroom.get_year_display}} {{class.set_name.classroom.course}} {{class.set_name.classroom.sec|upper}}</p>
+                </div>
+            </div>
         {% endfor %}
     {% else %}
-        <h2>No classes today.</h2>
+        <h2>No classes.</h2>
     {% endif %}
 {% endblock %}
