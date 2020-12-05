@@ -2,9 +2,8 @@
 *.pyc
 # Vscode custome settings
 .vscode
-# Scss folder will be omitted
-attendance/static/scss
+# layout sample file
+sample.html
 # node_modules
 attendance/node_modules
 package-lock.json
-ignore/kamar

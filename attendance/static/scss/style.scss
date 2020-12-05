@@ -1,0 +1,145 @@
+body {
+    background-color:#daeaf6;
+    font-family: 'Karla', sans-serif !important;    
+}
+
+/* Font Family */
+
+.karla {
+    font-family: 'Karla', sans-serif;
+}
+
+.arvo {
+    font-family: 'Arvo', serif;
+}
+
+/* Colors */
+
+/* Background Colors */
+.bg_d_blue {
+    background-color: #062743;
+}
+
+.bg_l_bluish_white {
+    background-color: #daeaf6;
+}
+
+/* Text Colors */
+.text_d_blue{
+    color: #062743;
+}
+
+.text_l_bluish_white{
+    color: #daeaf6 !important;
+}
+
+/* Font Style */
+
+.upper_case{
+    text-transform: uppercase;
+}
+
+.capitalize{
+    text-transform: capitalize;
+}
+
+
+/* Customizing Bootstrap */
+
+.nav-link{
+    color: #062743;                
+}
+ 
+
+/* Custom Button */
+/* Mainly for Hamburger Button */
+
+.btn-cust{
+    color: #062743;
+    transition: all 0.4s;    
+
+    &:focus {
+        outline: none !important;
+        box-shadow: none !important;    
+    }
+
+    &:active {
+        outline: none !important;
+    }
+}
+
+/* Main Content */
+
+.neu_icon{
+    transition: all 0.4s;
+    box-shadow: 5px 5px 10px #c2d0db, 
+             -5px -5px 10px #e5f6ff;
+
+    &:hover{
+        color: #062743;
+        font-size: 1.05rem;
+        box-shadow: inset 5px 5px 10px #c2d0db, 
+              inset -5px -5px 10px #e5f6ff;
+    }
+}
+
+.max_95{
+    max-width: 95%;
+}
+
+/* Left Side Nav Bar */
+#left_side_bar{
+    z-index: 1000 !important;
+    border: 0;
+    background-color: #daeaf6;
+    border-radius: 2rem !important;
+    box-shadow:  8px 8px 20px #aebbc5, 
+             -8px -8px 20px #ffffff;
+
+    .side_bar {
+
+        .side_bar_title {
+            padding: 12px 0px 5px 50px;
+            letter-spacing: .05em;
+            pointer-events: none;
+            cursor: default;
+            font-size: .7875rem;        
+            text-transform: uppercase;
+            color: #062743;
+            font-weight: 600;
+        }
+
+        .list-group {    
+
+            .side_bar_link {
+                color: #062743;
+                display: flex;
+                align-items: center;
+                padding: 10px 0px 10px 50px;
+                font-size: 1rem;
+                position: relative;
+                -webkit-transition: all .4s;
+                transition: all .4s;
+                text-decoration: none;
+            }
+
+            .fill_d_blue {              
+                fill: #062743 !important;
+                color: #062743;
+            }
+
+            :hover {
+                background-color: #062743;
+                color: #fff !important;
+                fill: #fff !important;
+                font-size: 1.1rem;
+            }
+
+            :active {
+                background-color: #062743;
+                color: #fff;
+                fill: #fff;
+            }
+        }
+    }
+}
