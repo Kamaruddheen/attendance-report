@@ -35,7 +35,7 @@ class ClassesView(LoginRequiredMixin, View):
             "classes" : classes,
             "date" : date
         }
-        return render(request, 'attendance/classes.html', context)
+        return render(request, 'attendancess/classes.html', context)
 
 
 class AttendanceView(LoginRequiredMixin, View):
@@ -46,4 +46,4 @@ class AttendanceView(LoginRequiredMixin, View):
         context = {
             'students' : students
         }
-        return render(request, 'attendance/attendance.html', context)
+        return render(request, 'attendancess/attendance.html', context)
