@@ -1,8 +1,9 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from .forms import ClassroomForm
 from .models import ClassroomModel
-# Create your views here.
+
+
 def CreateClass(request):
     if request.method=="POST":
         ClassroomObject=ClassroomForm(request.POST)
