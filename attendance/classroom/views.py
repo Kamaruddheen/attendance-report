@@ -11,14 +11,14 @@ def CreateClass(request):
             ClassroomObject.save()
             all_classrooms=ClassroomModel.objects.all()
             messages.success(request,"Classroom created")
-            return render(request,'classroom/ClassRoom.html',{'all_classrooms':all_classrooms})
+            return render(request,'classroom/view_and_create_classroom.html',{'all_classrooms':all_classrooms})
         all_classrooms=ClassroomModel.objects.all()
         errors="having"
-        return render(request,'classroom/ClassRoom.html',{'all_classrooms':all_classrooms,'form':ClassroomObject,'errors':errors})
+        return render(request,'classroom/view_and_create_classroom.html',{'all_classrooms':all_classrooms,'form':ClassroomObject,'errors':errors})
     else:
         all_classrooms=ClassroomModel.objects.all()
         ClassroomObject=ClassroomForm()
-        return render(request,'classroom/ClassRoom.html',{'form':ClassroomObject,'all_classrooms':all_classrooms})
+        return render(request,'classroom/view_and_create_classroom.html',{'form':ClassroomObject,'all_classrooms':all_classrooms})
 
 def editclass(request,id):
     get_obj=get_object_or_404(ClassroomModel,id=id)
@@ -26,4 +26,4 @@ def editclass(request,id):
     if request.method=='POST':
         if editclass.is_valid():
             editclass.save()
-    return render(request,'classroom/editclass.html',{'get_obj':get_obj,'editclass':editclass})
+    return render(request,'classroom/edit_classroom.html',{'get_obj':get_obj,'editclass':editclass})

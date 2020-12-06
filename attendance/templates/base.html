@@ -40,14 +40,15 @@
 
 <body>
   <header>
-    <!-- Navbar -->
+    <!-- Navbar (Top) -->
     {% include 'header.html' %}
   </header>
 
   <main>
     <article class="container-fluid p-0 max_95">
-      <div class="row mx-0">
-        <section id="left_side_bar" class="card metismenu col-2 p-0 m-2 d-none d-md-block">
+      <div class="d-flex flex-row mx-0">
+        <!-- Side Nav bar -->
+        <section id="left_side_bar" class="card metismenu p-0 m-2 d-none d-md-block">
           <!-- Left Side Bar - Detached -->
           <ul class="p-0 side_bar">
             <div class="d-block d-md-none">
@@ -90,6 +91,7 @@
                 Home
               </a>
             </li>
+            {% if user.is_authenticated %}
             <li class="list-group">
               <a href="#" class="side_bar_link fill_d_blue">
                 <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2" xmlns="http://www.w3.org/2000/svg">
@@ -176,6 +178,7 @@
                 Staff
               </a>
             </li>
+            {% endif %}
             <li class="list-group mb-3">
               <a href="#" class="side_bar_link fill_d_blue">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="users" role="img"
@@ -189,7 +192,10 @@
             </li>
           </ul>
         </section>
-        <section class="col p-0 mx-2">
+        <!-- Overlay Effect -->
+        <div class="overlay" id="overlay"></div>
+        <!-- Main Content Area -->
+        <section id="main_content" class="p-0 mx-2">
           {% block content %}
           {% endblock %}
         </section>
@@ -202,6 +208,27 @@
     <!-- Footer -->
     {% include 'footer.html' %}
   </footer>
+
+  <script>
+    $(document).ready(function () {
+
+      // While clicking Hamburger Button Icon in navigation
+      $("#btn_ham").click(function () {
+        // $("#left_side_bar").css("display", "block");
+        // $("#left_side_bar").removeClass("animate__slideOutLeft");
+        // $("#left_side_bar").addClass("animate__slideInLeft");
+        $("#overlay").css("display", "block");
+      });
+
+      // closing side nav bar
+      $("#left_side_bar_close,#overlay").click(function () {
+        // $("#left_side_bar").removeClass("animate__slideInLeft");
+        // $("#left_side_bar").addClass("animate__slideOutLeft");
+        $("#overlay").css("display", "none");
+      });
+
+    });
+  </script>
 </body>
 
 </html>

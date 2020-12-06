@@ -2,22 +2,21 @@
 
 {% block content %}
 
-<section class="container my-2">
-	<h2 class="text-center my-3">Subject List View</h2>
 
-	<div class="card-columns">
-		{% for sub in subjects %}
-		<div class="card">
-			<div class="card-body">
-				<div>Hour Name : {{ sub.hour_name }}</div>
-				<div>Sub Name : {{ sub.sub_name }}</div>
-				<div>Staff Name : {{ sub.handled_by.username }}</div>
-				<div>Classroom : {{ sub.classroom.course }}</div>
-				<a href="{% url 'subject:subject_detail' sub.id %}" class="stretched-link"></a>
-			</div>
+<h2 class="text-center my-3">Subject List View</h2>
+
+<div class="card-columns">
+	{% for sub in subjects %}
+	<div class="card">
+		<div class="card-body">
+			<div>Hour Name : {{ sub.hour_name }}</div>
+			<div>Sub Name : {{ sub.sub_name }}</div>
+			<div>Staff Name : {{ sub.handled_by.username }}</div>
+			<div>Classroom : {{ sub.classroom.course }}</div>
+			<a href="{% url 'subject:subject_detail' sub.id %}" class="stretched-link"></a>
 		</div>
-		{% endfor %}
 	</div>
-</section>
+	{% endfor %}
+</div>
 
 {% endblock %}

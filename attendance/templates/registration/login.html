@@ -4,26 +4,29 @@
 
 {% block content %}
 
-<section class="container-fluid ">
-	<div class="row my-5">
+
+<div class="row my-5">
 	<div class="col-md-5 mx-md-auto p-3">
 		<div class="card shadow">
-			<div class="card-header text-center text-white bg-primary"><h3>Login Page</h3></div>
+			<div class="card-header text-center text-white bg-primary">
+				<h3>Login Page</h3>
+			</div>
 			<div class="card-body">
 				<form class="form" method="POST" novalidate>
 					{% csrf_token %}
-					{{ form|crispy }}
+					{{ form.username|as_crispy_field }}
+					{{ form.password|as_crispy_field }}
 					<div class="d-flex">
-						<small>						
+						<small>
 							<a href="{% url 'user_module:password_reset' %}">Forget password ?</a>
 						</small>
-					<input type="submit" name="submit" value="Login" class="btn btn-primary align-self-center ml-auto">
+						<input type="submit" name="submit" value="Login"
+							class="btn btn-primary align-self-center ml-auto">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	</div>
-</section>
+</div>
 
 {% endblock %}

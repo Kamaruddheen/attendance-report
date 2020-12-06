@@ -91,6 +91,8 @@ body {
 #left_side_bar{
     z-index: 1000 !important;
     border: 0;
+    height: 465px;
+    width: 225px;
     background-color: #daeaf6;
     border-radius: 2rem !important;
     box-shadow:  8px 8px 20px #aebbc5, 
@@ -99,7 +101,7 @@ body {
     .side_bar {
 
         .side_bar_title {
-            padding: 12px 0px 5px 50px;
+            padding: 12px 50px 5px 50px;
             letter-spacing: .05em;
             pointer-events: none;
             cursor: default;
@@ -115,11 +117,11 @@ body {
                 color: #062743;
                 display: flex;
                 align-items: center;
-                padding: 10px 0px 10px 50px;
+                padding: 10px 50px 10px 50px;
                 font-size: 1rem;
                 position: relative;
-                -webkit-transition: all .4s;
-                transition: all .4s;
+                -webkit-transition: all 0.4s;
+                transition: all 0.4s;
                 text-decoration: none;
             }
 
@@ -142,4 +144,29 @@ body {
             }
         }
     }
+}
+
+/* Overlay effect */
+
+.overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1199;
+    cursor: pointer;
+}
+
+/* Right-side Main Content */
+
+#main_content{    
+    flex-basis: 0;
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
 }
