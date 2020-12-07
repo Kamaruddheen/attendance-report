@@ -33,3 +33,16 @@ Then, Go to: https://localhost:8000 or http://127.0.0.1:8000
  - #### Student Account(type 3)
     - username : stud1
     - password : Testpass123
+    
+ - #### Staff accounts
+    - username : Dr.thara
+    - password : teststaff
+
+    - username : priya_mam	
+    - password : teststaff
+ - #### Student accounts
+    - username : 18BCM552	
+    - password : test4321
+
+    - username : 18BCM516
+    - password : test4321
