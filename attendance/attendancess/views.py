@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from subject.models import SubjectModel
 from timetable.models import TimetablesetModel, TimetableModel
-from attendancess.models import AttendanceModel
+from attendancess.models import AttendanceModel, AttendanceIdModel
 
 # Create your views here.
 
@@ -59,16 +59,23 @@ class AttendanceView(LoginRequiredMixin, View):
         date = request.session['date']
         date = datetime.datetime.strptime(date,"%Y-%m-%d").date()
         
-        # a = AttendanceModel(date = date,
-        #                     subject = subject,
-        #                     handled_by = "NA",
-        # )
-        # a.save()
-        # for student in students:
-        #     if student.username in request.POST:
-        #         a.student.add(student)
+        a = AttendanceIdModel(date = date,
+                            subject = subject,
+                            handled_by = "NA",
+        )
+        a.save()
+
+        attendance_id = a.id
+
+        # If the toggle button is on(present), the value will be in the request.POST .
+        for student in students:
+            if student.username in request.POST:
+                AttendanceModel(attendance_id=attendance_id, rollno=student.username, status="Present").save()
+            else:
+                AttendanceModel(attendance_id=attendance_id, rollno=student.username, status="Absent").save()
+                
 
         date = request.session['date']
-        #del request.session['date']
+        del request.session['date']
 
         return redirect(reverse("attendancess:classes")+"?date="+date, permanent=True)
