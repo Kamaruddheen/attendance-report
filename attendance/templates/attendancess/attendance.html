@@ -2,9 +2,12 @@
 
 {% block content %}
     <h1> Welcome to attendance page!!!</h1>
-    {% for student in students %}
-        <ul>
-            <li>{{ student.username }}</li>
-        </ul>
-    {% endfor %}
+    <form action="." method="POST">
+        {% csrf_token %}
+        {% for student in students %}
+            <input name="{{student.username}}" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-on="Present" data-off="Absent">
+            <label>{{student.username}}</label><br><br>
+        {% endfor %}
+        <input type="submit" value="submit">
+    </form>
 {% endblock %}

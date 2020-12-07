@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
+from django.urls import reverse
 from django.http import HttpResponse, Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 import datetime
 from subject.models import SubjectModel
 from timetable.models import TimetablesetModel, TimetableModel
+from attendancess.models import AttendanceModel
 
 # Create your views here.
 
@@ -17,7 +19,6 @@ class ClassesView(LoginRequiredMixin, View):
             date = datetime.date.today()
         else:
             date = datetime.datetime.strptime(date,"%Y-%m-%d").date()
-
         day = date.strftime("%A")
 
         # Get all the active time tables and extract the classes
@@ -30,6 +31,7 @@ class ClassesView(LoginRequiredMixin, View):
         classes = TimetableModel.objects.filter(set_name__in = time_table_sets, day=day, subject__handled_by = request.user).order_by('hour')
 
         date = date.strftime("%Y-%m-%d")
+        request.session['date'] = date
         
         context = {
             "classes" : classes,
@@ -40,10 +42,33 @@ class ClassesView(LoginRequiredMixin, View):
 
 class AttendanceView(LoginRequiredMixin, View):
     def get(self, request, subject_id):
-
-        students = SubjectModel.objects.get(id=subject_id).students.all()
+        
+        students = SubjectModel.objects.get(id=subject_id).students.all().order_by("username")
         print(students)
+        print(request.session.get('date',0))
         context = {
             'students' : students
         }
         return render(request, 'attendancess/attendance.html', context)
+
+    def post(self, request, subject_id):
+
+        subject = SubjectModel.objects.get(id=subject_id)
+        students = subject.students.all().order_by("username")
+        
+        date = request.session['date']
+        date = datetime.datetime.strptime(date,"%Y-%m-%d").date()
+        
+        # a = AttendanceModel(date = date,
+        #                     subject = subject,
+        #                     handled_by = "NA",
+        # )
+        # a.save()
+        # for student in students:
+        #     if student.username in request.POST:
+        #         a.student.add(student)
+
+        date = request.session['date']
+        #del request.session['date']
+
+        return redirect(reverse("attendancess:classes")+"?date="+date, permanent=True)
