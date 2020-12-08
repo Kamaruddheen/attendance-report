@@ -2,26 +2,67 @@
 
 {% load crispy_forms_tags %}
 
+{% block title %}
+<title>SAMS | Login</title>
+{% endblock %}
+
+{% block head %}
+<style>
+	/* Custom CSS */
+	#login_view {
+		background-color: #daeaf6;
+		border-radius: 2rem !important;
+		box-shadow: 8px 8px 16px #aebbc5,
+			-8px -8px 16px #daeaf6;
+	}
+
+	#id_password,
+	#id_username {
+		margin-top: 3px;
+		font-size: 1.1rem;
+		font-family: 'Karla', sans-serif;
+		color: #062743 !important;
+		background-color: #daeaf6 !important;
+		border: 0px;
+		border-radius: 2rem !important;
+		box-shadow: inset 5px 5px 10px #c2d0db,
+			inset -5px -5px 10px #daeaf6;
+	}
+
+	#error_1_id_password,
+	#error_1_id_username {
+		padding: 10px 0px 0px 15px;
+	}
+</style>
+{% endblock %}
+
+
 {% block content %}
 
-
-<div class="row my-5">
-	<div class="col-md-5 mx-md-auto p-3">
-		<div class="card shadow">
-			<div class="card-header text-center text-white bg-primary">
-				<h3>Login Page</h3>
-			</div>
+<div class="row my-4">
+	<div class="col-sm-10 col-md-8 col-lg-5 mx-auto p-3">
+		<div class="card border_white p-2 p-md-3" id="login_view">
 			<div class="card-body">
+				<div class="text-center text_d_blue arvo" style="margin-bottom: 35px;">
+					<h3 class="m-0">Login Page</h3>
+				</div>
 				<form class="form" method="POST" novalidate>
 					{% csrf_token %}
-					{{ form.username|as_crispy_field }}
-					{{ form.password|as_crispy_field }}
+					{{ form|crispy }}
 					<div class="d-flex">
-						<small>
-							<a href="{% url 'user_module:password_reset' %}">Forget password ?</a>
-						</small>
-						<input type="submit" name="submit" value="Login"
-							class="btn btn-primary align-self-center ml-auto">
+						<div class="mt-1">
+							<a href="{% url 'password_reset' %}">Forget&nbsp;password&nbsp;?</a>
+						</div>
+						<button type="submit" name="submit" value="Login"
+							class="btn btn-cust neu_icon border_white text_d_blue align-self-center ml-auto">
+							Login&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home"
+								role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em"
+								height="1.2em" class="ml-md-1">
+								<path fill="currentColor"
+									d="M137.2 110.3l21.9-21.9c9.3-9.3 24.5-9.4 33.9-.1L344.9 239c9.5 9.4 9.5 24.7 0 34.1L193 423.7c-9.4 9.3-24.5 9.3-33.9-.1l-21.9-21.9c-9.7-9.7-9.3-25.4.8-34.7l77.6-71.1H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h191.5l-77.6-71.1c-10-9.1-10.4-24.9-.7-34.5zM512 352V160c0-53-43-96-96-96h-84c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h84c17.7 0 32 14.3 32 32v192c0 17.7-14.3 32-32 32h-84c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h84c53 0 96-43 96-96z">
+								</path>
+							</svg>
+						</button>
 					</div>
 				</form>
 			</div>

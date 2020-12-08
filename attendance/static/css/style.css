@@ -45,6 +45,21 @@ body {
   color: #062743;
 }
 
+.btn {
+  border-radius: 2rem !important;
+}
+
+/* Customizing Django */
+.asteriskField {
+  color: red !important;
+}
+
+.requiredField {
+  color: #062743;
+  font-size: 1.1rem;
+  font-family: 'arvo';
+}
+
 /* Custom Button */
 /* Mainly for Hamburger Button */
 .btn-cust {
@@ -86,15 +101,15 @@ body {
 #left_side_bar {
   position: relative;
   z-index: 1000;
-  border: 0;
+  border: 1px solid #c9d7e2;
   height: 465px;
   width: 225px;
   -webkit-transition: 0.5 ease;
   transition: 0.5 ease;
   background-color: #daeaf6;
   border-radius: 2rem !important;
-  -webkit-box-shadow: 8px 8px 20px #aebbc5,  -8px -8px 20px #ffffff;
-          box-shadow: 8px 8px 20px #aebbc5,  -8px -8px 20px #ffffff;
+  -webkit-box-shadow: 8px 8px 20px #aebbc5,  -8px -8px 20px #daeaf6;
+          box-shadow: 8px 8px 20px #aebbc5,  -8px -8px 20px #daeaf6;
 }
 
 #left_side_bar .side_bar .side_bar_title {
@@ -194,5 +209,9 @@ body {
           flex-grow: 1;
   position: relative;
   width: 100%;
+}
+
+.border_white {
+  border: 1px solid #c9d7e2;
 }
 /*# sourceMappingURL=style.css.map */
