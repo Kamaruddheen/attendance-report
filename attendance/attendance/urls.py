@@ -28,6 +28,7 @@ urlpatterns = [
     path('classes/', include('attendancess.urls')),
     path('subjects/', include('subject.urls')),
     path('classroom/',include('classroom.urls')),
+    path('timetable/',include('timetable.urls')),
 ]
 
 # urlpatterns += staticfiles_urlpatterns()

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>SAMS</title>
+{% endblock %}
+
+{% block content %}
+   <form method="POST" action="#">
+       <div class="row mb-4">
+           <div class="col-2 offset-2">
+                <label for="set_name" class="float-right">Set name :</label>
+           </div>
+           <div class="col-5">
+                {{t.set_name}}
+                {{t.set_name.help_text}}
+                <a href="#" class="btn btn-info float-right">Create a new set</a>
+           </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-2 offset-2">
+                 <label for="day" class="float-right">Day :</label>
+            </div>
+            <div class="col-5">
+                 {{t.day}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2 offset-2">
+                 <label for="s1" class="float-right">Hour I :</label>
+            </div>
+            <div class="col-4">
+                 {{t.s1}}
+            </div>
+         </div>
+         <div class="row mb-2">
+            <div class="col-2 offset-2">
+                 <label for="s2" class="float-right">Hour II :</label>
+            </div>
+            <div class="col-4">
+                 {{t.s2}}
+            </div>
+         </div>
+        
+         <div class="row mb-2">
+            <div class="col-2 offset-2">
+                 <label for="s2" class="float-right">Hour III :</label>
+            </div>
+            <div class="col-4">
+                 {{t.s3}}
+            </div>
+         </div>
+
+         <div class="row mb-2">
+            <div class="col-2 offset-2">
+                 <label for="s4" class="float-right">Hour IV :</label>
+            </div>
+            <div class="col-4">
+                 {{t.s4}}
+            </div>
+         </div>
+
+         <div class="row mb-3">
+            <div class="col-2 offset-2">
+                 <label for="s5" class="float-right">Hour V :</label>
+            </div>
+            <div class="col-4">
+                 {{t.s5}}
+            </div>
+         </div>
+         <div class="row">
+             <div class="col-8">
+                <input type="submit" class="btn btn-success float-right" value="Save and continue">
+             </div>
+         </div>
+    </form>
+{% endblock %}

@@ -7,10 +7,19 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
+            <div class="dropdown dropleft float-right">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Timetable</button> 
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'timetable:createtimetable' get_obj.id %}">Create new timetable</a>
+                    <a class="dropdown-item" href="#">Edit existing timetable</a>
+                    <a class="dropdown-item" href="#">Create new set</a>
+                    <a class="dropdown-item" href="#">Edit the existing set</a>
+                </div>
+            </div>
             <h5>Classroom Id :<small>{{get_obj.id}}</small></h5>
             <h5>Course :<small>{{get_obj.course}}</small></h5>
-            <h5>Year :<small>{{get_obj.year}}</small></h5>
-            <h5>Section :<small>{{get_obj.sec}}</small></h5>
+            <h5>Year :<small>{{get_obj.get_year_display}}</small></h5>
+            <h5>Section :<small>{{get_obj.get_sec_display}}</small></h5>
             <h5>Tutor :<small>{{get_obj.tutor}}</small></h5>
         </div>
         <div class="card-footer">

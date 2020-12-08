@@ -16,3 +16,6 @@ class ClassroomModel(models.Model):
 		db_table = 'classroom'
 		verbose_name = 'Classroom'
 		verbose_name_plural = 'Classrooms'
+    
+	def __str__(self):
+		return self.course+' '+self.sec+' '+self.get_year_display()+' '+"year"

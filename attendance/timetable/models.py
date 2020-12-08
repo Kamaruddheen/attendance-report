@@ -16,12 +16,28 @@ class TimetablesetModel(models.Model):
 		verbose_name = 'Set'
 		verbose_name_plural = 'Sets'
 
+day_choices=(
+    (1,'Monday'),
+    (2,'Tuesday'),
+    (3,'Wednesday'),
+    (4,'Thursday'),
+    (5,'Friday'),
+    (6,'Saturday')
+)
+
+hour_choices=(
+	(1,'I'),
+	(2,'II'),
+	(3,'III'),
+	(4,'IV'),
+	(5,'V')
+)
 
 class TimetableModel(models.Model):
-	hour = models.CharField(max_length=3)
-	day = models.CharField(max_length=15)
+	hour = models.CharField(max_length=3,choices=hour_choices)
+	day = models.CharField(max_length=15,choices=day_choices)
 	subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE)
-	set_name = models.ForeignKey(TimetablesetModel,on_delete=models.CASCADE)	
+	set_name = models.ForeignKey(TimetablesetModel,on_delete=models.CASCADE,help_text='Create a set if your set is not in the choice list')	
 	
 	class Meta:
 		db_table = 'timetable'
