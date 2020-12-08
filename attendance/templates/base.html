@@ -213,7 +213,7 @@
           </ul>
         </section>
         <!-- Overlay Effect -->
-        <div class="overlay d-block d-md-none" id="overlay"></div>
+        <div class="overlay d-md-none" id="overlay"></div>
         <!-- Main Content Area -->
         <section id="main_content" class="p-0 mx-2">
           {% block content %}
@@ -239,8 +239,8 @@
         if ($window.width() > 767) {
           return $("#left_side_bar").removeClass("animate__slideOutLeft").addClass("d-block");
         }
-
-        $("#overlay").addClass("d-block").removeClass("d-none");
+        
+        // $("#overlay").addClass("d-block").removeClass("d-none");
       }).trigger('resize');
 
       // While clicking Hamburger Button Icon in navigation
@@ -248,14 +248,14 @@
         $("#left_side_bar").css("display", "block");
         $("#left_side_bar").removeClass("animate__slideOutLeft");
         $("#left_side_bar").addClass("animate__slideInLeft");
-        $("#overlay").addClass("d-block").removeClass("d-none");
+        $("#overlay").css("display", "block");
       });
 
       // closing side nav bar
       $("#left_side_bar_close,#overlay").click(function () {
         $("#left_side_bar").removeClass("animate__slideInLeft");
         $("#left_side_bar").addClass("animate__slideOutLeft");
-        $("#overlay").addClass("d-none").removeClass("d-block");
+        $("#overlay").css("display", "none");
       });
 
     });
