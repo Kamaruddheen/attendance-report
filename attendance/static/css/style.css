@@ -84,10 +84,13 @@ body {
 
 /* Left Side Nav Bar */
 #left_side_bar {
-  z-index: 1000 !important;
+  position: relative;
+  z-index: 1000;
   border: 0;
   height: 465px;
   width: 225px;
+  -webkit-transition: 0.5 ease;
+  transition: 0.5 ease;
   background-color: #daeaf6;
   border-radius: 2rem !important;
   -webkit-box-shadow: 8px 8px 20px #aebbc5,  -8px -8px 20px #ffffff;
@@ -139,10 +142,37 @@ body {
   fill: #fff;
 }
 
-/* Overlay effect */
+@media screen and (max-width: 767px) {
+  #left_side_bar {
+    position: fixed !important;
+    top: 0px;
+    left: 0px;
+    display: none;
+    z-index: 1050 !important;
+    overflow-y: auto;
+    width: 250px;
+    height: 100%;
+    border-radius: 0 !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+  }
+  #left_side_bar .side_bar .list-group-item {
+    display: list-item;
+  }
+  #left_side_bar .side_bar .side_bar_title {
+    text-align: start;
+  }
+  #left_side_bar .side_bar .list-group .side_bar_link {
+    padding: 12px 50px 12px 50px;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+    border-bottom: 0.5px solid #fff;
+  }
+}
+
 .overlay {
   position: fixed;
-  display: none;
   width: 100%;
   height: 100%;
   top: 0;
@@ -150,7 +180,7 @@ body {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1199;
+  z-index: 1045;
   cursor: pointer;
 }
 

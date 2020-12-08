@@ -33,9 +33,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Arvo&family=Karla&display=swap" rel="stylesheet">
   <!-- Custom Css -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-
   <!-- Bootstrap toggle-->
-  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+    rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
   <!--https://gitbrent.github.io/bootstrap4-toggle/-->
 
@@ -53,10 +53,24 @@
     <article class="container-fluid p-0 max_95">
       <div class="d-flex flex-row mx-0">
         <!-- Side Nav bar -->
-        <section id="left_side_bar" class="card metismenu p-0 m-2 d-none d-md-block">
+        <section id="left_side_bar" class="card metismenu p-0 m-md-2 animate__animated">
           <!-- Left Side Bar - Detached -->
           <ul class="p-0 side_bar">
-            <div class="d-block d-md-none">
+            <!-- Mobile View Menu -->
+            <div class="d-md-none">
+              <!-- Sidebar close button for mobile -->
+              <li class="list-group-item bg_d_blue border-0">
+                <span id="left_side_bar_close" class="float-right">
+                  <a href="#" class="text_l_bluish_white">
+                    <svg width="1.3em" height="1.3em" viewBox="0 0 320 512" class="bi bi-x" fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path fill="currentColor"
+                        d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z"
+                        class=""></path>
+                    </svg>
+                  </a>
+                </span>
+              </li>
               <li class="side_bar_title list-group mt-3">Account</li>
               {% if user.is_authenticated %}
               <li class="list-group">
@@ -84,6 +98,7 @@
               </li>
               {% endif %}
             </div>
+            <!-- All View -->
             <li class="side_bar_title list-group mt-md-3">Navigation</li>
             <li class="list-group">
               <a href="{% url 'homepage' %}" class="side_bar_link fill_d_blue">
@@ -198,7 +213,7 @@
           </ul>
         </section>
         <!-- Overlay Effect -->
-        <div class="overlay" id="overlay"></div>
+        <div class="overlay d-block d-md-none" id="overlay"></div>
         <!-- Main Content Area -->
         <section id="main_content" class="p-0 mx-2">
           {% block content %}
@@ -209,6 +224,7 @@
 
     {% include 'messages.html' %}
   </main>
+
   <footer>
     <!-- Footer -->
     {% include 'footer.html' %}
@@ -217,19 +233,29 @@
   <script>
     $(document).ready(function () {
 
+      var $window = $(window), $html = $('html');
+
+      $window.resize(function resize() {
+        if ($window.width() > 767) {
+          return $("#left_side_bar").removeClass("animate__slideOutLeft").addClass("d-block");
+        }
+
+        $("#overlay").addClass("d-block").removeClass("d-none");
+      }).trigger('resize');
+
       // While clicking Hamburger Button Icon in navigation
       $("#btn_ham").click(function () {
-        // $("#left_side_bar").css("display", "block");
-        // $("#left_side_bar").removeClass("animate__slideOutLeft");
-        // $("#left_side_bar").addClass("animate__slideInLeft");
-        $("#overlay").css("display", "block");
+        $("#left_side_bar").css("display", "block");
+        $("#left_side_bar").removeClass("animate__slideOutLeft");
+        $("#left_side_bar").addClass("animate__slideInLeft");
+        $("#overlay").addClass("d-block").removeClass("d-none");
       });
 
       // closing side nav bar
       $("#left_side_bar_close,#overlay").click(function () {
-        // $("#left_side_bar").removeClass("animate__slideInLeft");
-        // $("#left_side_bar").addClass("animate__slideOutLeft");
-        $("#overlay").css("display", "none");
+        $("#left_side_bar").removeClass("animate__slideInLeft");
+        $("#left_side_bar").addClass("animate__slideOutLeft");
+        $("#overlay").addClass("d-none").removeClass("d-block");
       });
 
     });
