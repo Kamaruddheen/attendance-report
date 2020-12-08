@@ -3,8 +3,8 @@ from .models import AttendanceIdModel, AttendanceModel
 
 
 class AttendanceIdModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'date', 'subject', 'status', 'handled_by']
-    search_fields = ['date', 'subject', 'handled_by']
+    list_display = ['id', 'date', 'subject', 'status']
+    search_fields = ['date', 'subject']
 
 class AttendanceModelAdmin(admin.ModelAdmin):
     list_display = ['attendance_id', 'rollno', 'status']

@@ -43,7 +43,8 @@ class ClassesView(LoginRequiredMixin, View):
 class AttendanceView(LoginRequiredMixin, View):
     def get(self, request, subject_id):
         
-        students = SubjectModel.objects.get(id=subject_id).students.all().order_by("username")
+        subject = SubjectModel.objects.get(id=subject_id)
+        students = subject.students.all().order_by("username")
         print(students)
         print(request.session.get('date',0))
         context = {
@@ -61,7 +62,6 @@ class AttendanceView(LoginRequiredMixin, View):
         
         a = AttendanceIdModel(date = date,
                             subject = subject,
-                            handled_by = "NA",
         )
         a.save()
 
