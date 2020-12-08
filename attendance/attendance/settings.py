@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'subject',
     'timetable',
     'attendancess',
+    'django_extensions' # To Execute scripts
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
