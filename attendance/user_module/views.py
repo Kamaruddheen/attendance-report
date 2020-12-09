@@ -17,7 +17,7 @@ def createstaffview(request):
 		form_obj.user_type = 2
 		form_obj.save()
 		messages.success(request,'Staff Created Successfully')
-		return redirect('homepage')
+		return redirect('create_staff')
 	context = {
 		'form':myForm,
 	}

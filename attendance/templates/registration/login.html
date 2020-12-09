@@ -28,14 +28,8 @@
 		box-shadow: inset 5px 5px 10px #c2d0db,
 			inset -5px -5px 10px #daeaf6;
 	}
-
-	#error_1_id_password,
-	#error_1_id_username {
-		padding: 10px 0px 0px 15px;
-	}
 </style>
 {% endblock %}
-
 
 {% block content %}
 
@@ -46,7 +40,7 @@
 				<div class="text-center text_d_blue arvo" style="margin-bottom: 35px;">
 					<h3 class="m-0">Login Page</h3>
 				</div>
-				<form class="form" method="POST" novalidate>
+				<form class="form" method="POST" class="needs-validation" novalidate>
 					{% csrf_token %}
 					{{ form|crispy }}
 					<div class="d-flex">

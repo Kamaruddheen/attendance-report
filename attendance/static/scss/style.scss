@@ -65,6 +65,10 @@ body {
     font-family: 'arvo';
 }
 
+.invalid-feedback {
+    padding: 10px 0px 0px 15px;
+}
+
 /* Custom Button */
 /* Mainly for Hamburger Button */
 
@@ -221,6 +225,28 @@ body {
     width: 100%;
 }
 
+/* neumorphism-ui */
+
 .border_white{
     border: 1px solid #c9d7e2;
+}
+
+.input_cust{
+    margin-top: 3px;
+	font-size: 1.1rem;
+	font-family: 'Karla', sans-serif;
+	color: #062743 !important;
+	background-color: #daeaf6 !important;
+    border: 1px solid #c9d7e2;
+    border-color: #daeaf6 !important;
+	border-radius: 2rem !important;
+	box-shadow: inset 5px 5px 10px #c2d0db,
+		inset -5px -5px 10px #daeaf6;
+}
+
+.body_box_shadow{
+    background-color: #daeaf6;
+		border-radius: 2rem !important;
+		box-shadow: 8px 8px 16px #aebbc5,
+			-8px -8px 16px #daeaf6;
 }
