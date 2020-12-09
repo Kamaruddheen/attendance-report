@@ -260,9 +260,19 @@ body {
 	border-radius: 2rem !important;
 }
 
+/* Table */
+
 .table_box_shadow{        
     background-color: #daeaf6;
 	border-radius: 2rem !important;
     box-shadow: 6px 6px 12px #b8b9be,
         -6px -6px 12px #daeaf6 !important;
+}
+
+/* Table scroll for vertical */
+
+.table_wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    display: inline-block;
 }

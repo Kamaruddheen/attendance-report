@@ -1,26 +1,50 @@
 {% extends 'base.html' %}
 
+{% block title %}
+<title>SAMS | Manage Staff</title>
+{% endblock %}
+
+{% block head %}
+<style>
+	/* Custom CSS */
+	#tab_res .table td {
+		border-color: #ffffff;
+	}
+
+	#tab_res .table th {
+		border: 0;
+	}
+</style>
+{% endblock %}
+
 {% block content %}
 
-<section class="container">
-	<h2 class="text-center my-3">Manage All Staffs</h2>
-
-	<table class="table table-dark table-hover table-responsive-md">
-		<tr>
-			<th>ID</th>
-			<th>Username</th>
-			<th>Name</th>
-			<th>Email ID</th>
-		</tr>
-		{% for staff in staffs %}
-		<tr onclick="window.location='{% url 'staff_detail' staff.id %}'">
-			<td> {{ staff.user.id }} </td>
-			<td> {{ staff.user.username }} </td>
-			<td> {{ staff.user.first_name }} </td>
-			<td> {{ staff.user.email }} </td>
-		</tr>
-		{% endfor %}
-	</table>
+<section class="container pl-0 pl-md-3">
+	<div class="text-center text_d_blue arvo mb-3" style="margin-bottom: 35px;">
+		<h3 class="m-0">Manage&nbsp;All&nbsp;Staffs</h3>
+	</div>
+	<div class="table-responsive table_wrapper table_box_shadow border_white my-3" id="tab_res">
+		<table class="table table-hover my-1 my-md-2">
+			<thead>
+				<tr class="text-center">
+					<th class="upper_case">ID</th>
+					<th class="upper_case">Username</th>
+					<th class="upper_case">Name</th>
+					<th class="upper_case">Email ID</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for staff in staffs %}
+				<tr scope="row" class="text-center" onclick="window.location='{% url 'staff_detail' staff.id %}'">
+					<td> {{ staff.user.id }} </td>
+					<td> {{ staff.user.username }} </td>
+					<td> {{ staff.user.first_name }} </td>
+					<td> {{ staff.user.email }} </td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 </section>
 
 {% endblock %}
