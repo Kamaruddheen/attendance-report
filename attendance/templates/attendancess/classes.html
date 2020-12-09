@@ -6,12 +6,21 @@
         <input type="date" value={{date}} name="date">
         <input type="submit" value="Go">
     </form>
-    {% if classes %}
-        {% for class in classes %}
-            <div class="card">
+    {% if data %}
+        {% for class,isPosted in data %}
+            <div class="card m-4">
+                {% if isPosted %}
+                    <div class="card-header">
+                        Posted
+                    </div>
+                {% endif %}
                 <div class="card-body">             
                     <p>{{class.hour}} hour</p>
-                    <a href="{% url 'attendancess:attendance' class.subject.id %}" class="card-link"><p>{{class.subject.sub_name}}</p></a>
+                    {% if isPosted %}
+                        <a href="#" class="card-link"><p>{{class.subject.sub_name}}</p></a>    
+                    {% else %}
+                        <a href="{% url 'attendancess:attendance' class.subject.id %}" class="card-link"><p>{{class.subject.sub_name}}</p></a>
+                    {% endif %}
                     <p>{{class.set_name.classroom.get_year_display}} {{class.set_name.classroom.course}} {{class.set_name.classroom.sec|upper}}</p>
                 </div>
             </div>

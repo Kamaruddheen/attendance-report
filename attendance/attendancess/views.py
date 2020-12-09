@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.urls import reverse
 from django.http import HttpResponse, Http404
@@ -32,9 +32,16 @@ class ClassesView(LoginRequiredMixin, View):
 
         date = date.strftime("%Y-%m-%d")
         request.session['date'] = date
+
+        data = []
+        for clas in classes:
+            if AttendanceIdModel.objects.filter(date=date, subject=clas.subject).exists():
+                data.append((clas, True))
+            else:
+                data.append((clas, False))
         
         context = {
-            "classes" : classes,
+            "data" : data,
             "date" : date
         }
         return render(request, 'attendancess/classes.html', context)
@@ -43,10 +50,17 @@ class ClassesView(LoginRequiredMixin, View):
 class AttendanceView(LoginRequiredMixin, View):
     def get(self, request, subject_id):
         
-        subject = SubjectModel.objects.get(id=subject_id)
+        subject = get_object_or_404(SubjectModel, pk=subject_id)
+        
+        # Checking whether the subject id is belonging to the current user
+        if not subject.handled_by == request.user:
+            context = {
+                "msg" : "You are not allowed to view this page."
+            }
+            return render(request, "error.html", context)
+
         students = subject.students.all().order_by("username")
-        print(students)
-        print(request.session.get('date',0))
+        
         context = {
             'students' : students
         }
@@ -54,7 +68,15 @@ class AttendanceView(LoginRequiredMixin, View):
 
     def post(self, request, subject_id):
 
-        subject = SubjectModel.objects.get(id=subject_id)
+        subject = get_object_or_404(SubjectModel, pk=subject_id)
+
+        # Checking whether the subject id is belonging to the current user
+        if not subject.handled_by == request.user:
+            context = {
+                "msg" : "You are not allowed to view this page."
+            }
+            return render(request, "error.html", context)
+
         students = subject.students.all().order_by("username")
         
         date = request.session['date']
@@ -67,7 +89,7 @@ class AttendanceView(LoginRequiredMixin, View):
 
         attendance_id = a.id
 
-        # If the toggle button is on(present), the value will be in the request.POST .
+        # If the toggle button is on (present), the value will be in the request.POST .
         for student in students:
             if student.username in request.POST:
                 AttendanceModel(attendance_id=attendance_id, rollno=student.username, status="Present").save()
