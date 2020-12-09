@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Welcome to Attendance checking page.</h1>
+    {% if data %}
+        {% for student in data %}
+            <ul>
+                <li>{{student.rollno}} - {{student.status}}</li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

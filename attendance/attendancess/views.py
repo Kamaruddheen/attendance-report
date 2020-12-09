@@ -101,3 +101,26 @@ class AttendanceView(LoginRequiredMixin, View):
         del request.session['date']
 
         return redirect(reverse("attendancess:classes")+"?date="+date, permanent=True)
+
+class CheckAttendanceView(LoginRequiredMixin, View):
+    def get(self, request):
+
+        subject_id = request.GET.get('id')
+        date = request.GET.get('date')
+
+        if subject_id is None or date is None:    
+            raise Http404("The required arguments are missing")
+        
+        date = datetime.datetime.strptime(date,"%Y-%m-%d").date()
+        attendance_id = get_object_or_404(AttendanceIdModel, subject__id=subject_id, date=date)
+
+        # Checking whether the subject id is belonging to the current user
+        if not attendance_id.subject.handled_by == request.user:
+            raise Http404("You are not allowed to view this page.")
+
+        data = AttendanceModel.objects.filter(attendance_id = attendance_id.id).order_by('rollno')
+        
+        context = {
+            "data" : data
+        }
+        return render(request, 'attendancess/check_attendance.html', context)

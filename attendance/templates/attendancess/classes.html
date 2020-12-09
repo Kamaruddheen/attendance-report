@@ -17,7 +17,7 @@
                 <div class="card-body">             
                     <p>{{class.hour}} hour</p>
                     {% if isPosted %}
-                        <a href="#" class="card-link"><p>{{class.subject.sub_name}}</p></a>    
+                        <a href="{% url 'attendancess:check-attendance' %}?id={{class.subject.id}}&date={{date}}" class="card-link"><p>{{class.subject.sub_name}}</p></a>    
                     {% else %}
                         <a href="{% url 'attendancess:attendance' class.subject.id %}" class="card-link"><p>{{class.subject.sub_name}}</p></a>
                     {% endif %}
