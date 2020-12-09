@@ -16,7 +16,7 @@ def SubjectCreateView(request):
 	myForm = CreateSubjectForm(request.POST or None)
 	if myForm.is_valid():
 		myForm.save()
-		return redirect('subject_list')
+		return redirect('subject:subject_list')
 	context = {
 		'form':myForm,
 	}

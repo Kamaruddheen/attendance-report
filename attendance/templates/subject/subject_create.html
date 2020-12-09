@@ -1,18 +1,48 @@
 {% extends 'base.html' %}
-
 {% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | Create Subject</title>
+{% endblock %}
+
+{% block head %}
+<style>
+	/* Custom CSS */
+</style>
+{% endblock %}
 
 {% block content %}
 
-<section class="container">
-	<h2 class="text-center">Create Subject Form</h2>
-
-	<form class="form" method="POST">
+<section class="container px-md-4 body_box_shadow border_white mx-md-3">
+	<div class="text-center text_d_blue arvo my-4">
+		<h3 class="m-0">Create&nbsp;Subject&nbsp;Form</h3>
+	</div>
+	<form class="form needs-validation" method="POST" id="" novalidate>
 		{% csrf_token %}
-
-		{{ form|crispy }}
-
-		<input type="submit" value="Create" class="btn btn-success" />
+		<div class="form-row">
+			<div class="form-group col-md-12 text_d_blue arvo upper_case">Subject Details&nbsp;:</div>
+			<div class="form-group col-md-6 pr-md-2">
+				{{ form.sub_name|as_crispy_field }}
+			</div>
+			<div class="form-group col-md-6 pl-md-2">
+				{{ form.sub_type|as_crispy_field }}
+			</div>
+			<div class="form-group col-md-12">
+				{{ form.hour_name|as_crispy_field }}
+			</div>
+			<div class="form-group col-md-12 text_d_blue arvo upper_case">Other Details&nbsp;:</div>
+			<div class="form-group col-md-6 pr-md-2">
+				{{ form.classroom|as_crispy_field }}
+			</div>
+			<div class="form-group col-md-6 pl-md-2">
+				{{ form.handled_by|as_crispy_field }}
+			</div>
+			<div class="form-group col-12 d-flex justify-content-center justify-content-md-start">
+				<button class="btn border_white btn-cust neu_icon text-success align-self-center" type="submit">
+					Create&nbsp;Subject
+				</button>
+			</div>
+		</div>
 	</form>
 </section>
 
