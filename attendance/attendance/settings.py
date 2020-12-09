@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+from django.contrib.messages import constants as messages
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'livereload', # livereload for development purpose only
+    'livereload',  # livereload for development purpose only
     'django.contrib.staticfiles',
     'crispy_forms',
     'user_module',
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'subject',
     'timetable',
     'attendancess',
-    'django_extensions' # To Execute scripts
+    'django_extensions'  # To Execute scripts
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -131,6 +132,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR/"static/", ]
+STATIC_DIR = BASE_DIR
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     #Development Only
 
@@ -140,8 +142,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     #Developmen
 # EMAIL_HOST_PASSWORD = '<password>'
 # EMAIL_USE_TLS = True
 # DEFAULT_FROM_EMAIL = "admin@sams.in"
-
-from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'text-info',

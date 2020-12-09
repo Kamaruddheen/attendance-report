@@ -1,13 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>SAMS | Subjects</title>
+{% endblock %}
+
+{% block head %}
+<style>
+	/* Custom CSS */
+</style>
+{% endblock %}
 
 {% block content %}
-
-
-<h2 class="text-center my-3">Subject List View</h2>
+<div class="text-center text_d_blue arvo my-4">
+	<h3 class="m-0">Subject&nbsp;List&nbsp;View</h3>
+</div>
 
 <div class="card-columns">
-	{% for sub in subjects %}
-	<div class="card">
+	{% for sub, file in mylist %}
+	<div class="card body_box_shadow border_white">
+		<div class="card-header bg-transparent p-4">
+			{% with "img/books/"|add:file|default:"book10.jpg" as image_static %}
+			<img src="{% static image_static %}" class="card-img-top rounded" alt="Subject">
+			{% endwith %}
+		</div>
 		<div class="card-body">
 			<div>Hour Name : {{ sub.hour_name }}</div>
 			<div>Sub Name : {{ sub.sub_name }}</div>
