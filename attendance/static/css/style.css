@@ -220,6 +220,10 @@ body {
   border: 1px solid #c9d7e2;
 }
 
+.border_color_white {
+  border-color: #ffffff;
+}
+
 .input_cust {
   margin-top: 3px;
   font-size: 1.1rem;
@@ -238,5 +242,17 @@ body {
   border-radius: 2rem !important;
   -webkit-box-shadow: 8px 8px 16px #aebbc5, -8px -8px 16px #daeaf6;
           box-shadow: 8px 8px 16px #aebbc5, -8px -8px 16px #daeaf6;
+}
+
+.modal_box_shadow {
+  background-color: #daeaf6;
+  border-radius: 2rem !important;
+}
+
+.table_box_shadow {
+  background-color: #daeaf6;
+  border-radius: 2rem !important;
+  -webkit-box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #daeaf6 !important;
+          box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #daeaf6 !important;
 }
 /*# sourceMappingURL=style.css.map */

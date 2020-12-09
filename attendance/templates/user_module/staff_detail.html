@@ -1,75 +1,141 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
+{% block title %}
+<title>SAMS | Staff Details</title>
+{% endblock %}
+
+{% block head %}
+<style>
+	/* Custom CSS */
+	#staff_update_form .form-group label {
+		color: #062743;
+		font-size: 1.1rem;
+		font-family: 'arvo';
+		margin-top: 10px;
+	}
+
+	#tab_res table td,
+	.table th {
+		border-color: #ffffff;
+	}
+</style>
+
+{% endblock %}
+
 {% block content %}
 
-<section class="container">
-	<h2 class="text-center my-3">Staff Details</h2>
+<section class="container ml-md-5">
+	<div class="text-start text_d_blue arvo mb-3" style="margin-bottom: 35px;">
+		<h3 class="m-0">Staff&nbsp;Details</h3>
+	</div>
 
-	<table class="table table-responsive my-3 text-center">
-		<tr class="thead-dark">
-			<th>Username</th>
-			<th>:</th>
-			<th> {{ staff.user.username }} </th>
-		</tr>
+	<div class="table-responsive table_box_shadow border_white my-3" id="tab_res">
+		<table class="table my-3 my-md-4">
+			<tbody>
+				<tr>
+					<th scope="row" class="text-right">Username</th>
+					<th>:</th>
+					<td> {{ staff.user.username }} </td>
+				</tr>
 
-		<tr class="thead-dark">
-			<th>Name</th>
-			<th>:</th>
-			<th> {{ staff.user.get_full_name }} </th>
-		</tr>
+				<tr>
+					<th scope="row" class="text-right">Name</th>
+					<th>:</th>
+					<td> {{ staff.user.get_full_name }} </td>
+				</tr>
 
-		<tr class="thead-dark">
-			<th>Email Id</th>
-			<th>:</th>
-			<th> {{ staff.user.email }} </th>
-		</tr>
+				<tr>
+					<th scope="row" class="text-right">Email Id</th>
+					<th>:</th>
+					<td> {{ staff.user.email }} </td>
+				</tr>
 
-		<tr class="thead-dark">
-			<th>Tutor</th>
-			<th>:</th>
-			<th> {{ staff.user.username }} </th>
-		</tr>
+				<tr>
+					<th scope="row" class="text-right">Tutor</th>
+					<th>:</th>
+					<td> {{ staff.user.username }} </td>
+				</tr>
 
-		<tr class="thead-dark">
-			<th>Last Login</th>
-			<th>:</th>
-			<th> {{ staff.user.last_login }} </th>
-		</tr>
-	</table>
+				<tr>
+					<th scope="row" class="text-right">Last Login</th>
+					<th>:</th>
+					<td> {{ staff.user.last_login }} </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-	<button class="btn btn-success" data-toggle="modal" data-target="#edit_staff_detail">Edit</button>
-	<button class="btn btn-danger mx-2">Delete</button>
+	<button class="btn border_white btn-cust neu_icon text-success align-self-center mr-2"
+		data-target="#edit_staff_detail" data-toggle="modal">
+		Edit
+		<svg width="0.8em" height="0.8em" viewBox="0 0 16 16" class="bi bi-pencil-square ml-1"
+			xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+			<path
+				d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+			<path fill-rule="evenodd"
+				d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+		</svg>
+	</button>
+	<button class="btn border_white btn-cust neu_icon text-danger align-self-center mr-2">
+		Delete
+		<svg width="0.8em" height="0.8em" viewBox="0 0 16 16" class="bi bi-trash ml-1" fill="currentColor"
+			xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+			<path fill-rule="evenodd"
+				d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+		</svg>
+	</button>
 
 </section>
 
-<!-- STAFF UPDATE MODAL FORM -->
+<!-- Staff Update Modal Form -->
 <div class="modal fade" id="edit_staff_detail">
 	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title color-slateblue">Edit Staff Details</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content border_white modal_box_shadow">
+			<div class="modal-header ml-1 text_d_blue border_color_white">
+				<h3 class="modal-title">Edit&nbsp;Staff&nbsp;Details</h3>
+				<button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
 			</div>
-			<div class="modal-body">
-				<form class="edit_form" id="staff_update_form" method="POST" novalidate>
+			<div class="modal-body pt-0">
+				<form class="edit_form" method="POST" id="staff_update_form">
 					{% csrf_token %}
-					{{ form| crispy }}
-				<form class="edit_form" method="POST">
+					{{ form|crispy }}
+				</form>
 			</div>
-			<div class="modal-footer">
-				<input type="submit" value="Update" name="submit" class="btn btn-success" form="staff_update_form">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+			<div class="modal-footer border_color_white">
+				<div class="col-12 d-flex justify-content-end">
+					<input type="submit" value="Update" name="submit" form="staff_update_form"
+						class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+					<button class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2"
+						data-dismiss="modal" type="button">Cancel</button>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(document).ready(function () {
+		var $window = $(window), $html = $('html');
+
+		$window.resize(function resize() {
+			if ($window.width() > 1000) {
+				return $("#tab_res").css("width", "42%");
+			}
+			else if ($window.width() > 767) {
+				return $("#tab_res").css("width", "65%");
+			}
+			else {
+				$("#tab_res").css("width", "95%");
+			}
+		}).trigger('resize');
+
 		{% if form.errors %}
-			$('#staff_signup').modal()
+		$('#staff_signup').modal()
 		{% endif %}
+
 	});
 </script>
 

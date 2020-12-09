@@ -41,9 +41,26 @@ class CreateStaffForm(forms.ModelForm):
 
 
 class EditStaffForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Username', 'class': 'input_cust'}))
+    first_name = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'First name', 'class': 'input_cust'}))
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Last name', 'class': 'input_cust'}))
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={'placeholder': 'abc@example.com', 'class': 'input_cust'}))
+
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].label = "First Name"
+        self.fields['last_name'].label = "Last Name"
+        self.fields['first_name'].required = False
+        self.fields['email'].required = False
+        self.fields['last_name'].required = False
 
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()

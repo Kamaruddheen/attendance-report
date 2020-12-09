@@ -38,7 +38,7 @@
 		<div class="card border_white p-2 p-md-3" id="login_view">
 			<div class="card-body">
 				<div class="text-center text_d_blue arvo" style="margin-bottom: 35px;">
-					<h3 class="m-0">Login Page</h3>
+					<h3 class="m-0">Login&nbsp;Page</h3>
 				</div>
 				<form class="form" method="POST" class="needs-validation" novalidate>
 					{% csrf_token %}
@@ -48,7 +48,7 @@
 							<a href="{% url 'password_reset' %}">Forget&nbsp;password&nbsp;?</a>
 						</div>
 						<button type="submit" name="submit" value="Login"
-							class="btn btn-cust neu_icon border_white text_d_blue align-self-center ml-auto">
+							class="btn btn-cust neu_icon border_white text-success align-self-center ml-auto">
 							Login&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home"
 								role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em"
 								height="1.2em" class="ml-md-1">
