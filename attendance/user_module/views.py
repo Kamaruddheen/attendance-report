@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+from django.http import HttpResponse, Http404
 
 from .forms import CreateStaffForm, EditStaffForm
-from .models import StaffModel
+from .models import StaffModel, User
 from .decorators import is_hod,is_hod_or_self
 
 # Create your views here.
@@ -44,3 +47,38 @@ def staffdetailview(request,id):
 		'form':myForm,
 	}
 	return render(request,'user_module/staff_detail.html',context=context)
+
+class MyAccountView(LoginRequiredMixin, View):
+
+	def get(self, request):
+
+		user = request.user
+		if user.email == "":
+			user.email = "NA"
+		if user.first_name == "":
+			user.first_name = "NA"
+		if user.last_name == "":
+			user.last_name = "NA"
+
+		user = {
+			"username" : user.username,
+			"email" : user.email,
+			"first_name" : user.first_name,
+			"last_name" : user.last_name
+		}
+		form = EditStaffForm(user)
+		context = {
+			"user" : user,
+			"form" : form
+		}
+		return render(request, 'user_module/my_account.html', context)
+
+class AccountEditView(LoginRequiredMixin, View):
+	def post(self, request, id):
+		if not id == request.user.id:
+			raise Http404("The request cannot be processed.")
+		user = get_object_or_404(User, id = id)
+		form = EditStaffForm(request.POST or None, instance = user)
+		if form.is_valid():
+		 	form.save()
+		return redirect("my_account", permanent=True)

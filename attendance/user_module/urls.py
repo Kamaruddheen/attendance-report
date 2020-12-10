@@ -17,4 +17,7 @@ urlpatterns = [
 	path('manage/staff/',managestaffview,name='manage_staff'),
 	path('manage/staff/<int:id>',staffdetailview,name='staff_detail'),
 
+	path('my_account/', MyAccountView.as_view(), name="my_account"),
+	path('my_account/edit/<int:id>', AccountEditView.as_view(), name="account_edit")
+
 ]

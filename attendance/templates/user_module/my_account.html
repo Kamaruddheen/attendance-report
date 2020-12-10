@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Welcome to my account page!!!</h1>
+    <ul>
+        <li>Username : {{user.username}}</li>
+        <li>Email : {{user.email}}</li>
+        <li>First name : {{user.first_name}}</li>
+        <li>Last name : {{user.last_name}}</li>
+    </ul>
+    <button type="button" data-toggle="modal" data-target="#edit-data" class="btn btn-primary">Edit</button>
+    <!-- The Modal -->
+    <div class="modal" id="edit-data">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="{% url 'account_edit' request.user.id %}">
+                    {% csrf_token %}
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">edit data</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    {{form}}
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <input type="submit" value="Save">
+                </form>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+{% endblock %}
