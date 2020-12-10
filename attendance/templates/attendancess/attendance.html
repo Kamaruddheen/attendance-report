@@ -1,61 +1,68 @@
 {% extends 'base.html' %}
 
+{% block title %}
+<title>SAMS | Attendance | Status of the Student</title>
+{% endblock %}
+
 {% block content %}
-    <h1> Welcome to attendance page!!!</h1>
-    <form action="." method="POST">
-        {% csrf_token %}
-        {% for student in students %}
-            <input class="present-status" name="{{student.username}}" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-on="Present" data-off="Absent">
-            <label>{{student.username}}</label><br><br>
-        {% endfor %}
-        <input type="button" id="confirm-modal-button" value="submit" data-toggle="modal" data-target="#confirm-modal">
+<h1 class="text_d_blue text-center arvo">Attendance</h1>
+<form action="." method="POST">
+    {% csrf_token %}
+    {% for student in students %}
+    <input class="present-status" name="{{student.username}}" type="checkbox" checked data-toggle="toggle"
+        data-onstyle="success" data-offstyle="danger" data-on="present" data-off="absent">
+    <label>{{student.username}}</label><br><br>
+    {% endfor %}
+    <input type="button" id="confirm-modal-button" value="Submit" data-toggle="modal" data-target="#confirm-modal"
+        class="btn border_white btn-cust neu_icon text-primary align-self-center ">
 
-        <!--modal-->
-        <div class="modal" id="confirm-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    
-                    <!--modal-body-->
-                    <div class="modal-body">
+    <!--modal-->
+    <div class="modal fade" id="confirm-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content border_white modal_box_shadow">
+                <div class="modal-header ml-1 text_d_blue border_color_white pb-1">
+                    <h3 class="modal-title capitalize">Please check attendance again</h3>
+                </div>
+                <div class="modal-body text_d_blue pl-4">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-success" value="post">
-                    </div>
-                    <!--/modal-body-->
-
+                </div>
+                <div class="modal-footer text_d_blue border_color_white py-2">
+                    <input type="submit" class="btn border_white btn-cust neu_icon text-success align-self-center ml-2"
+                        value="Post">
+                    <button type="button" class="btn border_white btn-cust neu_icon text-danger align-self-center mr-2"
+                        data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-        <!--/modal-->
-    </form>
+    </div>
+</form>
 
-    <script>
-        absentees = []
-        $(function() {
-            $('.present-status').change(function() {
-                if($(this).prop("checked") == false){
-                    absentees.push( $(this).attr('name') );
+<script>
+    absentees = []
+    $(function () {
+        $('.present-status').change(function () {
+            if ($(this).prop("checked") == false) {
+                absentees.push($(this).attr('name'));
+            }
+            else if ($(this).prop("checked") == true) {
+                index = absentees.indexOf($(this).attr('name'));
+                if (index > -1) {
+                    absentees.splice(index, 1);
                 }
-                else if($(this).prop("checked") == true){
-                    index = absentees.indexOf($(this).attr('name'));
-                    if(index > -1){
-                        absentees.splice(index, 1);
-                    }
-                }
-                console.log(absentees);
-            });
+            }
+            console.log(absentees);
         });
+    });
 
-        $(document).ready(function(){
-            $('#confirm-modal-button').on('click', function(){
-                string = "Absentees : "+absentees.length+"</br>";
-                for(i = 0; i < absentees.length ; i++){
-                    string += absentees[i] + "</br>"; 
-                }
-                $(".modal-body").html(string);
-            });
+    $(document).ready(function () {
+        $('#confirm-modal-button').on('click', function () {
+            string = "<strong>Absentees&nbsp;:</strong>&nbsp;<label class='h5 text-danger font-weight-bold'>" + absentees.length + "</label>";
+            for (i = 0; i < absentees.length; i++) {
+                string += "<h5 class='mb-1 pl-5'>" + absentees[i] + "</h5>";
+            }
+            $(".modal-body").html(string);
         });
-    </script>
+    });
+</script>
 {% endblock %}

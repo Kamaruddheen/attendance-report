@@ -89,6 +89,35 @@ body {
     }
 }
 
+.cust_date{
+    margin-top: 3px;
+	font-size: 1.1rem;
+    font-family: 'Karla', sans-serif;
+    transition: all 0.4s;
+	color: #062743 !important;
+	background-color: #daeaf6 !important;
+    border: 1px solid #c9d7e2;
+    border-color: #daeaf6 !important;
+	border-radius: 2rem !important;
+	box-shadow: inset 5px 5px 10px #c2d0db,
+		inset -5px -5px 10px #daeaf6;  
+
+    &:focus {
+        outline: none !important;
+        box-shadow: none !important;    
+    }
+
+    &:active {
+        outline: #c9d7e2 !important;
+    }
+
+    &:hover{
+        color: #062743;        
+        box-shadow: 5px 5px 10px #c2d0db, 
+             -5px -5px 10px #e5f6ff;
+    }
+}
+
 /* Main Content */
 
 .neu_icon{
@@ -267,6 +296,22 @@ body {
 .modal_box_shadow{
     background-color: #daeaf6;
 	border-radius: 2rem !important;
+}
+
+.card_box_shadow{
+    background-color: #daeaf6;
+	border-radius: 2rem !important;
+	box-shadow: 8px 8px 16px #aebbc5,
+			-8px -8px 16px #daeaf6;
+}
+
+.badge_box_shadow{
+    padding: 6px;
+    border: 1px solid #c9d7e2;
+    background-color: #daeaf6;
+    border-radius: 2rem !important;    
+	box-shadow: inset 1px 1px 3px #aebbc5,
+			inset -1px -1px 3px #daeaf6;
 }
 
 /* Table */
