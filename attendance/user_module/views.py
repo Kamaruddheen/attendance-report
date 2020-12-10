@@ -82,3 +82,12 @@ class AccountEditView(LoginRequiredMixin, View):
 		if form.is_valid():
 		 	form.save()
 		return redirect("my_account", permanent=True)
+
+class AllStaffView(LoginRequiredMixin, View):
+	def get(self, request):
+		staffs = StaffModel.objects.all()
+		context = {
+			'staffs' : staffs,
+		}
+		return render(request, 'user_module/all_staff.html', context=context)
+
