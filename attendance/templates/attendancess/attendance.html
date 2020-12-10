@@ -5,9 +5,57 @@
     <form action="." method="POST">
         {% csrf_token %}
         {% for student in students %}
-            <input name="{{student.username}}" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-on="Present" data-off="Absent">
+            <input class="present-status" name="{{student.username}}" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-on="Present" data-off="Absent">
             <label>{{student.username}}</label><br><br>
         {% endfor %}
-        <input type="submit" value="submit">
+        <input type="button" id="confirm-modal-button" value="submit" data-toggle="modal" data-target="#confirm-modal">
+
+        <!--modal-->
+        <div class="modal" id="confirm-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    
+                    <!--modal-body-->
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-success" value="post">
+                    </div>
+                    <!--/modal-body-->
+
+                </div>
+            </div>
+        </div>
+        <!--/modal-->
     </form>
+
+    <script>
+        absentees = []
+        $(function() {
+            $('.present-status').change(function() {
+                if($(this).prop("checked") == false){
+                    absentees.push( $(this).attr('name') );
+                }
+                else if($(this).prop("checked") == true){
+                    index = absentees.indexOf($(this).attr('name'));
+                    if(index > -1){
+                        absentees.splice(index, 1);
+                    }
+                }
+                console.log(absentees);
+            });
+        });
+
+        $(document).ready(function(){
+            $('#confirm-modal-button').on('click', function(){
+                string = "Absentees : "+absentees.length+"</br>";
+                for(i = 0; i < absentees.length ; i++){
+                    string += absentees[i] + "</br>"; 
+                }
+                $(".modal-body").html(string);
+            });
+        });
+    </script>
 {% endblock %}
