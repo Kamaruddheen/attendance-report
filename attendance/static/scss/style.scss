@@ -43,6 +43,9 @@ body {
     text-transform: capitalize;
 }
 
+.font_size_normal{
+    font-size: 1.2rem;
+}
 
 /* Customizing Bootstrap */
 
@@ -103,6 +106,12 @@ body {
 
 .max_95{
     max-width: 95%;
+}
+
+/* Border Radius */
+
+.img_border_radius{
+    border-radius: 1.2rem !important;
 }
 
 /* Left Side Nav Bar */
