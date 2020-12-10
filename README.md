@@ -31,6 +31,8 @@ Then, Go to: https://localhost:8000 or http://127.0.0.1:8000
 
     - username : priya_mam	
     - password : teststaff
+    - username : hema_mam
+    - password : staff1234
  - #### Student accounts
     - username : 18BCM552	
     - password : test4321
