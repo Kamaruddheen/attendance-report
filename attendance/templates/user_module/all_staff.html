@@ -5,21 +5,9 @@
             <div class="m-3">
                 <div style="border : 2px red solid">
                     <ul>
-                        {% if staff.user.username %}
-                            <li> Username : {{ staff.user.username }} </li>
-                        {% else %}
-                            <li> Username : NA </li>
-                        {% endif %}
-                        {% if staff.user.first_name %}
-                            <li> First name : {{ staff.user.first_name }} </li>
-                        {% else %}
-                            <li> First name : NA </li>
-                        {% endif %}
-                        {% if staff.user.email %}
-                            <li> Email : {{ staff.user.email }} </li>
-                        {% else %}
-                            <li> Email : NA </li>
-                        {% endif %}
+                        <li> Username : {{ staff.user.username | default:"NA" }} </li>
+                        <li> First name : {{ staff.user.first_name | default:"NA" }} </li>
+                        <li> Email : {{ staff.user.email | default:"NA" }} </li>
                     </ul>
                 </div>
             </div>
