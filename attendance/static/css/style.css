@@ -49,10 +49,6 @@ body {
   color: #062743;
 }
 
-.btn {
-  border-radius: 2rem !important;
-}
-
 /* Customizing Django */
 .asteriskField {
   color: red !important;
@@ -74,6 +70,7 @@ body {
   color: #062743;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
+  border-radius: 2rem !important;
 }
 
 .btn-cust:focus {

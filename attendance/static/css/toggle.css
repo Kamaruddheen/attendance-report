@@ -1,0 +1,71 @@
+/* Customizing Bootstrap for Toggle */
+.toggle {
+  border-radius: 1.5rem !important;
+  background-color: #daeaf6;
+  -webkit-box-shadow: 3px 3px 8px #b8b9be, -3px -3px 8px #daeaf6 !important;
+          box-shadow: 3px 3px 8px #b8b9be, -3px -3px 8px #daeaf6 !important;
+}
+
+.toggle.btn {
+  min-height: 1.8rem !important;
+}
+
+.toggle .toggle-group .btn {
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+
+.toggle .toggle-group .btn.toggle-handle {
+  border-radius: 1rem;
+  padding: 0.8500rem !important;
+  background-color: transparent;
+  border: 0;
+}
+
+.toggle .toggle-group .btn-success {
+  font-size: 1.1rem;
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+  color: #28a745 !important;
+  background-color: #daeaf6 !important;
+}
+
+.toggle .toggle-group .btn-success:hover {
+  background: transparent;
+}
+
+.toggle .toggle-group .btn-danger {
+  font-size: 1.1rem;
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+  color: #dc3545 !important;
+  background-color: #daeaf6 !important;
+}
+
+/* Hovering Effect */
+/* Present */
+.btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show > .btn-success.dropdown-toggle {
+  color: transparent;
+  background-color: transparent;
+  border-color: #1e7e34;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: transparent !important;
+  border-color: #1e7e34;
+}
+
+/* Absent */
+.btn-danger:not(:disabled):not(.disabled).active, .btn-danger:not(:disabled):not(.disabled):active, .show > .btn-danger.dropdown-toggle {
+  color: transparent;
+  background-color: transparent;
+  border-color: #bd2130;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: transparent !important;
+  border-color: #bd2130;
+}
+/*# sourceMappingURL=toggle.css.map */

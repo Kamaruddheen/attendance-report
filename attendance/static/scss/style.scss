@@ -54,7 +54,7 @@ body {
 }
 
 .btn{    
-    border-radius: 2rem !important;    
+        
 }
 
 /* Customizing Django */
@@ -78,6 +78,7 @@ body {
 .btn-cust{
     color: #062743;
     transition: all 0.4s;    
+    border-radius: 2rem !important;
 
     &:focus {
         outline: none !important;
