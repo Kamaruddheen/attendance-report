@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 import os
 
 from .forms import CreateSubjectForm
 from .models import SubjectModel
+from user_module.models import StaffModel
 
 def SubjectListView(request):
     sub_obj = SubjectModel.objects.all()
@@ -39,3 +44,36 @@ def SubjectCreateView(request):
 def SubjectDetailView(request,id):
 	context = {}
 	return render(request,'subject/subject_detail.html',context=context)
+
+class SubjectEditView(LoginRequiredMixin, View):
+    
+    def get(self, request, id):
+
+        subject = get_object_or_404(SubjectModel, id = id)
+        is_hod = StaffModel.objects.get(user = request.user).is_hod
+        if  is_hod or subject.classroom.tutor != request.user:
+            raise Http404("You are not allowed to view this page.")
+        
+        form = CreateSubjectForm(instance = subject)
+        context = {
+            "form" : form
+        }
+        return render(request, 'subject/subject_edit.html', context)
+
+    def post(self, request, id):
+
+        subject = get_object_or_404(SubjectModel, id = id)
+        is_hod = StaffModel.objects.get(user = request.user).is_hod
+        if  is_hod or subject.classroom.tutor != request.user:
+            raise Http404("You are not allowed to view this page.")
+
+        form = CreateSubjectForm(request.POST or None, instance = subject)
+        if form.is_valid():
+            form.save()
+            return redirect("subject:subject_list", permanent = True)
+        context = {
+            "form" : form
+        }
+        return render(request, "subject/subject_edit.html", context)
+
+
