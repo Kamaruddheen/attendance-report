@@ -111,6 +111,7 @@ class CheckAttendanceView(LoginRequiredMixin, View):
     def get(self, request):
 
         subject_id = request.GET.get('id')
+        subject = get_object_or_404(SubjectModel, pk=subject_id)
         date = request.GET.get('date')
 
         if subject_id is None or date is None:
@@ -128,6 +129,7 @@ class CheckAttendanceView(LoginRequiredMixin, View):
             attendance_id=attendance_id.id).order_by('rollno')
 
         context = {
-            "data": data
+            "data": data,
+            "subject": subject
         }
         return render(request, 'attendancess/check_attendance.html', context)
