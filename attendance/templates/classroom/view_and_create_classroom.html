@@ -4,8 +4,9 @@
 
 
 {% block title %}
-<title>SAMS</title>
+<title>SAMS | Classroom | View and Create</title>
 {% endblock %}
+
 {% block head %}
 <style>
     #delete-more-button,
@@ -19,13 +20,14 @@
     }
 </style>
 {% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row my-4">
         <div class="col-2">
             <button type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static"
-                class="btn btn-primary shadow-lg pl-3 pr-4" style="border-radius:30px">
-                <h4>+ <small style="font-weight:500"> Create</small></h4>
+                class="btn border_white btn-cust neu_icon text-success align-self-center">
+                Create
             </button>
         </div>
         <div class="col-8">
@@ -46,107 +48,95 @@
         </div>
     </div>
 
-    {% if all_classrooms|length == 0 %}
-    <div>
-        <h5>No classrooms created yet</h5>
-    </div>
-    {% else %}
+    {% if all_classrooms %}
     <div class="form-check m-3">
         <input type="checkbox" class="form-check-input" id="select-all">
         <label class="form-check-label" for="select-all">
             Select all
         </label>
     </div>
-
-    <div class="row row-cols-3">
+    <div class="row">
         <!--no of column in each row is three because of row-cols-3-->
         {% for class in all_classrooms %}
-        <div class="col my-3">
-            <div class="card cards">
+        <div class="card cards" style="width:19.5rem">
 
-                <img src="{% static 'img/img1.jpg' %}" style="height:400px">
-                <div class="card-img-overlay">
-                    <div class="card-body">
+            <img src="{% static 'img/img1.jpg' %}" style="height:400px">
+            <div class="card-img-overlay">
+                <div class="card-body">
 
-                        <div class="float-right">
-                            <input type="checkbox" class="form-check-input class-check" style="width:20px;height:20px">
-                        </div>
-
-                        <div>
-                            <h5>Tutor :</h5>
-                            <p>{{class.tutor}}</p>
-                        </div>
-
-                        <div>
-                            <h5>Course :</h5>
-                            <p>{{class.course}}</p>
-                        </div>
-
-                        <div>
-                            <h5>Year :</h5>
-                            <p>{{class.year}}</p>
-                        </div>
-
-                        <div>
-                            <h5>Section :</h5>
-                            <p>{{class.sec}}</p>
-                        </div>
-                        <button type="button" class="btn btn-danger float-right m-2">Delete</button>
-                        <a href="{% url 'classroom:editclass' class.id %}" class="btn btn-info">View</a>
+                    <div class="float-right">
+                        <input type="checkbox" class="form-check-input class-check" style="width:20px;height:20px">
                     </div>
+
+                    <div>
+                        <h5>Tutor :</h5>
+                        <p>{{class.tutor}}</p>
+                    </div>
+
+                    <div>
+                        <h5>Course :</h5>
+                        <p>{{class.course}}</p>
+                    </div>
+
+                    <div>
+                        <h5>Year :</h5>
+                        <p>{{class.year}}</p>
+                    </div>
+
+                    <div>
+                        <h5>Section :</h5>
+                        <p>{{class.sec}}</p>
+                    </div>
+                    <button type="button" class="btn btn-danger float-right m-2">Delete</button>
+                    <a href="{% url 'classroom:editclass' class.id %}" class="btn btn-info">View</a>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <div>
+        <h5>No classrooms created yet</h5>
+    </div>
     {% endif %}
 </div>
 
-<!--Modal to display create class form-->
-<div class="modal fade" id="create-class-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4>Create a class</h4>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{% url 'classroom:createclass' %}">
+<form class="form" method="POST" action="{% url 'classroom:createclass' %}" novalidate>
+    <!--Modal to display create class form-->
+    <div class="modal fade" id="create-class-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border_white modal_box_shadow">
+                <div class="modal-header ml-1 text_d_blue border_color_white">
+                    <h3 class="modal-title capitalize">Create&nbsp;a&nbsp;class</h3>
+                    <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
                     {% csrf_token %}
-                    <div class="form-group">
-                        <label for="course">Course Name<span class="text-danger">*</span></label>
-                        {{form.course}}
-                        <p class="text-danger errors">{{form.course.errors}}</p>
+                    {{ form|crispy }}
+                </div>
+                <div class="modal-footer border_color_white">
+                    <div class="col-12 d-flex justify-content-end">
+                        <input type="submit" value="Create" name="submit"
+                            class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+                        <a href="{% url 'classroom:createclass' %}"
+                            class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2">Cancel</a>
                     </div>
-                    <div class="form-group">
-                        <label for="year">Year<span class="text-danger">*</span></label>
-                        {{form.year}}
-                    </div>
-                    <div class="form-group">
-                        <label for="section">Section<span class="text-danger">*</span></label>
-                        {{form.sec}}
-                    </div>
-                    <div class="form-group">
-                        <label for="tutor">Tutor Name<span class="text-danger">*</span></label>
-                        {{form.tutor}}
-                    </div>
-                    <input type="submit" class="btn btn-success float-right mx-2">
-                    <a href="{% url 'classroom:createclass' %}" class="btn btn-secondary float-right">Cancel</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 <script>
     $(document).ready(function () {
         $("#delete-more").tooltip();
         $(".toast").toast({ delay: 2000 }).toast({ autohide: false }).toast('show');
 
-        var errors = "{{errors}}";
-        if (errors.length != 0) {
-            $("#create-class-modal").modal({ backdrop: 'static' });
-            $("#create-class-modal").modal('show');
-        }
+        {% if form.errors %}
+        $("#create-class-modal").modal({ backdrop: 'static' });
+        $("#create-class-modal").modal('show');
+        {% endif %}
+
         $(".class-check").change(function () {
             if (this.checked) {
                 $("#delete-more-button").prop("disabled", false);
