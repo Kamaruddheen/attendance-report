@@ -53,16 +53,8 @@ class MyAccountView(LoginRequiredMixin, View):
 	def get(self, request):
 
 		user = request.user
-
-		user = {
-			"username" : user.username,
-			"email" : user.email,
-			"first_name" : user.first_name,
-			"last_name" : user.last_name
-		}
-		form = EditStaffForm(user)
+		form = EditStaffForm(instance=user)
 		context = {
-			"user" : user,
 			"form" : form
 		}
 		return render(request, 'user_module/my_account.html', context)
