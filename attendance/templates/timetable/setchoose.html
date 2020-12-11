@@ -8,7 +8,7 @@
 
 {% block content %}
 <h5>You are in the classroom : <a href="{% url 'classroom:editclass' c_object.id %}">{{c_object}}</a> </h5>
-<form method="POST" action="{% url 'timetable:showsubjects' c_object %}">
+<form method="POST" action="{% url 'timetable:showsubjects' c_object.id %}">
     {% csrf_token %}
      <label for="set_choose">Choose the set for the timetable</label>
      {{t_set_choose.setchoose}}

@@ -2,7 +2,7 @@ from django.http import QueryDict
 from django.shortcuts import HttpResponse,redirect
 from django.shortcuts import render,get_object_or_404
 from .forms import TimetableForm,TimetablesetForm,Timetablesetchoose,CreatetimetableForm
-from .models import ClassroomModel,TimetableModel,TimetablesetModel
+from .models import ClassroomModel,TimetableModel,TimetablesetModel,SubjectModel
 # Create your views here.
 def createtimetable(request,id=None):
     c_object=get_object_or_404(ClassroomModel,id=id)
@@ -41,4 +41,4 @@ def showsubjects(request,id):
     #Subjects for the particular timetable
     setsubjects=TimetableModel.objects.filter(set_name__id=set_id)#subjects to be displayed as a timetable view in te form
     days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
-    return render(request,'timetable/showsubjects.html',{'set_id':set_id,'set_object':set_object,'days':days,'setsubjects':setsubjects})
+    return render(request,'timetable/showsubjects.html',{'set_id':set_id,'set_object':s_object,'days':days,'setsubjects':setsubjects})
