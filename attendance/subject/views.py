@@ -42,8 +42,11 @@ def SubjectCreateView(request):
 	return render(request,'subject/subject_create.html',context=context)
 
 def SubjectDetailView(request,id):
-	context = {}
-	return render(request,'subject/subject_detail.html',context=context)
+    subject = get_object_or_404(SubjectModel, id = id)
+    context = {
+        "subject" : subject
+    }
+    return render(request,'subject/subject_detail.html',context=context)
 
 class SubjectEditView(LoginRequiredMixin, View):
     
