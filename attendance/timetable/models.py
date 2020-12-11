@@ -15,7 +15,10 @@ class TimetablesetModel(models.Model):
 		db_table = 'set'
 		verbose_name = 'Set'
 		verbose_name_plural = 'Sets'
-
+	
+	def __str__(self):
+		return str(self.classroom) + "\n" +  "(" + str(self.from_date) + " - " + str(self.to_date) + ")"
+#foriegn key data are not string ;they belong to the particular model so we have to convert that to string to concatenate with the string 
 day_choices=(
     (1,'Monday'),
     (2,'Tuesday'),
@@ -34,8 +37,8 @@ hour_choices=(
 )
 
 class TimetableModel(models.Model):
-	hour = models.CharField(max_length=3,choices=hour_choices)
-	day = models.CharField(max_length=15,choices=day_choices)
+	hour = models.PositiveIntegerField(choices=hour_choices)
+	day = models.PositiveIntegerField(choices=day_choices)
 	subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE)
 	set_name = models.ForeignKey(TimetablesetModel,on_delete=models.CASCADE,help_text='Create a set if your set is not in the choice list')	
 	
@@ -43,3 +46,6 @@ class TimetableModel(models.Model):
 		db_table = 'timetable'
 		verbose_name = 'Timetable'
 		verbose_name_plural = 'Timetables'
+    
+	def __str__(self):
+		return self.subject.sub_name

@@ -1,5 +1,5 @@
 from django import forms
-from .models import TimetableModel
+from .models import TimetableModel,TimetablesetModel
 from subject.models import SubjectModel
 
 
@@ -23,3 +23,27 @@ class TimetableForm(forms.ModelForm):
         model=TimetableModel
         fields=('day','set_name')
 
+class TimetablesetForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.fields['from_date'].widget.attrs.update({'type':'date'})
+        self.fields['to_date'].widget.attrs.update({'type':'date'})
+    class Meta:
+        model=TimetablesetModel
+        fields=('name','from_date','to_date')
+
+class Timetablesetchoose(forms.Form):
+    setchoose=forms.ModelChoiceField(queryset=None)
+    def __init__(self,*args,**kwargs):
+        self.choice=kwargs.pop('c_object')
+        super().__init__(*args,**kwargs)
+        self.fields['setchoose']=forms.ModelChoiceField(queryset=TimetablesetModel.objects.filter(classroom=self.choice))
+
+class CreatetimetableForm(forms.Form):
+    def __init__(self,*args,**kwargs):
+        self.choice=kwargs.pop('s_list')
+        super().__init__(*args,**kwargs)
+        self.fields['classroom']=forms.ModelChoiceField(queryset=self.choice)
+    class Meta:
+        model=TimetableModel
+        fields="__all__"

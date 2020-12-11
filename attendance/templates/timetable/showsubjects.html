@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>SAMS</title>
+{% endblock %}
+    
+{% block content %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Days/Hour</td>
+                <th>I</td>
+                <th>II</td>
+                <th>III</td>
+                <th>IV</td>
+                <th>V</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in days %}
+            <tr>
+                <th> {{i}} </th>
+                
+                <td id="{{forloop.counter}}1">{% for j in setsubjects %}
+                    {% if j.day == forloop.parentloop.counter and j.hour == 1 %}
+                    <p>{{j.subject.sub_name}}</p>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+                <td id="{{forloop.counter}}2">
+                    {% for j in setsubjects %}
+                    {% if j.day == forloop.parentloop.counter and j.hour == 2 %}
+                    <p>{{j.subject.sub_name}}</p>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+                <td id="{{forloop.counter}}3">{% for j in setsubjects %}
+                    {% if j.day == forloop.parentloop.counter and j.hour == 3 %}
+                    <p>{{j.subject.sub_name}}</p>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+                <td id="{{forloop.counter}}4">{% for j in setsubjects %}
+                    {% if j.day == forloop.parentloop.counter and j.hour == 4 %}
+                    <p>{{j.subject.sub_name}}</p>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+                <td id="{{forloop.counter}}5">{% for j in setsubjects %}
+                    {% if j.day == forloop.parentloop.counter and j.hour == 5 %}
+                    <p>{{j.subject.sub_name}}</p>
+                    {% endif %}
+                    {% endfor %}
+                </td> 
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Create/Edit a subject</h4>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("td").click(function(){
+               var a=$(this).find('p')
+               if(a.length>0){
+                   a=$(this).attr('id')
+                   var day=a[0]
+                   var hour=a[0]
+
+               }
+            })
+        })
+    </script>
+{% endblock %}
+    
