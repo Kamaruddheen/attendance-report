@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
 {% block content %}
     <h1>Welcome to my account page!!!</h1>
     <ul>
         <li>Username : {{user.username}}</li>
-        <li>Email : {{user.email}}</li>
-        <li>First name : {{user.first_name}}</li>
-        <li>Last name : {{user.last_name}}</li>
+        <li>Email : {{user.email|default:'NA'}}</li>
+        <li>First name : {{user.first_name|default:'NA'}}</li>
+        <li>Last name : {{user.last_name|default:'NA'}}</li>
     </ul>
     <button type="button" data-toggle="modal" data-target="#edit-data" class="btn btn-primary">Edit</button>
     <!-- The Modal -->
@@ -23,7 +26,7 @@
         
                 <!-- Modal body -->
                 <div class="modal-body">
-                    {{form}}
+                    {{form|crispy}}
                 </div>
         
                 <!-- Modal footer -->

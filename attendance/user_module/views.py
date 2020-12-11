@@ -53,12 +53,6 @@ class MyAccountView(LoginRequiredMixin, View):
 	def get(self, request):
 
 		user = request.user
-		if user.email == "":
-			user.email = "NA"
-		if user.first_name == "":
-			user.first_name = "NA"
-		if user.last_name == "":
-			user.last_name = "NA"
 
 		user = {
 			"username" : user.username,
