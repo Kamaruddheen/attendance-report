@@ -37,8 +37,8 @@ hour_choices=(
 )
 
 class TimetableModel(models.Model):
-	hour = models.PositiveIntegerField(choices=hour_choices)
-	day = models.PositiveIntegerField(choices=day_choices)
+	hour = models.PositiveIntegerField(max_length=10,choices=hour_choices)
+	day = models.PositiveIntegerField(max_length=10,choices=day_choices)
 	subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE)
 	set_name = models.ForeignKey(TimetablesetModel,on_delete=models.CASCADE,help_text='Create a set if your set is not in the choice list')	
 	
