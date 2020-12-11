@@ -22,6 +22,17 @@ class ClassesView(LoginRequiredMixin, View):
             date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         day = date.strftime("%A")
 
+        days = {
+            "Monday" : 1,
+            "Tuesday" : 2,
+            "Wednesday" : 3,
+            "Thursday" : 4,
+            "Friday" : 5,
+            "Saturday" : 6
+        }
+        day = days[day]
+        print(day)
+
         # Get all the active time tables and extract the classes
         active_sets = []
         time_table_sets = TimetablesetModel.objects.all()
