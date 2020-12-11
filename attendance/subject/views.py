@@ -76,4 +76,16 @@ class SubjectEditView(LoginRequiredMixin, View):
         }
         return render(request, "subject/subject_edit.html", context)
 
+class SubjectDeleteView(LoginRequiredMixin, View):
+    def get(self, request, id):
+        subject = get_object_or_404(SubjectModel, id = id)
+        is_hod = StaffModel.objects.get(user = request.user).is_hod
+        if  is_hod or subject.classroom.tutor != request.user:
+            raise Http404("You are not allowed to view this page.")
+
+        subject.delete()
+        return redirect("subject:subject_list", permanent = True)
+        
+
+
 
