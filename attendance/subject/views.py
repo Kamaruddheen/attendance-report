@@ -32,14 +32,14 @@ def SubjectListView(request):
     return render(request, 'subject/subject_list.html', context=context)
 
 def SubjectCreateView(request):
-	myForm = CreateSubjectForm(request.POST or None)
-	if myForm.is_valid():
-		myForm.save()
-		return redirect('subject:subject_list')
-	context = {
+    myForm = CreateSubjectForm(request.POST or None, staff_id = request.user.id)
+    if myForm.is_valid():
+	    myForm.save()
+	    return redirect('subject:subject_list')
+    context = {
 		'form':myForm,
 	}
-	return render(request,'subject/subject_create.html',context=context)
+    return render(request,'subject/subject_create.html',context=context)
 
 def SubjectDetailView(request,id):
     subject = get_object_or_404(SubjectModel, id = id)

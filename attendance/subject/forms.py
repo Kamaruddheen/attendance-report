@@ -1,8 +1,10 @@
 from django import forms
+from django.shortcuts import get_object_or_404
 
 from .models import SubjectModel
 from classroom.models import ClassroomModel
 from user_module.models import User
+from user_module.models import StaffModel
 
 sub_types = (
     ('reg', 'Regular'), ('sel', 'Selective')
@@ -10,6 +12,17 @@ sub_types = (
 
 
 class CreateSubjectForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        staff = get_object_or_404(StaffModel, user_id = kwargs.pop('staff_id'))
+        if staff.is_hod:
+            queryset = ClassroomModel.objects.all()
+        else:
+            queryset = ClassroomModel.objects.filter(tutor_id = staff.user.id)
+        super(CreateSubjectForm, self).__init__(*args, **kwargs)
+        self.fields['classroom'].queryset = queryset
+        
+
     hour_name = forms.CharField(widget=forms.TextInput(
         attrs={'placeholder': 'SE, PCD, Lang, etc...', 'class': 'input_cust col-md-6'}),
         label="Hour Name")
@@ -23,7 +36,7 @@ class CreateSubjectForm(forms.ModelForm):
         attrs={'class': 'input_cust'}), queryset=User.objects.filter(user_type=2),
         label="Handled By")
     classroom = forms.ModelChoiceField(widget=forms.Select(
-        attrs={'class': 'input_cust'}), queryset=ClassroomModel.objects.all())
+        attrs={'class': 'input_cust'}), queryset=ClassroomModel.objects.none())
 
     class Meta:
         model = SubjectModel
