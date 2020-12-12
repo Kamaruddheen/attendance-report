@@ -32,7 +32,9 @@ def SubjectListView(request):
     return render(request, 'subject/subject_list.html', context=context)
 
 def SubjectCreateView(request):
-    myForm = CreateSubjectForm(request.POST or None, staff_id = request.user.id)
+    
+    staff = get_object_or_404(StaffModel, user_id = request.user.id)
+    myForm = CreateSubjectForm(request.POST or None, staff = staff)
     if myForm.is_valid():
 	    myForm.save()
 	    return redirect('subject:subject_list')
@@ -53,11 +55,11 @@ class SubjectEditView(LoginRequiredMixin, View):
     def get(self, request, id):
 
         subject = get_object_or_404(SubjectModel, id = id)
-        is_hod = StaffModel.objects.get(user = request.user).is_hod
-        if  is_hod or subject.classroom.tutor != request.user:
+        staff = StaffModel.objects.get(user = request.user)
+        if  staff.is_hod or subject.classroom.tutor != request.user:
             raise Http404("You are not allowed to view this page.")
         
-        form = CreateSubjectForm(instance = subject)
+        form = CreateSubjectForm(instance = subject, staff = staff)
         context = {
             "form" : form
         }
@@ -66,11 +68,11 @@ class SubjectEditView(LoginRequiredMixin, View):
     def post(self, request, id):
 
         subject = get_object_or_404(SubjectModel, id = id)
-        is_hod = StaffModel.objects.get(user = request.user).is_hod
-        if  is_hod or subject.classroom.tutor != request.user:
+        staff = StaffModel.objects.get(user = request.user)
+        if  staff.is_hod or subject.classroom.tutor != request.user:
             raise Http404("You are not allowed to view this page.")
 
-        form = CreateSubjectForm(request.POST or None, instance = subject)
+        form = CreateSubjectForm(request.POST or None, instance = subject, staff = staff)
         if form.is_valid():
             form.save()
             return redirect("subject:subject_list", permanent = True)

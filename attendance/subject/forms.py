@@ -14,7 +14,7 @@ sub_types = (
 class CreateSubjectForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
-        staff = get_object_or_404(StaffModel, user_id = kwargs.pop('staff_id'))
+        staff = kwargs.pop('staff')
         if staff.is_hod:
             queryset = ClassroomModel.objects.all()
         else:
