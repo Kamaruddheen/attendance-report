@@ -14,5 +14,6 @@
      {{t_set_choose.setchoose}}
      <input type="submit" value="Submit">
 </form>
-<a href="{% url 'timetable:createtimetableset' c_object.id %}">Create a new set</a>
+<a href="{% url 'timetable:createtimetableset' c_object.id %}">{{t_set_choose.setchoose.help_text}}</a>
 {% endblock %}
+<!--Guys don't display it as a form just display it as a field so that it won't display help_text twice as i have used outside of the form-->

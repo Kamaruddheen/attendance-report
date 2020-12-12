@@ -21,7 +21,9 @@ class SubjectModel(models.Model):
         limit_choices_to={'user_type': 3},
         related_name="students",
         blank=True) #null=True is not required for manytomany field, just blank will do
-
+    
+    def __str__(self):
+        return self.sub_name
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -30,4 +32,6 @@ class SubjectModel(models.Model):
         db_table = 'subject'
         verbose_name = 'Subject'
         verbose_name_plural = 'Subjects'
+
+    
 

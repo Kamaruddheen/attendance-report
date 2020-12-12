@@ -34,11 +34,35 @@ def setchoose(request,id):
 
 def showsubjects(request,id):
     set_id=request.POST.get('setchoose')#set id for the form
+    set_object=get_object_or_404(TimetablesetModel,id=set_id)
     #classroom subjects
     s_list=SubjectModel.objects.filter(classroom__id=id)
     #sent to form to choose the list of choices to be shown
-    s_object=CreatetimetableForm(request.POST or None,s_list=s_list)#This is the place where form object is created
+    t_form_object=CreatetimetableForm(initial={'set_name':set_id},s_list=s_list)#This is the place where form object is created
     #Subjects for the particular timetable
-    setsubjects=TimetableModel.objects.filter(set_name__id=set_id)#subjects to be displayed as a timetable view in te form
     days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
-    return render(request,'timetable/showsubjects.html',{'set_id':set_id,'set_object':s_object,'days':days,'setsubjects':setsubjects})
+    all_subjects=[]
+    for i in range(1,7):
+        setsubjects=TimetableModel.objects.filter(set_name__id=set_id,day=i).order_by('hour')
+        j=1
+        subject_list=[]
+        if len(setsubjects)==0:
+            all_subjects.append(['Free','Free','Free','Free','Free'])
+            continue
+        for s_in_t_object in setsubjects:
+            while j<6:
+                if s_in_t_object.hour==j:
+                    subject_list.append(s_in_t_object)
+                    j+=1
+                    break
+                else:
+                    subject_list.append('Free')
+                    j+=1
+        else:
+            while j<6:
+                subject_list.append('Free')
+                j+=1
+        all_subjects.append(subject_list)
+    all_subjects=zip(all_subjects,days)
+    
+    return render(request,'timetable/showsubjects.html',{'set_id':set_id,'t_form_object':t_form_object,'days':days,'all_subjects':all_subjects})

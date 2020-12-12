@@ -38,12 +38,13 @@ class Timetablesetchoose(forms.Form):
         self.choice=kwargs.pop('c_object')
         super().__init__(*args,**kwargs)
         self.fields['setchoose']=forms.ModelChoiceField(queryset=TimetablesetModel.objects.filter(classroom=self.choice))
+        self.fields['setchoose'].help_text='Create a new set if your set is not available in the choices'
 
-class CreatetimetableForm(forms.Form):
+class CreatetimetableForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         self.choice=kwargs.pop('s_list')
         super().__init__(*args,**kwargs)
-        self.fields['classroom']=forms.ModelChoiceField(queryset=self.choice)
+        self.fields['subject']=forms.ModelChoiceField(queryset=self.choice)
     class Meta:
         model=TimetableModel
-        fields="__all__"
+        fields=['set_name','day','hour','subject']
