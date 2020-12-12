@@ -115,6 +115,7 @@
 
         $('#confirm-modal-button').on('click', function () {
             string = "<strong>Absentees&nbsp;:</strong>&nbsp;<label class='h5 text-danger font-weight-bold'>" + absentees.length + "</label>";
+            absentees.sort();
             for (i = 0; i < absentees.length; i++) {
                 string += "<h5 class='mb-1 pl-5'>" + absentees[i] + "</h5>";
             }
