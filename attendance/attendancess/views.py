@@ -146,6 +146,7 @@ class CheckAttendanceView(LoginRequiredMixin, View):
 
         context = {
             "data": data,
-            "date": date
+            "date": date,
+            "attendance_id": attendance_id
         }
         return render(request, 'attendancess/check_attendance.html', context)
