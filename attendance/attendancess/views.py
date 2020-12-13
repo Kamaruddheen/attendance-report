@@ -32,7 +32,6 @@ class ClassesView(LoginRequiredMixin, View):
             "Saturday": 6
         }
         day = days[day]
-        print(day)
 
         # Get all the active time tables and extract the classes
         active_sets = []
@@ -74,10 +73,18 @@ class AttendanceView(LoginRequiredMixin, View):
             return render(request, "error.html", context)
 
         students = subject.students.all().order_by("username")
+        date = request.session['date']
 
+        # Convert date from "yyyy-mm-dd" format to "dd-mm-yyyy" format.
+        date = date.split('-')
+        date.reverse()
+        date = '-'.join(date)
+        
+        
         context = {
             'students': students,
-            'subject': subject
+            'subject': subject,
+            'date' : date
         }
         return render(request, 'attendancess/attendance.html', context)
 
