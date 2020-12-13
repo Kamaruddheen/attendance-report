@@ -77,7 +77,7 @@ class AttendanceView(LoginRequiredMixin, View):
         # Convert date from "yyyy-mm-dd" format to "dd-mm-yyyy" format.
         date = request.session['date']
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-        date = date.strftime("%d-%b-%Y")
+        date = date.strftime("%d-%m-%Y")
 
         context = {
             'students': students,
@@ -137,10 +137,7 @@ class CheckAttendanceView(LoginRequiredMixin, View):
         attendance_id = get_object_or_404(
             AttendanceIdModel, subject__id=subject_id, date=date)
 
-        # Convert date from "yyyy-mm-dd" format to "dd-mm-yyyy" format.
-        
-        date = attendance_id.date.strftime("%d-%b-%Y")
-        print(date)
+        date = attendance_id.date.strftime("%d-%m-%Y")
 
         # Checking whether the subject id is belonging to the current user
         if not attendance_id.subject.handled_by == request.user:
