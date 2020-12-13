@@ -137,6 +137,11 @@ class CheckAttendanceView(LoginRequiredMixin, View):
         attendance_id = get_object_or_404(
             AttendanceIdModel, subject__id=subject_id, date=date)
 
+        # Convert date from "yyyy-mm-dd" format to "dd-mm-yyyy" format.
+        
+        date = attendance_id.date.strftime("%d-%b-%Y")
+        print(date)
+
         # Checking whether the subject id is belonging to the current user
         if not attendance_id.subject.handled_by == request.user:
             raise Http404("You are not allowed to view this page.")
@@ -146,6 +151,7 @@ class CheckAttendanceView(LoginRequiredMixin, View):
 
         context = {
             "data": data,
-            "attendance_id": attendance_id
+            "attendance_id": attendance_id,
+            "date" : date
         }
         return render(request, 'attendancess/check_attendance.html', context)
