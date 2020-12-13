@@ -23,13 +23,13 @@ class ClassesView(LoginRequiredMixin, View):
         day = date.strftime("%A")
 
         days = {
-            "Sunday" : 0,
-            "Monday" : 1,
-            "Tuesday" : 2,
-            "Wednesday" : 3,
-            "Thursday" : 4,
-            "Friday" : 5,
-            "Saturday" : 6
+            "Sunday": 0,
+            "Monday": 1,
+            "Tuesday": 2,
+            "Wednesday": 3,
+            "Thursday": 4,
+            "Friday": 5,
+            "Saturday": 6
         }
         day = days[day]
         print(day)
@@ -123,7 +123,6 @@ class CheckAttendanceView(LoginRequiredMixin, View):
     def get(self, request):
 
         subject_id = request.GET.get('id')
-        subject = get_object_or_404(SubjectModel, pk=subject_id)
         date = request.GET.get('date')
 
         if subject_id is None or date is None:
@@ -142,6 +141,6 @@ class CheckAttendanceView(LoginRequiredMixin, View):
 
         context = {
             "data": data,
-            "subject": subject
+            "attendance_id": attendance_id
         }
         return render(request, 'attendancess/check_attendance.html', context)
