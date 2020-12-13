@@ -9,8 +9,6 @@ from subject.models import SubjectModel
 from timetable.models import TimetablesetModel, TimetableModel
 from attendancess.models import AttendanceModel, AttendanceIdModel
 
-# Create your views here.
-
 
 class ClassesView(LoginRequiredMixin, View):
     def get(self, request):
@@ -82,7 +80,7 @@ class AttendanceView(LoginRequiredMixin, View):
         context = {
             'students': students,
             'subject': subject,
-            'date' : date
+            'date': date
         }
         return render(request, 'attendancess/attendance.html', context)
 
@@ -148,7 +146,6 @@ class CheckAttendanceView(LoginRequiredMixin, View):
 
         context = {
             "data": data,
-            "attendance_id": attendance_id,
-            "date" : date
+            "date": date
         }
         return render(request, 'attendancess/check_attendance.html', context)
