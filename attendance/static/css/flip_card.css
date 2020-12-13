@@ -1,0 +1,64 @@
+/* Rotating Card */
+.flip-card {
+  background-color: #daeaf6 !important;
+  width: 18.5rem;
+  min-height: 21rem;
+  max-height: 25rem;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+.card {
+  background-color: #daeaf6 !important;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  -webkit-transition: -webkit-transform 0.7s cubic-bezier(0.34, 1.45, 0.7, 1) !important;
+  transition: -webkit-transform 0.7s cubic-bezier(0.34, 1.45, 0.7, 1) !important;
+  transition: transform 0.7s cubic-bezier(0.34, 1.45, 0.7, 1) !important;
+  transition: transform 0.7s cubic-bezier(0.34, 1.45, 0.7, 1), -webkit-transform 0.7s cubic-bezier(0.34, 1.45, 0.7, 1) !important;
+  -webkit-transform-style: preserve-3d !important;
+          transform-style: preserve-3d !important;
+}
+
+.flip-card:hover .card {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background-color: #daeaf6;
+  border-radius: 2rem !important;
+  -webkit-box-shadow: 8px 8px 16px #aebbc5, -8px -8px 16px #daeaf6;
+          box-shadow: 8px 8px 16px #aebbc5, -8px -8px 16px #daeaf6;
+  color: #062743;
+  cursor: pointer;
+}
+
+.card-front {
+  min-height: 21rem;
+  max-height: 24rem;
+  border: 1px solid #c9d7e2;
+}
+
+.card-back {
+  height: 100%;
+  margin-bottom: 15px;
+  border: 2px solid #c9d7e2;
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+
+/* Selected classroom */
+.ui-selected {
+  background-color: #c0daf0;
+}
+
+.ui-selecting {
+  background-color: #c0daf0;
+}
+/*# sourceMappingURL=flip_card.css.map */
