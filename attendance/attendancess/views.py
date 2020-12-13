@@ -73,14 +73,12 @@ class AttendanceView(LoginRequiredMixin, View):
             return render(request, "error.html", context)
 
         students = subject.students.all().order_by("username")
-        date = request.session['date']
 
         # Convert date from "yyyy-mm-dd" format to "dd-mm-yyyy" format.
-        date = date.split('-')
-        date.reverse()
-        date = '-'.join(date)
-        
-        
+        date = request.session['date']
+        date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        date = date.strftime("%d-%b-%Y")
+
         context = {
             'students': students,
             'subject': subject,
