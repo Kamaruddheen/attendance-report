@@ -48,4 +48,4 @@ class TimetableModel(models.Model):
 		verbose_name_plural = 'Timetables'
     
 	def __str__(self):
-		return str(self.id)+' '+str(self.subject.id)+' '+self.subject.hour_name
+		return self.subject.hour_name

@@ -8,7 +8,8 @@
 
 {% block content %}
 <h5>You are in the classroom : <a href="{% url 'classroom:editclass' c_object.id %}">{{c_object}}</a> </h5>
-<form method="POST" action="#">
+<form method="POST" action="{% url 'timetable:createtimetable' c_object.id set_id %}">
+     {% csrf_token %}
      <div class="row mb-4">
           <div class="col-2 offset-2">
                <label for="set_name" class="float-right">Set name :</label>
@@ -73,7 +74,17 @@
      <div class="row">
           <div class="col-8">
                <input type="submit" class="btn btn-success float-right" value="Save and continue">
+               <a href="{% url 'timetable:setchoose' c_object.id %}" class="btn btn-danger">Back</a>
           </div>
      </div>
 </form>
+
+<script>
+     $(document).ready(function(){
+          $("#set_name").prop('disabled',true);
+          $("form").on('submit',function(){
+               $("#set_name").prop('disabled',false);
+          });
+     })
+</script>
 {% endblock %}
