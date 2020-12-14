@@ -2,12 +2,18 @@
 {% load static %}
 
 {% block title %}
-<title>SAMS | Subjects</title>
+<title>SAMS | List of Subjects</title>
 {% endblock %}
 
 {% block content %}
 <div class="text-center text_d_blue arvo my-4 mt-md-0 mb-md-4">
-	<h3 class="m-0">Subject&nbsp;List&nbsp;View</h3>
+	<h3 class="m-0">Subjects</h3>
+</div>
+<div class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 ml-md-3 ml-lg-5">
+	<a href="{% url 'subject:create_subject' %}" type="submit"
+		class="btn border_white btn-cust neu_icon text-primary align-self-center">
+		Create Subject
+	</a>
 </div>
 
 <article class="row d-flex justify-content-center mx-0">
@@ -43,9 +49,9 @@
 			</h6>
 		</div>
 	</section>
-	{% if request.user.is_hod or sub.classroom.tutor == request.user %}
-		<a href="{% url 'subject:edit_subject' sub.id %}">Edit</a>
-		<a href="{% url 'subject:delete_subject' sub.id %}">Delete</a>
+	{% if request.user.staffmodel.is_hod or sub.classroom.tutor == request.user %}
+	<a href="{% url 'subject:edit_subject' sub.id %}">Edit</a>
+	<a href="{% url 'subject:delete_subject' sub.id %}">Delete</a>
 	{% endif %}
 	{% endfor %}
 </article>
