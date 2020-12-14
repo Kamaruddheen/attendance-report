@@ -3,18 +3,8 @@ from .models import User
 
 
 class CreateStaffForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Username', 'class': 'input_cust'}))
-    first_name = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'First name', 'class': 'input_cust'}))
-    last_name = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Last name', 'class': 'input_cust'}))
-    email = forms.EmailField(widget=forms.EmailInput(
-        attrs={'placeholder': 'abc@example.com', 'class': 'input_cust'}))
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': 'Enter Password', 'class': 'input_cust'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': 'Confirm Password', 'class': 'input_cust border_white'}))
+        attrs={'placeholder': 'Confirm Password', 'class': 'input_cust border_white'}), label="Confirm Password")
 
     class Meta:
         model = User
@@ -23,11 +13,19 @@ class CreateStaffForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {'placeholder': 'Username', 'class': 'input_cust capitalize', 'autocomplete': 'new-password'})
+        self.fields['first_name'].widget.attrs.update(
+            {'placeholder': 'First name', 'class': 'input_cust capitalize'})
+        self.fields['last_name'].widget.attrs.update(
+            {'placeholder': 'Last name', 'class': 'input_cust capitalize'})
+        self.fields['email'].widget.attrs.update(
+            {'placeholder': 'eg..abc@example.com', 'class': 'input_cust'})
+        self.fields['password'].widget.attrs.update(
+            {'placeholder': 'Enter Password', 'class': 'input_cust'})
         self.fields['first_name'].label = "First Name"
         self.fields['last_name'].label = "Last Name"
-        self.fields['first_name'].required = False
-        self.fields['email'].required = False
-        self.fields['last_name'].required = False
+        self.fields['email'].label = "Email Address"
 
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()
@@ -41,14 +39,6 @@ class CreateStaffForm(forms.ModelForm):
 
 
 class EditStaffForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Username', 'class': 'input_cust'}))
-    first_name = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'First name', 'class': 'input_cust'}))
-    last_name = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Last name', 'class': 'input_cust'}))
-    email = forms.EmailField(widget=forms.EmailInput(
-        attrs={'placeholder': 'abc@example.com', 'class': 'input_cust'}))
 
     class Meta:
         model = User
@@ -56,11 +46,17 @@ class EditStaffForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {'placeholder': 'Username', 'class': 'input_cust capitalize'})
+        self.fields['first_name'].widget.attrs.update(
+            {'placeholder': 'First name', 'class': 'input_cust capitalize'})
+        self.fields['last_name'].widget.attrs.update(
+            {'placeholder': 'Last name', 'class': 'input_cust capitalize'})
+        self.fields['email'].widget.attrs.update(
+            {'placeholder': 'eg..abc@example.com', 'class': 'input_cust'})
         self.fields['first_name'].label = "First Name"
         self.fields['last_name'].label = "Last Name"
-        self.fields['first_name'].required = False
-        self.fields['email'].required = False
-        self.fields['last_name'].required = False
+        self.fields['email'].label = "Email Address"
 
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()
