@@ -9,6 +9,7 @@ from .models import ClassroomModel
 import csv, io, json
 from django.http import JsonResponse
 from user_module.models import User
+from user_module.decorators import *
 
 
 def CreateClass(request):
@@ -61,6 +62,7 @@ def editclass(request, id):
     }
     return render(request, 'classroom/edit_classroom.html', context=context)
 
+@is_staff
 def ManageStudents(request,id):
     class_obj = get_object_or_404(ClassroomModel,id=id)
     if request.method == "POST":
@@ -85,7 +87,8 @@ def ManageStudents(request,id):
     }
     return render(request,'classroom/manage_students.html',context=context)
 
-def ajax_update_student(request):
+@is_hod_or_tutor
+def ajax_update_student(request,id):
     data = {"is_working":True}
     if request.method == "POST" and request.is_ajax():
         id = request.POST.get('obj[id]',None)
@@ -125,6 +128,7 @@ def ajax_update_student(request):
     response.status_code = 404
     return response
 
+@is_hod_or_tutor
 def AddStudents(request,id):
     class_obj = get_object_or_404(ClassroomModel,id=id)
     csv_form = AddStudentCSVForm()

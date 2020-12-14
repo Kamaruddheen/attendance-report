@@ -22,7 +22,9 @@
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Email</th>
+				{% if request.user.staffmodel.is_hod or class_obj.tutor == request.user %}
 				<th colspan="2">Options</th>
+				{% endif %}
 			</tr>
 			<tr v-for="(s,index) in student">
 				<td>
@@ -45,6 +47,7 @@
 					<input v-else type="text" name="email" class="form-control" v-model="s.email" v-bind:class="{'is-invalid': s.email_error}" v-bind:disabled="!s.edit">
 					<div class="invalid-feedback">[[ s.email_error_msg ]]</div>
 				</td>
+				{% if request.user.staffmodel.is_hod or class_obj.tutor == request.user %}
 				<td>
 					<button class="btn btn-success" v-bind:key="s.id" v-on:click="ajax_update(index)" v-if="s.edit">Update</button>
 					<button class="btn btn-success" v-bind:key="s.id" v-on:click="toggle_edit(index)" v-else>Edit</button>
@@ -76,6 +79,7 @@
 						</div>
 					</div>
 				</td>
+				{% endif %}
 			</tr>
 		</table>
 	</div>
@@ -100,7 +104,7 @@
 				},
 				ajax_update: function(index) {
 					$.ajax({
-						url: "{% url 'classroom:update_student' %}",
+						url: "{% url 'classroom:update_student' class_obj.id %}",
 						type: "POST",
 						headers: {'X-CSRFToken': '{{ csrf_token }}'},
 						data: {
