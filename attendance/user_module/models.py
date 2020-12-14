@@ -9,9 +9,11 @@ from django.conf import settings
 class User(AbstractUser):
 	user_type_choice = ((1,'Admin'),(2,'Staff'),(3,'Student'))
 	user_type = models.PositiveSmallIntegerField(choices=user_type_choice)
+	email = models.EmailField(unique=True)
+	first_name = models.CharField(max_length=50,null=True,blank=False)
 
 	#required during createsuperuser command
-	REQUIRED_FIELDS = ['user_type']
+	REQUIRED_FIELDS = ['user_type','email']
 
 class StaffModel(models.Model):
 	user = models.OneToOneField(

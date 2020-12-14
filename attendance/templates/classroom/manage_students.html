@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<section class="container">
+	<h2 class="text-center">Manage Students</h2>
+	<a class="btn btn-primary" href="{% url 'classroom:add_students' class_obj.id %}">Add Students</a>
+
+	<article class="container my-3" id="app">
+		<div class="table-responsive">
+		<table class="table">
+			<tr>
+				<th>Roll</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th colspan="2">Options</th>
+			</tr>
+			<tr v-for="(s,index) in student">
+				<td>
+					<span v-if="!s.edit">[[ s.username ]]</span>
+					<input v-else type="text" name="username" class="form-control" v-model="s.username" v-bind:class="{'is-invalid': s.username_error}" v-bind:disabled="!s.edit">
+					<div class="invalid-feedback">[[ s.username_error_msg ]]</div>
+				</td>
+				<td>
+					<span v-if="!s.edit">[[ s.first_name ]]</span>
+					<input v-else type="text" name="first_name" class="form-control" v-model="s.first_name" v-bind:class="{'is-invalid': s.first_name_error}" v-bind:disabled="!s.edit">
+					<div class="invalid-feedback">[[ s.first_name_error_msg ]]</div>
+				</td>
+				<td>
+					<span v-if="!s.edit">[[ s.last_name ]]</span>
+					<input v-else type="text" name="last_name" class="form-control" v-model="s.last_name" v-bind:class="{'is-invalid': s.last_name_error}" v-bind:disabled="!s.edit">
+					<div class="invalid-feedback">[[ s.last_name_error_msg ]]</div>
+				</td>
+				<td>
+					<span v-if="!s.edit">[[ s.email ]]</span>
+					<input v-else type="text" name="email" class="form-control" v-model="s.email" v-bind:class="{'is-invalid': s.email_error}" v-bind:disabled="!s.edit">
+					<div class="invalid-feedback">[[ s.email_error_msg ]]</div>
+				</td>
+				<td>
+					<button class="btn btn-success" v-bind:key="s.id" v-on:click="ajax_update(index)" v-if="s.edit">Update</button>
+					<button class="btn btn-success" v-bind:key="s.id" v-on:click="toggle_edit(index)" v-else>Edit</button>
+				</td>
+				<td>
+					<button class="btn btn-danger" data-toggle="modal" v-bind:data-target="'#confirm_delete_student_'+index">Delete</button>
+					<div class="modal fade" v-bind:id="'confirm_delete_student_'+index">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content border_white modal_box_shadow">
+								<form class="form" method="POST">
+								<div class="modal-header ml-1 text_d_blue border_color_white">
+									<h3 class="modal-title">Confirm&nbsp;Delete&nbsp;Student</h3>
+									<button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body text-center">
+									Are you sure you want to delete [[s.username]]?<br>Instead you can edit the username.
+									<input type="text" name="username" hidden v-model="s.username">
+									{% csrf_token %}
+								</div>
+								<div class="modal-footer border_color_white">
+									<div class="col-12 d-flex justify-content-end">
+										<input type="submit" value="Yes, Delete" class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+										<button class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2"
+										data-dismiss="modal" type="button">Cancel</button>
+									</div>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</article>
+
+</section>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var stud_obj = '{{ stds_obj|safe }}';
+		stud_obj = JSON.parse(stud_obj);
+		var app = new Vue({
+			el: '#app',
+			delimiters: ['[[', ']]'],
+			data: {
+				message: 'Hello Vue!',
+				student: stud_obj,
+			},
+			methods: {
+				toggle_edit: function(index) {
+					this.student[index].edit = !this.student[index].edit;
+				},
+				ajax_update: function(index) {
+					$.ajax({
+						url: "{% url 'classroom:update_student' %}",
+						type: "POST",
+						headers: {'X-CSRFToken': '{{ csrf_token }}'},
+						data: {
+							'obj': this.student[index],
+							'index': index,
+							'csrfmiddlewaretoken': "{{ csrf_token }}",
+						},
+						success: function(result,status){
+							_index = parseInt(result.index)
+							if(result.valid){
+								app.student[_index].username_error_msg = ""
+								app.student[_index].username_error = false
+								app.student[_index].email_error_msg = ""
+								app.student[_index].email_error = false
+								app.student[_index].first_name_error_msg = ""
+								app.student[_index].first_name_error = false
+								app.student[_index].edit = false
+							}
+							else if(result.valid == false){
+								result = JSON.parse(result.errors)
+								if(result.username){
+									app.student[_index].username_error_msg = result.username[0].message
+									app.student[_index].username_error = true
+								}
+								else{
+									app.student[_index].username_error_msg = ""
+									app.student[_index].username_error = false
+								}
+								if(result.email){
+									app.student[_index].email_error_msg = result.email[0].message
+									app.student[_index].email_error = true
+								}
+								else{
+									app.student[_index].email_error_msg = ""
+									app.student[_index].email_error = false
+								}
+								if(result.first_name){
+									app.student[_index].first_name_error_msg = result.first_name[0].message
+									app.student[_index].first_name_error = true
+								}
+								else{
+									app.student[_index].first_name_error_msg = ""
+									app.student[_index].first_name_error = false
+								}
+							}
+						},
+						error: function(status){
+							alert(status.responseJSON.status+' Refresh and Try Again')
+							console.log(status);
+						},
+					});
+				},
+			},
+		});
+
+		$()
+	})
+</script>
+
+{% endblock %}

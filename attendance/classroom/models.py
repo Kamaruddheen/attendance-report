@@ -11,6 +11,7 @@ class ClassroomModel(models.Model):
 		settings.AUTH_USER_MODEL,
 		on_delete = models.PROTECT,
 		limit_choices_to={'user_type':2})
+	students = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='classroom_students',limit_choices_to={'user_type':3})
 
 	class Meta:
 		db_table = 'classroom'

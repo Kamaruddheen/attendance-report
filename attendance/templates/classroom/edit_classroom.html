@@ -15,6 +15,7 @@
             <h5>Tutor :<small>{{get_obj.tutor}}</small></h5>
         </div>
         <div class="card-footer">
+            <a href="{% url 'classroom:manage_students' get_obj.id %}" class="btn btn-primary">Manage Students</a>
             <button type="button" data-toggle="modal" data-target="#edit-modal" data-backdrop="static" class="btn btn-info float-right mx-2">Edit</button>
             <a href="{% url 'classroom:createclass' %}" class="btn btn-secondary float-right">Back</a>
         </div>

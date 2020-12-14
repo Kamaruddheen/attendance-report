@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<section class="container">
+	<h2 class="text-center">Manage Students</h2>
+
+	<article>
+		<button class="btn btn-primary" data-toggle="modal" data-target="#add_stud_csv">Upload CSV</button>
+
+	</article>
+
+	<form method="POST">
+		{{ formset.management_form }}
+		{% for form in formset %}
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-3">
+				{{ form.username|as_crispy_field }}
+			</div>
+			<div class="col-3">
+				{{ form.first_name|as_crispy_field }}
+			</div>
+			<div class="col-3">
+				{{ form.last_name|as_crispy_field }}
+			</div>
+			<div class="col-3">
+				{{ form.email|as_crispy_field }}
+			</div>
+		</div>
+		{% endfor %}
+		<input type="submit" name="add_stud_form" value="Submit" class="btn btn-success">
+	</form>
+
+	<!-- Add Student CSV Modal Form -->
+<div class="modal fade" id="add_stud_csv">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content border_white modal_box_shadow">
+			<form class="edit_form" method="POST" id="add_stud_csv_form" enctype="multipart/form-data" novalidate>
+			<div class="modal-header ml-1 text_d_blue border_color_white">
+				<h3 class="modal-title">Edit&nbsp;Staff&nbsp;Details</h3>
+				<button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body pt-0">
+					{% csrf_token %}
+					{{ csv_form|crispy }}
+			</div>
+			<div class="modal-footer border_color_white">
+				<div class="col-12 d-flex justify-content-end">
+					<input type="submit" value="upload" name="add_stud_csv_form" form="add_stud_csv_form"
+						class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+					<button class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2"
+						data-dismiss="modal" type="button">Cancel</button>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+</section>
+
+{% endblock %}

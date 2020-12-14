@@ -1,9 +1,14 @@
 import os
 from django.conf import settings
-from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
-from .forms import ClassroomForm
+from django.shortcuts import render, get_object_or_404, redirect
+from django.forms import modelformset_factory, inlineformset_factory
+from .forms import ClassroomForm, AddStudentCSVForm, AddStudentForm, BaseStudentFormSet
 from .models import ClassroomModel
+
+import csv, io, json
+from django.http import JsonResponse
+from user_module.models import User
 
 
 def CreateClass(request):
@@ -55,3 +60,119 @@ def editclass(request, id):
         'editclass': editclass
     }
     return render(request, 'classroom/edit_classroom.html', context=context)
+
+def ManageStudents(request,id):
+    class_obj = get_object_or_404(ClassroomModel,id=id)
+    if request.method == "POST":
+        username = request.POST.get('username',None)
+        stds_obj = get_object_or_404(class_obj.students,username=username)
+        if stds_obj.user_type == 3:
+            stds_obj.delete()
+            messages.success(request,"Student {} deleted Successfully".format(username))
+        return redirect('classroom:manage_students',id=id,permanent=True)
+    stds_obj = class_obj.students.order_by('username').values('username','first_name','last_name','email','id')
+    for i in stds_obj:
+        i['username_error_msg'] = "";
+        i['username_error'] = False;
+        i['first_name_error_msg'] = "";
+        i['first_name_error'] = False;
+        i['email_error_msg'] = "";
+        i['email_error'] = False;
+        i['edit'] = False;
+    context = {
+        'class_obj': class_obj,
+        'stds_obj': json.dumps(list(stds_obj)),
+    }
+    return render(request,'classroom/manage_students.html',context=context)
+
+def ajax_update_student(request):
+    data = {"is_working":True}
+    if request.method == "POST" and request.is_ajax():
+        id = request.POST.get('obj[id]',None)
+        index = request.POST.get('index',None)
+        data = {
+            'username': request.POST.get('obj[username]',None),
+            'first_name': request.POST.get('obj[first_name]',None),
+            'last_name': request.POST.get('obj[last_name]',None),
+            'email': request.POST.get('obj[email]',None)
+        }
+        if User.objects.filter(id=id).exists() and index:
+            print('exists')
+            myform = AddStudentForm(data,instance=User.objects.get(id=id))
+            if myform.is_valid():
+                print('valid')
+                myform.save()
+                resp = {
+                    "valid": True,
+                    "updated": True,
+                    "index": index,
+                }
+            else:
+                print('not valid')
+                print(myform.errors.as_json())
+                resp = {
+                    "valid": False,
+                    "errors": myform.errors.as_json(),
+                    "index": index,
+                }
+            return JsonResponse(resp,safe=False)
+        else:
+            print('does not exist')
+            response =  JsonResponse({'status':'ID Not Found'})
+            response.status_code = 404
+            return response
+    response =  JsonResponse({'status':'Not Authorized'})
+    response.status_code = 404
+    return response
+
+def AddStudents(request,id):
+    class_obj = get_object_or_404(ClassroomModel,id=id)
+    csv_form = AddStudentCSVForm()
+    initial = []
+    StudentFormSet = modelformset_factory(User,formset=BaseStudentFormSet,form=AddStudentForm)
+    formset = StudentFormSet(queryset=User.objects.none())
+    if request.method == "POST" and request.POST.get('add_stud_csv_form',False):
+        csv_form = AddStudentCSVForm(request.POST,request.FILES)
+        if csv_form.is_valid():
+            csv_file = request.FILES['file']
+            if not csv_file.name.endswith('.csv'):
+                messages.error(request,'Not a csv file')
+            else:
+                # print(csv_file)
+                io_string = io.StringIO(csv_file.read().decode())
+                csv_reader = csv.DictReader(io_string)
+                print(csv_reader.fieldnames)
+                for i,v in enumerate(csv_reader.fieldnames):
+                    csv_reader.fieldnames[i] = v.lower()
+                print(csv_reader.fieldnames)
+                for row in csv_reader:
+                    if row.get('username',False):
+                        initial.append(row)
+                    else:
+                        print(row)
+                        initial.append({'a':'a'})
+                        messages.info(request,"The column header should have username")
+                        break
+                # print(initial)
+                # print(len(initial))
+                StudentFormSet = modelformset_factory(User,fields=('username','email','first_name','last_name'),formset=BaseStudentFormSet,form=AddStudentForm,extra=len(initial))
+                formset = StudentFormSet(initial=initial)
+    elif request.method == "POST" and request.POST.get('add_stud_form',False):
+        formset = StudentFormSet(request.POST)
+        print('atleat it came')
+        if formset.is_valid():
+            print('valid')
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.user_type = 3
+                instance.is_active = False
+            user_obj = User.objects.bulk_create(instances)
+            user_obj = User.objects.filter(email__in=(ins.email for ins in instances))
+            class_obj.students.add(*(user_obj))
+            messages.success(request,'Student Added Successfully')
+            return redirect('classroom:manage_students',id=class_obj.id)
+    context = {
+        'csv_form': csv_form,
+        'formset': formset,
+    }
+    return render(request,'classroom/add_students.html',context=context)

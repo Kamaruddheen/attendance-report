@@ -1,6 +1,8 @@
 from django import forms
 from .models import ClassroomModel
 
+from user_module.models import User
+
 
 class ClassroomForm(forms.ModelForm):
 
@@ -21,3 +23,41 @@ class ClassroomForm(forms.ModelForm):
     class Meta:
         model = ClassroomModel
         fields = ['course', 'year', 'sec', 'tutor']
+
+class AddStudentCSVForm(forms.Form):
+    file = forms.FileField()
+
+class AddStudentForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name','email']
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        return username.upper()
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        return email.lower()
+
+class BaseStudentFormSet(forms.BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.queryset = User.objects.none()
+
+    def clean(self):
+        if any(self.errors):
+            return
+        usernames = []
+        emails = []
+        for form in self.forms:
+            if self.can_delete and self._should_delete_form(form):
+                continue
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            if username in usernames:
+                raise ValidationError("Students in the set must have distinct username")
+            usernames.append(username)
+            if email in emails:
+                raise ValidationError("Students in the set must have distinct email")
+            emails.append(email)
