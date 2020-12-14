@@ -27,6 +27,11 @@
     {{t_set.to_date}}
     {{t_set.to_date.errors}}
 </div>
-<input type="submit" class="btn btn-success float-right" value="Next">
-</form>   
+<input type="submit" class="btn btn-success float-right" value="Save your set">
+</form>  
+<br>
+{% if No_set %}
+    <h5>No sets created yet for this classroom</h5>
+{% endif %} 
+<br><a href="{{ request.META.HTTP_REFERER }}" class="btn btn-danger">Back</a>
 {% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>SAMS</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>You are in the classroom :<small><a href="{% url 'classroom:editclass' c_object.id %}">{{c_object}}</a> </small></h2>
+        <h4>Set chosen :<small>{{s_object}}</small></h4>
+        <h5>From date :<small>{{s_object.from_date}}</small></h5>
+        <h5>To date :<small>{{s_object.to_date}}</small></h5>
+        <a href="{% url 'timetable:setchoose' c_object.id %}" class="btn btn-danger">Back</a>
+        <a href="{% url 'timetable:showsubjects' c_object.id s_object.id %}" class="btn btn-info">View Timetable</a>
+    </div>
+{% endblock %}

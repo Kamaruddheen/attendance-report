@@ -11,9 +11,10 @@
 <ul>
 <h4>The sets for the particular class : </h4>
 {% for i in t_set_particular %}
-    <li><a href="{% url 'timetable:showsubjects' c_object.id i.id %}">{{i}}</a></li>
+    <li><a href="{% url 'timetable:set_info' c_object.id i.id %}">{{i}}</a></li>
 {% endfor %}
 </ul>
-<a href="{% url 'timetable:createtimetableset' c_object.id %}">{{t_set_choose.setchoose.help_text}}</a>
+<a href="{% url 'timetable:createtimetableset' c_object.id %}">Create a new set</a>
+<br>
+<a href="{% url 'classroom:editclass' c_object.id %}" class="btn btn-danger">Back</a>
 {% endblock %}
-<!--Guys don't display it as a form just display it as a field so that it won't display help_text twice as i have used outside of the form-->

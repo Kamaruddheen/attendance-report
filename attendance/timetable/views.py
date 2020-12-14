@@ -1,4 +1,4 @@
-from django.http import QueryDict
+from django.contrib import messages
 from django.shortcuts import HttpResponse,redirect
 from django.shortcuts import render,get_object_or_404
 from .forms import TimetableForm,TimetablesetForm,CreatetimetableForm
@@ -19,10 +19,20 @@ def createtimetable(request,class_id=None,set_id=None):
             t_obj.save()
         check=TimetableModel.objects.filter(set_name__id=set_id)
         if len(check)>=30:
+            messages.info(request,'You have filled for all the 6 days timetable')
             return redirect('timetable:showsubjects',class_id=class_id,set_id=set_id)
-    c_object=get_object_or_404(ClassroomModel,id=class_id)
-    t=TimetableForm(initial={'set_name':set_id},c_object=c_object)
-    return render(request,'timetable/timetable.html',{'t':t,'c_object':c_object,'set_id':set_id})
+        c_object=get_object_or_404(ClassroomModel,id=class_id)
+        t=TimetableForm(initial={'set_name':set_id},c_object=c_object)
+        messages.success(request,'Your timetable entry gets stored')
+        return render(request,'timetable/timetable.html',{'t':t,'c_object':c_object,'set_id':set_id})
+    else:
+        check=TimetableModel.objects.filter(set_name__id=set_id)
+        if len(check)>=30:
+            messages.info(request,'You have filled for all the 6 days timetable')
+            return redirect('timetable:showsubjects',class_id=class_id,set_id=set_id)
+        c_object=get_object_or_404(ClassroomModel,id=class_id)
+        t=TimetableForm(initial={'set_name':set_id},c_object=c_object)
+        return render(request,'timetable/timetable.html',{'t':t,'c_object':c_object,'set_id':set_id})
 
 def createtimetableset(request,class_id):
     c_object=get_object_or_404(ClassroomModel,id=class_id)
@@ -44,7 +54,8 @@ def setchoose(request,class_id):
             'c_object':c_object
         }
         return render(request,'timetable/setchoose.html',context)
-    return redirect('timetable:createtimetableset',class_id=class_id)
+    t_set=TimetablesetForm()
+    return render(request,'timetable/timetableset.html',{'c_object':c_object,'t_set':t_set,'No_set':1})
 
 def set_info(request,class_id=None,set_id=None):
     c_object=get_object_or_404(ClassroomModel,id=class_id)
@@ -54,7 +65,10 @@ def set_info(request,class_id=None,set_id=None):
 def showsubjects(request,class_id=None,set_id=None):
     where_to_redirect=TimetableModel.objects.filter(set_name__id=set_id)
     if len(where_to_redirect)==0:
-        return redirect('timetable:createtimetable',class_id=class_id,set_id=set_id)
+        c_object=get_object_or_404(ClassroomModel,id=class_id)
+        t=TimetableForm(initial={'set_name':set_id},c_object=c_object)
+        messages.error(request,'No subjects created for this timetable yet')
+        return render(request,'timetable/timetable.html',{'t':t,'c_object':c_object,'set_id':set_id})
 
     s_object=get_object_or_404(TimetablesetModel,id=set_id)
     c_object=get_object_or_404(ClassroomModel,id=class_id)    
