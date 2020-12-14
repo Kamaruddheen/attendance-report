@@ -10,7 +10,15 @@ def is_hod(function):
 				return function(request,*args,**kwargs)
 			else:
 				messages.info(request,'Not Authorized')
-				return redirect('homepage')
+				prev_url = request.META.get('HTTP_REFERER')
+				cur_url = request.get_full_path()
+				print(prev_url)
+				if prev_url:
+					redirect_url = 'homepage' if cur_url in prev_url else prev_url
+				else:
+					redirect_url = 'homepage'
+				print(redirect_url)
+				return redirect(redirect_url or 'homepage',)
 		else:
 			return redirect(redirect('login').url+'?next='+request.path)
 	wrap.__doc__ = function.__doc__
@@ -24,7 +32,15 @@ def is_staff(function):
 				return function(request,*args,**kwargs)
 			else:
 				messages.info(request,'Not Authorized')
-				return redirect('homepage')
+				prev_url = request.META.get('HTTP_REFERER')
+				cur_url = request.get_full_path()
+				print(prev_url)
+				if prev_url:
+					redirect_url = 'homepage' if cur_url in prev_url else prev_url
+				else:
+					redirect_url = 'homepage'
+				print(redirect_url)
+				return redirect(redirect_url or 'homepage',)
 		else:
 			return redirect(redirect('login').url+'?next='+request.path)
 	wrap.__doc__ = function.__doc__
@@ -41,7 +57,15 @@ def is_hod_or_self(function):
 				messages.info(request,'Not Authorized')
 				print(kwargs['id'],u.id)
 				print(type(kwargs['id']))
-				return redirect('homepage')
+				prev_url = request.META.get('HTTP_REFERER')
+				cur_url = request.get_full_path()
+				print(prev_url)
+				if prev_url:
+					redirect_url = 'homepage' if cur_url in prev_url else prev_url
+				else:
+					redirect_url = 'homepage'
+				print(redirect_url)
+				return redirect(redirect_url or 'homepage',)
 		else:
 			return redirect(redirect('login').url+'?next='+request.path)
 	wrap.__doc__ = function.__doc__
@@ -56,10 +80,18 @@ def is_hod_or_tutor(function):	# WARNING - use it only if you pass the classroom
 			if u.staffmodel.is_hod or class_obj.tutor == u:
 				return function(request,id,*args,**kwargs)
 			else:
+				prev_url = request.META.get('HTTP_REFERER')
+				cur_url = request.get_full_path()
+				print(prev_url)
+				if prev_url:
+					redirect_url = 'homepage' if cur_url in prev_url else prev_url
+				else:
+					redirect_url = 'homepage'
+				print(redirect_url)
 				messages.info(request,'Only the Tutor of {} and HoD have access'.format(class_obj))
-				return redirect(request.META.get('HTTP_REFERER'))
+				return redirect(redirect_url or 'homepage',)
 		else:
-			return redirect(redirect('login').url+'?next='+request.path)
+			return redirect(redirect('login').url+'?next='+request.path,permanent=True)
 	wrap.__doc__ = function.__doc__
 	wrap.__name__ = function.__name__
 	return wrap
