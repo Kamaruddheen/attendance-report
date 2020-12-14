@@ -109,6 +109,7 @@
                             class="btn border_white btn-cust neu_icon text-primary align-self-center my-2">
                             View
                         </a>
+                        {% if request.user.staffmodel.is_hod or class.tutor == request.user %}
                         <a href="{% url 'classroom:editclass' class.id %}" type="submit"
                             class="btn border_white btn-cust neu_icon text-body align-self-center my-2  d-none d-md-block">
                             Manage
@@ -117,6 +118,7 @@
                             class="btn border_white btn-cust neu_icon text-danger align-self-center my-2  d-none d-md-block">
                             Delete
                         </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -130,32 +132,34 @@
     </section>
     {% endif %}
 
-    <form class="form" method="POST" action="{% url 'classroom:createclass' %}" novalidate>
-        <!--Modal to display create class form-->
-        <div class="modal fade" id="create-class-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content border_white modal_box_shadow">
-                    <div class="modal-header ml-1 text_d_blue border_color_white">
-                        <h3 class="modal-title capitalize">Create&nbsp;a&nbsp;class</h3>
-                        <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
+
+    <!--Modal to display create class form-->
+    <div class="modal fade" id="create-class-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border_white modal_box_shadow">
+                <div class="modal-header ml-1 text_d_blue border_color_white">
+                    <h3 class="modal-title capitalize">Create&nbsp;a&nbsp;class</h3>
+                    <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form class="form needs-validation" method="POST" id="classroom_create_form"
+                        action="{% url 'classroom:createclass' %}" novalidate>
                         {% csrf_token %}
                         {{ form|crispy }}
-                    </div>
-                    <div class="modal-footer border_color_white">
-                        <div class="col-12 d-flex justify-content-end">
-                            <input type="submit" value="Create" name="submit"
-                                class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
-                            <a href="{% url 'classroom:createclass' %}"
-                                class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2">Cancel</a>
-                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border_color_white">
+                    <div class="col-12 d-flex justify-content-end">
+                        <input type="submit" value="Create" name="submit" form="classroom_create_form"
+                            class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+                        <a href="{% url 'classroom:createclass' %}"
+                            class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2">Cancel</a>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </article>
 
 <script>

@@ -82,8 +82,8 @@ body {
 
     &:focus {
         outline: none !important;
-        box-shadow: inset 3px 3px 8px #c2d0db, 
-        inset -3px -3px 8px #e5f6ff !important;    
+        box-shadow: 5px 5px 10px #c2d0db, 
+             -5px -5px 10px #e5f6ff;   
     }
 
     &:active {
@@ -104,19 +104,26 @@ body {
 	box-shadow: inset 5px 5px 10px #c2d0db,
 		inset -5px -5px 10px #daeaf6;  
 
-    &:focus {
-        outline: none !important;
-        box-shadow: none !important;    
-    }
+    &:focus{        
+        outline: none !important;            
+        box-shadow: 5px 5px 10px #c2d0db, 
+             -5px -5px 10px #e5f6ff;
+        border: 1px solid #c9d7e2;
+        cursor: pointer;
+    }    
 
     &:active {
         outline: #c9d7e2 !important;
+        border: 1px solid #c9d7e2;
+        cursor: pointer;
     }
 
     &:hover{
         color: #062743;        
         box-shadow: 5px 5px 10px #c2d0db, 
              -5px -5px 10px #e5f6ff;
+        border: 1px solid #c9d7e2;
+        cursor: pointer;
     }
 }
 
