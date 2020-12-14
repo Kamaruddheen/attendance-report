@@ -2,30 +2,34 @@ from django import forms
 
 from .models import SubjectModel
 from classroom.models import ClassroomModel
-from user_module.models import User
-
-sub_types = (
-    ('reg', 'Regular'), ('sel', 'Selective')
-)
 
 
 class CreateSubjectForm(forms.ModelForm):
-    hour_name = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'SE, PCD, Lang, etc...', 'class': 'input_cust col-md-6'}),
-        label="Hour Name")
-    sub_name = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Full Subject Name', 'class': 'input_cust'}),
-        label="Subject Name")
-    sub_type = forms.ChoiceField(choices=sub_types, widget=forms.Select(
-        attrs={'class': 'input_cust'}),
-        label="Subject Type")
-    handled_by = forms.ModelChoiceField(widget=forms.Select(
-        attrs={'class': 'input_cust'}), queryset=User.objects.filter(user_type=2),
-        label="Handled By")
-    classroom = forms.ModelChoiceField(widget=forms.Select(
-        attrs={'class': 'input_cust'}), queryset=ClassroomModel.objects.all())
 
     class Meta:
         model = SubjectModel
         fields = ['hour_name', 'sub_name',
                   'sub_type', 'handled_by', 'classroom']
+
+    def __init__(self, *args, **kwargs):
+        staff = kwargs.pop('staff')
+        if staff.is_hod:
+            queryset = ClassroomModel.objects.all()
+        else:
+            queryset = ClassroomModel.objects.filter(tutor_id=staff.user.id)
+        super(CreateSubjectForm, self).__init__(*args, **kwargs)
+        self.fields['classroom'].queryset = queryset
+        self.fields['hour_name'].widget.attrs.update(
+            {'class': 'input_cust  col-md-6', 'placeholder': 'SE, PCD, Lang, Elective etc...'})
+        self.fields['sub_name'].widget.attrs.update(
+            {'class': 'input_cust', 'placeholder': 'Full Subject Name'})
+        self.fields['sub_type'].widget.attrs.update(
+            {'class': 'input_cust capitalize'})
+        self.fields['handled_by'].widget.attrs.update(
+            {'class': 'input_cust capitalize'})
+        self.fields['classroom'].widget.attrs.update(
+            {'class': 'input_cust capitalize'})
+        self.fields['hour_name'].label = "Hour Name"
+        self.fields['sub_name'].label = "Subject Name"
+        self.fields['sub_type'].label = "Subject Type"
+        self.fields['handled_by'].label = "Handled By"

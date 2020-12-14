@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<title>SAMS | Attendance | Checking Student Attendance</title>
+<title>SAMS | Attendance | Attendance Report</title>
 {% endblock %}
 
 {% block head %}
@@ -20,13 +20,14 @@
 {% block content %}
 <section class="text-center text_d_blue arvo mt-2 mb-3 mt-md-0" style="margin-bottom: 35px;">
     <h1>Attendance Report</h1>
+    <small class="upper_case text-body">{{ date }}</small>
 </section>
 <section class="pl-md-5 d-flex flex-column flex-md-row pt-md-2">
     <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
         Subject :
     </h5>
     <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        {{ subject.sub_name }}
+        {{ attendance_id.subject.sub_name }}
     </h5>
 </section>
 <section class="container px-0 px-md-5 mx-auto d-flex d-md-block justify-content-center">

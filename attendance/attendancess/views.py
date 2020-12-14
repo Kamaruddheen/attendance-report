@@ -9,8 +9,6 @@ from subject.models import SubjectModel
 from timetable.models import TimetablesetModel, TimetableModel
 from attendancess.models import AttendanceModel, AttendanceIdModel
 
-# Create your views here.
-
 
 class ClassesView(LoginRequiredMixin, View):
     def get(self, request):
@@ -21,6 +19,17 @@ class ClassesView(LoginRequiredMixin, View):
         else:
             date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         day = date.strftime("%A")
+
+        days = {
+            "Sunday": 0,
+            "Monday": 1,
+            "Tuesday": 2,
+            "Wednesday": 3,
+            "Thursday": 4,
+            "Friday": 5,
+            "Saturday": 6
+        }
+        day = days[day]
 
         # Get all the active time tables and extract the classes
         active_sets = []
@@ -63,9 +72,15 @@ class AttendanceView(LoginRequiredMixin, View):
 
         students = subject.students.all().order_by("username")
 
+        # Convert date from "yyyy-mm-dd" format to "dd-mm-yyyy" format.
+        date = request.session['date']
+        date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        date = date.strftime("%d-%m-%Y")
+
         context = {
             'students': students,
-            'subject': subject
+            'subject': subject,
+            'date': date
         }
         return render(request, 'attendancess/attendance.html', context)
 
@@ -111,7 +126,6 @@ class CheckAttendanceView(LoginRequiredMixin, View):
     def get(self, request):
 
         subject_id = request.GET.get('id')
-        subject = get_object_or_404(SubjectModel, pk=subject_id)
         date = request.GET.get('date')
 
         if subject_id is None or date is None:
@@ -120,6 +134,8 @@ class CheckAttendanceView(LoginRequiredMixin, View):
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         attendance_id = get_object_or_404(
             AttendanceIdModel, subject__id=subject_id, date=date)
+
+        date = attendance_id.date.strftime("%d-%m-%Y")
 
         # Checking whether the subject id is belonging to the current user
         if not attendance_id.subject.handled_by == request.user:
@@ -130,6 +146,7 @@ class CheckAttendanceView(LoginRequiredMixin, View):
 
         context = {
             "data": data,
-            "subject": subject
+            "date": date,
+            "attendance_id": attendance_id
         }
         return render(request, 'attendancess/check_attendance.html', context)

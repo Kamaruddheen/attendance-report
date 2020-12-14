@@ -43,6 +43,10 @@
 			</h6>
 		</div>
 	</section>
+	{% if request.user.is_hod or sub.classroom.tutor == request.user %}
+		<a href="{% url 'subject:edit_subject' sub.id %}">Edit</a>
+		<a href="{% url 'subject:delete_subject' sub.id %}">Delete</a>
+	{% endif %}
 	{% endfor %}
 </article>
 

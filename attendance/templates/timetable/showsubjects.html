@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>SAMS</title>
+{% endblock %}
+    
+{% block content %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Days/Hour</td>
+                <th>I</td>
+                <th>II</td>
+                <th>III</td>
+                <th>IV</td>
+                <th>V</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i,days in all_subjects %}
+            <tr>
+                <th>{{days}}</th>
+                {% for j in i %}
+                    <td id="{{forloop.parentloop.counter}}{{forloop.counter}}">{{j}}<!--<span id="subject_id">{{j.subject.id}}</span>--></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'timetable:set_info' c_object.id s_object.id %}" class="btn btn-danger">Back</a>
+    <!--<div class="modal fade" id="timetable_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Create/Edit a subject</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="create_timetable_form">
+                        {% csrf_token %}
+                        {{t_form_object.as_p}}
+                        <button type="button" class="btn btn-info" id="add_subject">Add subject</button>
+                        <input id="save_subjects" type="submit" class="btn btn-success" value="Save subject">
+                        <button type="reset" class="btn btn-secondary" id="cancel_button">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <script>
+        $(document).ready(function(){
+            $("#cancel_button").click(function(){
+                $("#timetable_modal").modal('hide')
+            });
+        });
+    </script>
+{% endblock %}
+
+<!--    var subject_creation_array=[]
+            for(i=0;i<7;i++){
+                inner_subject_creation_array=[]
+                for(j=0;j<6;j++){
+                    inner_subject_creation_array.push([i,j,0])
+                }
+                subject_creation_array.push(inner_subject_creation_array)
+            }
+            $("td").click(function(){
+                var stored_check=$(this).find('#subject_id').text()
+                if(stored_check.length>0){
+                    alert("Subject is already added for the clicked hour \n\n You can't edit the timetable entry instead you have to create a new set and add the subject there")
+                }
+                else{
+                    var current_id=$(this).attr('id')
+                    console.log(current_id)
+                    var day=current_id[0]
+                    var hour=current_id[1]
+                    $("#id_day").val(day)
+                    //Here day and hour id's are strings but the options are integers.Here implicit type conversion is performed to convert string to integer
+                    $("#id_hour").val(hour)
+                    $("#id_day,#id_hour,#id_set_name").prop('disabled',true);
+                    $("#timetable_modal").modal({backdrop:"static"})
+                    $("#add_subject").on('click',function(){
+                    console.log(current_id)
+                     //current_id='#'.concat(current_id)
+                    subject_creation_array[day][hour][2]=$("#id_subject").val()
+                    $('#'.concat(current_id)).text($("#id_subject option:selected").text())
+                    console.table(subject_creation_array)
+                    })
+                }
+            });
+    
+    var subject=$(this).find('#subject_id').text()
+                   //subject id returned by {{j.subject.id}}
+                   $("#id_subject").val(subject)-->
+    

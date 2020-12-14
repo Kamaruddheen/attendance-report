@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>SAMS</title>
+{% endblock %}
+
+{% block content %}
+<h5>You are in the classroom : <a href="{% url 'classroom:editclass' c_object.id %}">{{c_object}}</a> </h5>
+<ul>
+<h4>The sets for the particular class : </h4>
+{% for i in t_set_particular %}
+    <li><a href="{% url 'timetable:showsubjects' c_object.id i.id %}">{{i}}</a></li>
+{% endfor %}
+</ul>
+<a href="{% url 'timetable:createtimetableset' c_object.id %}">{{t_set_choose.setchoose.help_text}}</a>
+{% endblock %}
+<!--Guys don't display it as a form just display it as a field so that it won't display help_text twice as i have used outside of the form-->

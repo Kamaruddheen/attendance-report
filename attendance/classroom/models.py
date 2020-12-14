@@ -18,4 +18,4 @@ class ClassroomModel(models.Model):
 		verbose_name_plural = 'Classrooms'
     
 	def __str__(self):
-		return self.course+' '+self.sec+' '+self.get_year_display()+' '+"year"
+		return self.get_year_display()+' '+self.course+' '+self.sec

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>SAMS</title>
+{% endblock %}
+
+{% block content %}
+<h5>You are in the classroom : <a href="{% url 'classroom:editclass' c_object.id %}">{{c_object}}</a> </h5>
+<form method="POST" action="{% url 'timetable:createtimetableset' c_object.id %}">
+    {% csrf_token %}
+    {{t_set.classroom.errors}}
+<div class="form-group">
+     <label for="name">Set name :</label>
+     {{t_set.name}}
+     {{t_set.name.errors}}
+     
+</div>
+<div class="form-group">
+      <label for="from_date">From date :</label>
+      {{t_set.from_date}}
+      {{t_set.from_date.errors}}
+</div>
+<div class="form-group">
+    <label for="to_date">To date :</label>
+    {{t_set.to_date}}
+    {{t_set.to_date.errors}}
+</div>
+<input type="submit" class="btn btn-success float-right" value="Next">
+</form>   
+{% endblock %}

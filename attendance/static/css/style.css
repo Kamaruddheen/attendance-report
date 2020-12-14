@@ -64,6 +64,10 @@ body {
   padding: 10px 0px 0px 15px;
 }
 
+.form-text {
+  padding: 10px 0px 0px 15px;
+}
+
 /* Custom Button */
 /* Mainly for Hamburger Button */
 .btn-cust {
@@ -75,8 +79,8 @@ body {
 
 .btn-cust:focus {
   outline: none !important;
-  -webkit-box-shadow: none !important;
-          box-shadow: none !important;
+  -webkit-box-shadow: inset 3px 3px 8px #c2d0db,  inset -3px -3px 8px #e5f6ff !important;
+          box-shadow: inset 3px 3px 8px #c2d0db,  inset -3px -3px 8px #e5f6ff !important;
 }
 
 .btn-cust:active {
@@ -136,6 +140,83 @@ body {
 /* Border Radius */
 .img_border_radius {
   border-radius: 1.2rem !important;
+}
+
+/* Search Field */
+.search_cust {
+  margin-top: 3px;
+  font-size: 1.1rem;
+  font-family: 'Karla', sans-serif;
+  color: #062743 !important;
+  background-color: #daeaf6 !important;
+  border: 1px solid #c9d7e2;
+  border-color: #daeaf6 !important;
+  border-radius: 2rem !important;
+  -webkit-box-shadow: inset 5px 5px 10px #c2d0db, inset -5px -5px 10px #daeaf6;
+          box-shadow: inset 5px 5px 10px #c2d0db, inset -5px -5px 10px #daeaf6;
+  border-right: 0px;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.search_cust:focus {
+  outline: none !important;
+  font-size: 1.150rem !important;
+  -webkit-box-shadow: 0 0 0 0.1rem #c2d0db;
+          box-shadow: 0 0 0 0.1rem #c2d0db;
+  cursor: context-menu !important;
+}
+
+.search_cust:hover {
+  cursor: pointer;
+  font-size: 1.150rem;
+}
+
+.rounded_custom_left {
+  margin-top: 3px;
+  font-size: 1.1rem;
+  font-family: 'Karla', sans-serif;
+  color: #062743 !important;
+  background-color: #daeaf6 !important;
+  border: 1px solid #c9d7e2;
+  border-color: #daeaf6 !important;
+  border-radius: 2rem !important;
+  -webkit-box-shadow: inset 5px 5px 10px #c2d0db, inset -5px -5px 10px #daeaf6;
+          box-shadow: inset 5px 5px 10px #c2d0db, inset -5px -5px 10px #daeaf6;
+  border-top-right-radius: 0rem !important;
+  border-bottom-right-radius: 0rem !important;
+  border-right: 0px;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.rounded_custom_left:focus {
+  outline: none !important;
+  font-size: 1.150rem !important;
+  -webkit-box-shadow: 0 0 0 0.1rem #c2d0db;
+          box-shadow: 0 0 0 0.1rem #c2d0db;
+  cursor: context-menu !important;
+}
+
+.rounded_custom_left:hover {
+  cursor: pointer;
+  font-size: 1.150rem;
+}
+
+.rounded_custom_right {
+  margin-top: 3px;
+  font-size: 1.1rem;
+  font-family: 'Karla', sans-serif;
+  color: #062743 !important;
+  background-color: #daeaf6 !important;
+  border: 1px solid #c9d7e2;
+  border-color: #daeaf6 !important;
+  border-radius: 2rem !important;
+  -webkit-box-shadow: inset 2px 2px 3px #b3c0ca,  inset -2px -2px 3px #b3c0ca;
+          box-shadow: inset 2px 2px 3px #b3c0ca,  inset -2px -2px 3px #b3c0ca;
+  border-top-left-radius: 0rem !important;
+  border-bottom-left-radius: 0rem !important;
+  border-left: 0px;
 }
 
 /* Left Side Nav Bar */

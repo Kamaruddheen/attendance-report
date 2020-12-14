@@ -4,183 +4,267 @@
 
 
 {% block title %}
-<title>SAMS</title>
+<title>SAMS | Classroom | View and Create</title>
 {% endblock %}
+
 {% block head %}
-<style>
-    #delete-more-button,
-    #search-class-input-group {
-        border: none;
-        background: none;
-    }
-
-    label {
-        font-weight: 700;
-    }
-</style>
+<!-- Jquery UI -->
+<link href="http://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+    // Change JQueryUI plugin names to fix name collision with Bootstrap.
+    $.widget.bridge('uitooltip', $.ui.tooltip);
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- Custom Css -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/flip_card.css' %}">
 {% endblock %}
-{% block content %}
-<div class="container">
-    <div class="row my-4">
-        <div class="col-2">
-            <button type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static"
-                class="btn btn-primary shadow-lg pl-3 pr-4" style="border-radius:30px">
-                <h4>+ <small style="font-weight:500"> Create</small></h4>
-            </button>
-        </div>
-        <div class="col-8">
-            <div class="input-group"
-                style="box-shadow: 4px 4px 20px 0 rgba(0, 0, 0, 0.2), 4px 4px 20px 0 rgba(0, 0, 0, 0.19);height:45px">
-                <div class="input-group-prepend">
-                    <i class="fa fa-search input-group-text pt-2" aria-hidden="true"
-                        style="border:none;background:none"></i>
-                </div>
-                <input type="text" class="form-control" placeholder="Search for class . . . ." id="search-class"
-                    style="border:none;">
-            </div>
-        </div>
-        <div class="col-1">
-            <button type="button" class="mt-2" id="delete-more-button" disabled><i class="fa fa-trash"
-                    aria-hidden="true" style="font-size:25px;" data-toggle="tooltip" title="Delete more classes at once"
-                    data-placement="bottom" id="delete-more"></i></button>
-        </div>
-    </div>
 
-    {% if all_classrooms|length == 0 %}
-    <div>
-        <h5>No classrooms created yet</h5>
-    </div>
-    {% else %}
-    <div class="form-check m-3">
-        <input type="checkbox" class="form-check-input" id="select-all">
-        <label class="form-check-label" for="select-all">
+{% block content %}
+<article class="container w-100 h-100 p-0 px-md-3">
+    <nav class="navbar navbar-expand-md p-0 pl-md-3">
+        <section class="container-fluid justify-content-md-between justify-content-center">
+            <button type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static"
+                class="btn border_white btn-cust neu_icon text-dark align-self-center my-2 mr-md-2 order-1 order-md-0">
+                Create
+            </button>
+            <button type="button"
+                class="btn border_white btn-cust neu_icon text-success flex-row d-none d-md-block order-md-1"
+                id="drag-and-select" data-value="drag" value="drag" data-toggle="tooltip"
+                title="Drag and Select your classrooms to delete">
+                Select
+            </button>
+            <div class="input-group mx-2 order-0 order-md-2">
+                <input type="text" class="form-control search_cust border_white w-75"
+                    placeholder="Search your classroom . . . ." id="search-class">
+            </div>
+            <button type="button" class="btn border_white btn-cust neu_icon text-danger d-none d-md-block order-md-3"
+                id="delete-more-button" disabled>
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" role="img" id="delete-more"
+                    class="bi bi-trash" fill="currentColor" height="1.2em" viewBox="0 0 16 16" width="1.2em"
+                    data-toggle="tooltip" title="Delete more classes at once" data-placement="bottom"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path
+                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z">
+                        </path>
+                        <path
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                            fill-rule="evenodd">
+                        </path>
+                    </g>
+                </svg>
+            </button>
+        </section>
+    </nav>
+
+    {% if mylist %}
+    <section class="form-check mx-4 pl-md-5 mt-1 d-none d-md-block">
+        <input type="checkbox" class="form-check-input" id="select-all" style="width: 18px;height: 18px;">
+        <label class="form-check-label font_size_normal ml-2 text-primary" for="select-all">
             Select all
         </label>
-    </div>
+    </section>
+    <article class="row d-flex justify-content-center mt-md-4" id="selectable">
+        {% for class,img in mylist %}
+        <section class="flip-card my-2 mx-4">
+            <div class="card cards border-0">
+                <div class="card-front" class-obj="{{ class }}" class-id="{{ class.id }}" id="front{{ class.id }}"
+                    data-value="select">
+                    <div class="card-header border-0 bg-transparent p-3">
+                        {% with "img/classrooms/"|add:img|default:"classroom11.jpg" as image_static %}
+                        <img src="{% static image_static %}" class="card-img-top img_border_radius">
+                        {% endwith %}
+                    </div>
+                    <div class="card-body py-0 pb-1 text_d_blue">
+                        <h3 class="text-center upper_case font-weight-bold pb-1">
+                            {{class.get_year_display}}
+                            {{class.course}}
+                            {{class.sec}}</h3>
+                    </div>
+                    <div class="card-footer d-flex flex-row border_color_white bg-transparent text_d_blue">
+                        <h6 class="capitalize font_size_normal font-weight-bold mb-0">Tutor&nbsp;:</h6>
+                        <h6 class="input-group capitalize font_size_normal ml-2 mb-0">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="chalkboard-teacher"
+                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em"
+                                height="1.2em" class="mr-1 mr-md-2 text-body">
+                                <g class="fa-group">
+                                    <path fill="currentColor"
+                                        d="M640 49.59v316.82c0 27.34-21.53 49.59-48 49.59H343.79c-.9-2.53-1.86-5.05-2.9-7.54A144.52 144.52 0 0 0 298.51 352H576V64H224v49.1a127 127 0 0 0-59.46-17h-.33c-1.4 0-2.8-.08-4.21-.08V49.59C160 22.25 181.53 0 208 0h384c26.47 0 48 22.25 48 49.59z"
+                                        class="fa-secondary"></path>
+                                    <path fill="currentColor"
+                                        d="M208 352a22.88 22.88 0 0 0-7.06 1.09A131.91 131.91 0 0 1 160 360a132 132 0 0 1-40.95-6.91 22.82 22.82 0 0 0-7-1.09A112 112 0 0 0 0 464.62C.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38A112 112 0 0 0 208 352zm-48-32a96 96 0 1 0-96-96 96 96 0 0 0 96 96zm64-256v49.09a129 129 0 0 1 26.51 20.4 128 128 0 0 1 0 181 132.13 132.13 0 0 1-10.14 9.14A143.89 143.89 0 0 1 298.51 352H384v-64h128v64h64V64z"
+                                        class="fa-primary"></path>
+                                </g>
+                            </svg>
+                            {{ class.tutor }}
+                        </h6>
+                    </div>
+                </div>
+                <div class="card-back pb-0" data-value="select" id="back{{ class.id }}" data-place="{{ class.id }}">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
+                        <a href="{% url 'classroom:editclass' class.id %}" type="submit"
+                            class="btn border_white btn-cust neu_icon text-primary align-self-center my-2">
+                            View
+                        </a>
+                        <a href="{% url 'classroom:editclass' class.id %}" type="submit"
+                            class="btn border_white btn-cust neu_icon text-body align-self-center my-2  d-none d-md-block">
+                            Manage
+                        </a>
+                        <a type=" submit"
+                            class="btn border_white btn-cust neu_icon text-danger align-self-center my-2  d-none d-md-block">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+    </article>
 
-    <div class="row row-cols-3">
-        <!--no of column in each row is three because of row-cols-3-->
-        {% for class in all_classrooms %}
-        <div class="col my-3">
-            <div class="card cards">
+    {% else %}
+    <section class="h-75 w-100 d-flex justify-content-center align-items-center my-5 py-5 px-3 my-md-0 p-md-0">
+        <h2 class="text_d_blue">No Classrooms created yet..</h2>
+    </section>
+    {% endif %}
 
-                <img src="{% static 'img/img1.jpg' %}" style="height:400px">
-                <div class="card-img-overlay">
-                    <div class="card-body">
-
-                        <div class="float-right">
-                            <input type="checkbox" class="form-check-input class-check" style="width:20px;height:20px">
+    <form class="form" method="POST" action="{% url 'classroom:createclass' %}" novalidate>
+        <!--Modal to display create class form-->
+        <div class="modal fade" id="create-class-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border_white modal_box_shadow">
+                    <div class="modal-header ml-1 text_d_blue border_color_white">
+                        <h3 class="modal-title capitalize">Create&nbsp;a&nbsp;class</h3>
+                        <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                    </div>
+                    <div class="modal-footer border_color_white">
+                        <div class="col-12 d-flex justify-content-end">
+                            <input type="submit" value="Create" name="submit"
+                                class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+                            <a href="{% url 'classroom:createclass' %}"
+                                class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2">Cancel</a>
                         </div>
-
-                        <div>
-                            <h5>Tutor :</h5>
-                            <p>{{class.tutor}}</p>
-                        </div>
-
-                        <div>
-                            <h5>Course :</h5>
-                            <p>{{class.course}}</p>
-                        </div>
-
-                        <div>
-                            <h5>Year :</h5>
-                            <p>{{class.year}}</p>
-                        </div>
-
-                        <div>
-                            <h5>Section :</h5>
-                            <p>{{class.sec}}</p>
-                        </div>
-                        <button type="button" class="btn btn-danger float-right m-2">Delete</button>
-                        <a href="{% url 'classroom:editclass' class.id %}" class="btn btn-info">View</a>
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-</div>
-
-<!--Modal to display create class form-->
-<div class="modal fade" id="create-class-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4>Create a class</h4>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{% url 'classroom:createclass' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="course">Course Name<span class="text-danger">*</span></label>
-                        {{form.course}}
-                        <p class="text-danger errors">{{form.course.errors}}</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="year">Year<span class="text-danger">*</span></label>
-                        {{form.year}}
-                    </div>
-                    <div class="form-group">
-                        <label for="section">Section<span class="text-danger">*</span></label>
-                        {{form.sec}}
-                    </div>
-                    <div class="form-group">
-                        <label for="tutor">Tutor Name<span class="text-danger">*</span></label>
-                        {{form.tutor}}
-                    </div>
-                    <input type="submit" class="btn btn-success float-right mx-2">
-                    <a href="{% url 'classroom:createclass' %}" class="btn btn-secondary float-right">Cancel</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+    </form>
+</article>
 
 <script>
     $(document).ready(function () {
-        $("#delete-more").tooltip();
+        $(".card-back").each(function () {
+            $("#back" + $(this).data("place")).css("height", $("#front" + $(this).data("place")).height());
+        })
+
+        $('[data-toggle="tooltip"]').tooltip();
         $(".toast").toast({ delay: 2000 }).toast({ autohide: false }).toast('show');
 
-        var errors = "{{errors}}";
-        if (errors.length != 0) {
-            $("#create-class-modal").modal({ backdrop: 'static' });
-            $("#create-class-modal").modal('show');
+        {% if form.errors %}
+        $("#create-class-modal").modal({ backdrop: 'static' });
+        $("#create-class-modal").modal('show');
+        {% endif %}
+
+        var selectableList = $("#selectable");
+        var selected_class_obj_items, selected_class_id = [];
+
+        function clearClassroomData() {
+            selected_class_obj_items = []; // Clearing the classroom object data
+            selected_class_id = []; // Clearing classroom id data
         }
-        $(".class-check").change(function () {
-            if (this.checked) {
-                $("#delete-more-button").prop("disabled", false);
+
+        function enableDeleteButton() {
+            $("#delete-more-button").prop("disabled", false);
+        }
+
+        function disableDeleteButton() {
+            $("#delete-more-button").prop("disabled", true);
+        }
+
+        function enableDragFeature() {
+            // Enabling drag and select feature
+            selectableList.selectable({
+                stop: getSelectedItems
+            });
+            // Those has 'data-value="select"' attribute, can have ui-selected class
+            selectableList.selectable('destroy').selectable({
+                stop: getSelectedItems,
+                filter: 'div[data-value="select"]'
+            });
+        }
+
+        function disableDragFeature() {
+            // Disabling drag and select feature
+            selectableList.selectable({
+                stop: getSelectedItems
+            });
+            // Destroying the selecting option
+            selectableList.selectable('destroy');
+        }
+
+        function changeCancelStatus() {
+            $("#drag-and-select").attr("data-value", "cancel");
+            $("#drag-and-select").html("Cancel");
+            $("#drag-and-select").removeClass("text-success").addClass("text-danger");
+        }
+
+        function changeSelectStatus() {
+            $("#drag-and-select").attr("data-value", "drag");
+            $("#drag-and-select").html("Select");
+            $("#drag-and-select").removeClass("text-danger").addClass("text-success");
+        }
+        // Fetching the selected items and finding its class object
+        function getSelectedItems() {
+            clearClassroomData();
+            $(".card-front.ui-selected").each(function () {
+                selected_class_obj_items += $(this).attr("class-obj") + "<br/>";
+                selected_class_id.push($(this).attr("class-id"));
+            });
+            enableDeleteButton();
+        }
+
+        $("#drag-and-select").click(function () {
+            var value = $(this).attr("data-value");
+
+            if ((value.localeCompare("drag")) == "0") {
+                clearClassroomData();
+                changeCancelStatus();
+                enableDragFeature();
+                $("#select-all").prop("checked", false);
+                $(".card-front, .card-back").removeClass("ui-selected");
             }
-            else {
-                var decide = false;
-                $(".class-check").each(function () {
-                    if (this.checked) {
-                        decide = true;
-                    }
-                });
-                if (decide == false) {
-                    //decide is false when no anyone of the checkbox is checked
-                    $("#delete-more-button").prop("disabled", true)
-                    if ($("#select-all").prop("checked") == true) {
-                        $("#select-all").prop("checked", false)
-                    }
-                }
-                else if (decide == true) {
-                    $("#delete-more-button").prop("disabled", false)
-                }
+            else if ((value.localeCompare("cancel")) == "0") {
+                clearClassroomData();
+                changeSelectStatus();
+                disableDragFeature();
+                disableDeleteButton();
             }
-        });
+        })
 
         $("#select-all").change(function () {
             if (this.checked) {
-                $(".class-check").prop("checked", true)
-                $("#delete-more-button").prop("disabled", false)
+                clearClassroomData();
+                disableDragFeature();
+                changeSelectStatus();
+                $("#select-all").prop("checked", true);
+                $(".card-front, .card-back").addClass("ui-selected"); // adding ui-selected
+                enableDeleteButton();
+                getSelectedItems();
             }
             else {
-                $(".class-check").prop("checked", false)
-                $("#delete-more-button").prop("disabled", true)
+                clearClassroomData();
+                $(".card-front, .card-back").removeClass("ui-selected"); // removing ui-selected
+                disableDeleteButton();
+
             }
-        });
+        })
 
         $("#search-class").keyup(function () {
             var value = $(this).val().toLowerCase()
@@ -192,8 +276,3 @@
 </script>
 
 {% endblock %}
-
-<!--User defined classes:
-1.identify : to identify all the input tag 
-  in the create classroom form
-2.errorlist : it is the predefined class to show the error-->
