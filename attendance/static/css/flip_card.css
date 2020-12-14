@@ -40,14 +40,12 @@
 }
 
 .card-front {
-  min-height: 21rem;
+  min-height: 18.8rem;
   max-height: 24rem;
   border: 1px solid #c9d7e2;
 }
 
 .card-back {
-  height: 100%;
-  margin-bottom: 15px;
   border: 2px solid #c9d7e2;
   -webkit-transform: rotateY(180deg);
           transform: rotateY(180deg);

@@ -69,9 +69,10 @@
     </section>
     <article class="row d-flex justify-content-center mt-md-4" id="selectable">
         {% for class,img in mylist %}
-        <section class="flip-card my-4 mx-4">
+        <section class="flip-card my-2 mx-4">
             <div class="card cards border-0">
-                <div class="card-front" date-id="{{ class }}" id="{{ class.id }}" data-value="select">
+                <div class="card-front" class-obj="{{ class }}" class-id="{{ class.id }}" id="front{{ class.id }}"
+                    data-value="select">
                     <div class="card-header border-0 bg-transparent p-3">
                         {% with "img/classrooms/"|add:img|default:"classroom11.jpg" as image_static %}
                         <img src="{% static image_static %}" class="card-img-top img_border_radius">
@@ -102,7 +103,7 @@
                         </h6>
                     </div>
                 </div>
-                <div class="card-back" data-value="select">
+                <div class="card-back pb-0" data-value="select" id="back{{ class.id }}" data-place="{{ class.id }}">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
                         <a href="{% url 'classroom:editclass' class.id %}" type="submit"
                             class="btn border_white btn-cust neu_icon text-primary align-self-center my-2">
@@ -158,6 +159,10 @@
 
 <script>
     $(document).ready(function () {
+        $(".card-back").each(function () {
+            $("#back" + $(this).data("place")).css("height", $("#front" + $(this).data("place")).height());
+        })
+
         $('[data-toggle="tooltip"]').tooltip();
         $(".toast").toast({ delay: 2000 }).toast({ autohide: false }).toast('show');
 
@@ -218,8 +223,8 @@
         function getSelectedItems() {
             clearClassroomData();
             $(".card-front.ui-selected").each(function () {
-                selected_class_obj_items += $(this).attr("date-id") + "<br/>";
-                selected_class_id.push($(this).attr("id"));
+                selected_class_obj_items += $(this).attr("class-obj") + "<br/>";
+                selected_class_id.push($(this).attr("class-id"));
             });
             enableDeleteButton();
         }
