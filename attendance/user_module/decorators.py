@@ -48,7 +48,7 @@ def is_hod_or_self(function):
 	wrap.__name__ = function.__name__
 	return wrap
 
-def is_hod_or_tutor(function):
+def is_hod_or_tutor(function):	# WARNING - use it only if you pass the classroom_id as id to the view function
 	def wrap(request,id,*args,**kwargs):
 		if request.user.is_authenticated:
 			u = request.user
