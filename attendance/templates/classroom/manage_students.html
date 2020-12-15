@@ -82,13 +82,13 @@
 						<div class="invalid-feedback"><strong>[[ s.email_error_msg ]]</strong></div>
 					</td>
 					{% if request.user.staffmodel.is_hod or class_obj.tutor == request.user %}
-					<td>
+					<td class="text-right">
 						<button class="btn border_white btn-cust neu_icon text-success align-self-center"
 							v-bind:key="s.id" v-on:click="ajax_update(index)" v-if="s.edit">Update</button>
 						<button class="btn border_white btn-cust neu_icon text-success align-self-center"
 							v-bind:key="s.id" v-on:click="toggle_edit(index)" v-else>Edit</button>
 					</td>
-					<td>
+					<td class="text-left">
 						<button class="btn border_white btn-cust neu_icon text-danger align-self-center"
 							data-toggle="modal" v-bind:data-target="'#confirm_delete_student_'+index">Delete</button>
 						<div class="modal fade" v-bind:id="'confirm_delete_student_'+index">

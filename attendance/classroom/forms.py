@@ -26,7 +26,8 @@ class ClassroomForm(forms.ModelForm):
 
 
 class AddStudentCSVForm(forms.Form):
-    file = forms.FileField()
+    file = forms.FileField(widget=forms.FileInput(
+        attrs={'class': 'custom-file-input'}))
 
 
 class AddStudentForm(forms.ModelForm):
@@ -73,8 +74,10 @@ class BaseStudentFormSet(forms.BaseModelFormSet):
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             if username in usernames:
-                raise ValidationError("Students in the set must have distinct username")
+                raise ValidationError(
+                    "Students in the set must have distinct username")
             usernames.append(username)
             if email in emails:
-                raise ValidationError("Students in the set must have distinct email")
+                raise ValidationError(
+                    "Students in the set must have distinct email")
             emails.append(email)

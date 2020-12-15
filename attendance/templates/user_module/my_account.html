@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
-
 {% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | My Account</title>
+{% endblock %}
+
+{% block head %}
+<style>
+    #account_update_form label {
+        color: #062743;
+        font-size: 1.1rem;
+        font-family: 'arvo';
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 <div class="row d-flex justify-content-center align-items-center m-3 m-md-0">
@@ -27,7 +40,6 @@
                 <button type="submit" form="account_update_form"
                     class="btn border_white btn-cust neu_icon text-primary align-self-center float-right mr-3">Update</button>
             </div>
-
         </form>
     </div>
 </div>

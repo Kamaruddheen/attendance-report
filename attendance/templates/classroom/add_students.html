@@ -1,65 +1,95 @@
 {% extends 'base.html' %}
-
 {% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | Add Students</title>
+{% endblock %}
+
+{% block head %}
+<style>
+	#student_create_form label {
+		color: #062743;
+		font-size: 1.1rem;
+		font-family: 'arvo';
+	}
+</style>
+{% endblock %}
 
 {% block content %}
 
-<section class="container">
-	<h2 class="text-center">Manage Students</h2>
-
-	<article>
-		<button class="btn btn-primary" data-toggle="modal" data-target="#add_stud_csv">Upload CSV</button>
-
-	</article>
-
-	<form method="POST">
-		{{ formset.management_form }}
-		{% for form in formset %}
-		{% csrf_token %}
-		<div class="row">
-			<div class="col-3">
+<div class="row d-flex justify-content-center align-items-center m-3 m-md-0">
+	<div class="container col-lg-8 col-xl-7 body_box_shadow border_white p-4 mx-md-3">
+		<div class="row d-flex flex-column">
+			<div class="text-center text_d_blue arvo mb-3">
+				<h3 class="m-0">Add Students</h3>
+			</div>
+			<small class="text-dark text-center mb-3">
+				Create a multiple student account at once.
+			</small>
+			<button class="btn border_white btn-cust neu_icon text-primary align-self-center" data-toggle="modal"
+				data-target="#add_stud_csv">Upload CSV</button>
+			<h5 class="text-dark text-center mt-3">
+				(or)
+			</h5>
+			<small class="text-dark text-center mb-3">
+				Just create a single student account.
+			</small>
+		</div>
+		<form class="form form-row edit_form needs-validation" method="POST" id="student_create_form" novalidate>
+			{{ formset.management_form }}
+			{% for form in formset %}
+			{% csrf_token %}
+			<div class="form-group col-md-12">
 				{{ form.username|as_crispy_field }}
 			</div>
-			<div class="col-3">
+			<div class="form-group col-md-6">
 				{{ form.first_name|as_crispy_field }}
 			</div>
-			<div class="col-3">
+			<div class="form-group col-md-6">
 				{{ form.last_name|as_crispy_field }}
 			</div>
-			<div class="col-3">
+			<div class="form-group col-md-12">
 				{{ form.email|as_crispy_field }}
 			</div>
-		</div>
-		{% endfor %}
-		<input type="submit" name="add_stud_form" value="Submit" class="btn btn-success">
-	</form>
-
-	<!-- Add Student CSV Modal Form -->
+			{% endfor %}
+			<div class="form-group col-md-12">
+				<input type="submit" name="add_stud_form" form="student_create_form" value="Submit"
+					class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3">
+			</div>
+		</form>
+	</div>
+</div>
+<!-- Add Student CSV Modal Form -->
 <div class="modal fade" id="add_stud_csv">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content border_white modal_box_shadow">
 			<form class="edit_form" method="POST" id="add_stud_csv_form" enctype="multipart/form-data" novalidate>
-			<div class="modal-header ml-1 text_d_blue border_color_white">
-				<h3 class="modal-title">Edit&nbsp;Staff&nbsp;Details</h3>
-				<button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
-			</div>
-			<div class="modal-body pt-0">
-					{% csrf_token %}
-					{{ csv_form|crispy }}
-			</div>
-			<div class="modal-footer border_color_white">
-				<div class="col-12 d-flex justify-content-end">
-					<input type="submit" value="upload" name="add_stud_csv_form" form="add_stud_csv_form"
-						class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
-					<button class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2"
-						data-dismiss="modal" type="button">Cancel</button>
+				<div class="modal-header ml-1 text_d_blue border_color_white">
+					<h3 class="modal-title">Edit&nbsp;Student&nbsp;Details</h3>
+					<button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
 				</div>
-			</div>
+				<div class="modal-body mt-3 pt-0">
+					{% csrf_token %}
+					{% for field in csv_form %}
+					<div class="fieldWrapper">
+						{{ field.label_tag }}
+						{{ field }}
+						{{ field.errors }}
+					</div>
+					{% endfor %}
+				</div>
+				<div class="modal-footer border_color_white">
+					<div class="col-12 d-flex justify-content-end">
+						<input type="submit" value="Upload" name="add_stud_csv_form" form="add_stud_csv_form"
+							class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+						<button class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2"
+							data-dismiss="modal" type="button">Cancel</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
 </div>
 
-</section>
 
 {% endblock %}
