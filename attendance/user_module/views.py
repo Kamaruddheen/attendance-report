@@ -72,4 +72,8 @@ class AccountEditView(LoginRequiredMixin, View):
             form.save()
             messages.success(
                 request, "Your Account details saved successfully")
-        return redirect("my_account", permanent=True)
+            return redirect("my_account", permanent=True)
+        context = {
+            "form": form
+        }
+        return render(request, 'user_module/my_account.html', context)
