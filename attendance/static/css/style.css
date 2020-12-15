@@ -139,8 +139,10 @@ body {
           box-shadow: inset 5px 5px 10px #c2d0db,  inset -5px -5px 10px #e5f6ff;
 }
 
-.max_95 {
-  max-width: 95%;
+@media screen and (min-width: 768px) {
+  .max_95 {
+    max-width: 95%;
+  }
 }
 
 /* Border Radius */
@@ -231,6 +233,7 @@ body {
   z-index: 1000;
   border: 1px solid #c9d7e2;
   height: 465px;
+  min-width: 225px !important;
   width: 225px;
   -webkit-transition: 0.5 ease;
   transition: 0.5 ease;
@@ -285,7 +288,7 @@ body {
   fill: #fff;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   #left_side_bar {
     position: fixed !important;
     top: 0px;

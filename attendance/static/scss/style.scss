@@ -141,9 +141,10 @@ body {
               inset -5px -5px 10px #e5f6ff;
     }
 }
-
-.max_95{
-    max-width: 95%;
+@media screen and (min-width: 768px) {
+    .max_95{
+        max-width: 95%;
+    }
 }
 
 /* Border Radius */
@@ -232,6 +233,7 @@ body {
     z-index: 1000;
     border: 1px solid #c9d7e2;
     height: 465px;
+    min-width: 225px !important;
     width: 225px;
     transition: 0.5 ease;
     background-color: #daeaf6;
@@ -287,7 +289,7 @@ body {
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
     #left_side_bar{
         position: fixed !important;
         top: 0px;
