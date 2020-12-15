@@ -21,8 +21,8 @@
         <div class="text-center text_d_blue arvo my-4 mt-md-0 mb-md-4">
             <h3 class="m-0">Edit&nbsp;Account</h3>
         </div>
-        <form class="form form-row edit_form needs-validation" action="{% url 'account_edit' request.user.id %}"
-            method="POST" id="account_update_form">
+        <form class="form form-row needs-validation" action="{% url 'account_edit' request.user.id %}" method="POST"
+            id="account_update_form" novalidate>
             {% csrf_token %}
             <div class="form-group col-md-12">
                 {{ form.username|as_crispy_field }}
