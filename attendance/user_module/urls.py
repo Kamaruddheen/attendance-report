@@ -14,11 +14,10 @@ urlpatterns = [
 	path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 	# View url patters
 	path('create/staff/',createstaffview,name='create_staff'),
-	path('manage/staff/',managestaffview,name='manage_staff'),
-	path('manage/staff/<int:id>',staffdetailview,name='staff_detail'),
+	path('view/staff/',allstaffview,name='view_all_staff'),
+	path('view/staff/<int:id>',staffdetailview,name='staff_detail'),
 
 	path('my_account/', MyAccountView.as_view(), name="my_account"),
 	path('my_account/edit/<int:id>', AccountEditView.as_view(), name="account_edit"),
-	path('staffs/', AllStaffView.as_view(), name="staffs")
 
 ]

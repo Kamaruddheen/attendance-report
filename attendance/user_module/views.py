@@ -7,7 +7,7 @@ from django.http import Http404
 
 from .forms import CreateStaffForm, EditStaffForm
 from .models import StaffModel, User
-from .decorators import is_hod, is_hod_or_self
+from .decorators import is_hod, is_staff, is_hod_or_self
 
 
 @login_required
@@ -27,13 +27,13 @@ def createstaffview(request):
 
 
 @login_required
-@is_hod
-def managestaffview(request):
+@is_staff
+def allstaffview(request):
     staff_obj = StaffModel.objects.filter(is_hod=False)
     context = {
         'staffs': staff_obj,
     }
-    return render(request, 'user_module/managestaff.html', context=context)
+    return render(request, 'user_module/view_all_staff.html', context=context)
 
 
 @login_required
@@ -73,12 +73,3 @@ class AccountEditView(LoginRequiredMixin, View):
             messages.success(
                 request, "Your Account details saved successfully")
         return redirect("my_account", permanent=True)
-
-
-class AllStaffView(LoginRequiredMixin, View):
-    def get(self, request):
-        staffs = StaffModel.objects.all()
-        context = {
-            'staffs': staffs,
-        }
-        return render(request, 'user_module/all_staff.html', context=context)
