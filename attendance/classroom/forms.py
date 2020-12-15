@@ -60,8 +60,10 @@ class AddStudentForm(forms.ModelForm):
 
 class BaseStudentFormSet(forms.BaseModelFormSet):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(BaseStudentFormSet,self).__init__(*args, **kwargs)
         self.queryset = User.objects.none()
+        for form in self.forms:
+            form.empty_permitted=False
 
     def clean(self):
         if any(self.errors):
