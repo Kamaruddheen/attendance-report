@@ -141,6 +141,7 @@ body {
               inset -5px -5px 10px #e5f6ff;
     }
 }
+
 @media screen and (min-width: 768px) {
     .max_95{
         max-width: 95%;
@@ -365,10 +366,25 @@ body {
 	color: #062743 !important;
 	background-color: #daeaf6 !important;
     border: 1px solid #c9d7e2;
-    border-color: #daeaf6 !important;
 	border-radius: 2rem !important;
 	box-shadow: inset 5px 5px 10px #c2d0db,
-		inset -5px -5px 10px #daeaf6;
+        inset -5px -5px 10px #daeaf6;
+        
+    &:focus{
+        border: 2px solid #c9d7e2;
+        outline: none !important;
+        box-shadow: inset 5px 5px 10px #c2d0db, 
+              inset -5px -5px 10px #e5f6ff;
+    }
+
+    &:hover{               
+        box-shadow: inset 5px 5px 10px #c2d0db, 
+              inset -5px -5px 10px #e5f6ff;
+    }
+
+    &:active {
+        outline: none !important;        
+    }
 }
 
 .body_box_shadow{
@@ -414,4 +430,10 @@ body {
     max-height: 400px;
     overflow-y: auto;
     display: inline-block;
+}
+
+/* Animation */
+
+.transition_4s{
+    transition: all 0.4s;
 }

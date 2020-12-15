@@ -24,13 +24,29 @@ class ClassroomForm(forms.ModelForm):
         model = ClassroomModel
         fields = ['course', 'year', 'sec', 'tutor']
 
+
 class AddStudentCSVForm(forms.Form):
     file = forms.FileField()
+
 
 class AddStudentForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','email']
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {'placeholder': 'Username', 'class': 'input_cust capitalize'})
+        self.fields['first_name'].widget.attrs.update(
+            {'placeholder': 'First name', 'class': 'input_cust capitalize'})
+        self.fields['last_name'].widget.attrs.update(
+            {'placeholder': 'Last name', 'class': 'input_cust capitalize'})
+        self.fields['email'].widget.attrs.update(
+            {'placeholder': 'eg..abc@example.com', 'class': 'input_cust'})
+        self.fields['first_name'].label = "First Name"
+        self.fields['last_name'].label = "Last Name"
+        self.fields['email'].label = "Email Address"
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -39,6 +55,7 @@ class AddStudentForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         return email.lower()
+
 
 class BaseStudentFormSet(forms.BaseModelFormSet):
     def __init__(self, *args, **kwargs):

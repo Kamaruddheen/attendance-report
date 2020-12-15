@@ -358,10 +358,25 @@ body {
   color: #062743 !important;
   background-color: #daeaf6 !important;
   border: 1px solid #c9d7e2;
-  border-color: #daeaf6 !important;
   border-radius: 2rem !important;
   -webkit-box-shadow: inset 5px 5px 10px #c2d0db, inset -5px -5px 10px #daeaf6;
           box-shadow: inset 5px 5px 10px #c2d0db, inset -5px -5px 10px #daeaf6;
+}
+
+.input_cust:focus {
+  border: 2px solid #c9d7e2;
+  outline: none !important;
+  -webkit-box-shadow: inset 5px 5px 10px #c2d0db,  inset -5px -5px 10px #e5f6ff;
+          box-shadow: inset 5px 5px 10px #c2d0db,  inset -5px -5px 10px #e5f6ff;
+}
+
+.input_cust:hover {
+  -webkit-box-shadow: inset 5px 5px 10px #c2d0db,  inset -5px -5px 10px #e5f6ff;
+          box-shadow: inset 5px 5px 10px #c2d0db,  inset -5px -5px 10px #e5f6ff;
+}
+
+.input_cust:active {
+  outline: none !important;
 }
 
 .body_box_shadow {
@@ -405,5 +420,11 @@ body {
   max-height: 400px;
   overflow-y: auto;
   display: inline-block;
+}
+
+/* Animation */
+.transition_4s {
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
 }
 /*# sourceMappingURL=style.css.map */
