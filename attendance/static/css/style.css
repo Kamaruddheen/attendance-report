@@ -1,3 +1,29 @@
+/* Html Scrollbar Hide */
+.html::-webkit-scrollbar {
+  /* Edge,Chrome,Opera */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  display: none;
+}
+
+::-webkit-scrollbar {
+  /* Edge,Chrome,Opera, */
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 0px;
+  display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background: transparent;
+}
+
+@-moz-document url-prefix() {
+  html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 body {
   background-color: #daeaf6;
   font-family: 'Karla', sans-serif !important;
@@ -434,5 +460,25 @@ body {
 .transition_4s {
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
+}
+
+/* Table */
+/* Table Scrollbar Hide */
+.table::-webkit-scrollbar {
+  /* Chrome,Edge,Opera,Firefox */
+  width: 0px;
+  background: transparent;
+}
+
+.table_wrapper {
+  /* Chrome,Edge,Opera,Firefox */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.table_wrapper::-webkit-scrollbar {
+  /* Chrome,Edge,Opera,Firefox */
+  width: 0px;
+  background: transparent;
 }
 /*# sourceMappingURL=style.css.map */
