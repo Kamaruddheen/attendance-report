@@ -398,6 +398,14 @@ body {
           box-shadow: 8px 8px 16px #aebbc5, -8px -8px 16px #daeaf6;
 }
 
+.toast_box_shadow {
+  border: 1px solid #ffffff;
+  background-color: #daeaf6;
+  border-radius: 2rem !important;
+  -webkit-box-shadow: 8px 8px 16px #aebbc5, -8px -8px 16px #daeaf6;
+          box-shadow: 8px 8px 16px #aebbc5, -8px -8px 16px #daeaf6;
+}
+
 .badge_box_shadow {
   padding: 6px;
   border: 1px solid #c9d7e2;

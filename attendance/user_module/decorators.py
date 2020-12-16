@@ -1,6 +1,5 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
-from .models import User
 from classroom.models import ClassroomModel
 
 def is_hod(function):
@@ -88,7 +87,7 @@ def is_hod_or_tutor(function):	# WARNING - use it only if you pass the classroom
 				else:
 					redirect_url = 'homepage'
 				print(redirect_url)
-				messages.info(request,'Only the Tutor of {} and HoD have access'.format(class_obj))
+				messages.info(request,'Only the Tutor of {} and HoD have access.'.format(str(class_obj).upper()))
 				return redirect(redirect_url or 'homepage',)
 		else:
 			return redirect(redirect('login').url+'?next='+request.path,permanent=True)

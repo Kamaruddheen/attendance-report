@@ -1,27 +1,28 @@
-{% for message in messages %}
-<div class="modal fadex" id="{{ forloop.counter }}">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<!--Modal Header -->
-			<div class="modal-header">
-				<h5 class="{{ message.tags }}">{{ message }}</h5>
-				<button type="button" class="close" data-dismiss="modal">&times</button>
-			</div>
-			<!-- Modal Body -->
-			<!-- <div class="modal-body">
-						<p class="text-secondary"></p>
-					</div> -->
-			<!-- Modal Footer -->
+{% load static %}
+
+<div aria-live="polite" aria-atomic="true" style="position: relative; z-index:1800">
+	{% for message in messages %}
+	<div class="toast toast_box_shadow p-2 mr-md-3 mt-md-3" style="position: absolute; top: 0; right: 0;"
+		data-delay="2000" id="{{ forloop.counter0 }}">
+		<div class="toast-header border_color_white p-2 bg-transparent">
+			<img src="{% static 'img/logo.jpg' %}" width="35" class="rounded-circle mr-2" alt="Horbax">
+			<strong class="mr-auto text_d_blue">Notification</strong>
+			<small>Just Now</small>
+			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="toast-body">
+			<h5 class="{{ message.tags }}">{{ message }}</h5>
 		</div>
 	</div>
+	{% endfor %}
 </div>
-{% endfor %}
-
 
 <script type="text/javascript">
 	$(document).ready(function () {
 		{% for message in messages %}
-		$('#{{ forloop.counter }}').modal('toggle');
+		$('#{{ forloop.counter0 }}').toast('show');
 		{% endfor %}
 	});
 </script>
