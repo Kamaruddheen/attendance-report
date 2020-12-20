@@ -20,6 +20,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <!-- Custom Css -->
 <link rel="stylesheet" type="text/css" href="{% static 'css/flip_card.css' %}">
+<!-- Lazy Image Load -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> -->
 {% endblock %}
 
 {% block content %}
@@ -75,14 +77,15 @@
                     data-value="select">
                     <div class="card-header border-0 bg-transparent p-3">
                         {% with "img/classrooms/"|add:img|default:"classroom11.jpg" as image_static %}
-                        <img src="{% static image_static %}" class="card-img-top img_border_radius">
+                        <img src="{% static image_static %}" class="card-img-top img_border_radius"
+                            alt="&nbsp;&nbsp;{{class|title }}">
                         {% endwith %}
                     </div>
                     <div class="card-body py-0 pb-1 text_d_blue">
-                        <h3 class="text-center upper_case font-weight-bold pb-1">
-                            {{class.get_year_display}}
-                            {{class.course}}
-                            {{class.sec}}</h3>
+                        <h3 class="text-center font-weight-bold pb-1">
+                            {{class.get_year_display|upper}}
+                            {{class.course|upper}}
+                            {{class.sec|upper}}</h3>
                     </div>
                     <div class="card-footer d-flex flex-row border_color_white bg-transparent text_d_blue">
                         <h6 class="capitalize font_size_normal font-weight-bold mb-0">Tutor&nbsp;:</h6>
