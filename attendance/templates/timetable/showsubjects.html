@@ -23,7 +23,7 @@
             <tr>
                 <th>{{days}}</th>
                 {% for j in i %}
-                    <td id="{{forloop.parentloop.counter}}{{forloop.counter}}">{{j}}<!--<span id="subject_id">{{j.subject.id}}</span>--></td>
+                    <td id="{{forloop.parentloop.counter}}{{forloop.counter}}" name="{{j.id}}">{{j}}</td>
                 {% endfor %}
             </tr>
             {% endfor %}
@@ -32,30 +32,88 @@
     <h5>This timetable is valid from{{s_object.from_date}} to {{s_object.to_date}}</h5>
     <a href="{% url 'timetable:set_info' c_object.id s_object.id %}" class="btn btn-danger">Back</a>
     <a href="{% url 'timetable:createtimetable' c_object.id s_object.id %}" class="btn btn-info">Add subjects for this timetable</a>
-    <!--<div class="modal fade" id="timetable_modal">
+    <button type="button" class="btn btn-success float-right" id="save-changes">Save changes</button>
+    <div class="modal fade" id="timetable_modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4>Create/Edit a subject</h4>
+                    <h4>Change the subject for the particular hour</h4>
                 </div>
                 <div class="modal-body">
                     <form method="POST" id="create_timetable_form">
                         {% csrf_token %}
-                        {{t_form_object.as_p}}
+                        {{edit_timetable.as_p}}
                         <button type="button" class="btn btn-info" id="add_subject">Add subject</button>
-                        <input id="save_subjects" type="submit" class="btn btn-success" value="Save subject">
                         <button type="reset" class="btn btn-secondary" id="cancel_button">Cancel</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
 
     <script>
         $(document).ready(function(){
+            var a,day,hour,subject,save=false;
+            var subject_list=[];
             $("#cancel_button").click(function(){
                 $("#timetable_modal").modal('hide')
             });
+
+            $("td").click(function(){
+                subject=$(this).text()
+                if(subject!='Free'){
+                    a=$(this).attr('id')
+                    day=a[0]
+                    hour=a[1]
+                    $("#id_day").val(day)
+                    $("#id_hour").val(hour)
+                    $("#id_day,#id_hour,#id_set_name").attr('disabled',true)
+                    //prop method is the best for setting the selected kind of elements
+                    $("#id_subject option:contains("+subject+")").prop('selected',true)
+                    $("#timetable_modal").modal('show')
+                }
+            });
+
+            $("#add_subject").click(function(){
+                $("#save-changes").prop('disabled',false)
+                subject=$("#id_subject").val()
+                var temp=[day,hour,subject]
+                //:selected selector selects the elements that are pre-selected;so there is no manadatory for the elements with the 'selected' attribute
+                subject=$("#id_subject option:selected").text()
+                $("td").each(function(){
+                    var find=$(this).attr('id')
+                    if(a==find){
+                        $(this).text(subject)  
+                        var timetable_id=$(this).attr('name')
+                        temp.push(timetable_id) 
+                    }
+                })
+                subject_list.push(temp)
+                save=true
+                $("#timetable_modal").modal('hide')
+            });
+            
+            $("#save-changes").click(function(){
+                console.log(subject_list)
+                var url="{% url 'timetable:edit_subjects' s_object.id %}";
+                $.ajax({
+                    headers:{
+                        "X-CSRFTOKEN": "{{ csrf_token }}"
+                    },
+                    url:url,
+                    type:'post',
+                    data:{
+                        'subject_list[]':subject_list
+                    },
+                    success:function(response){
+                        if(response=="saved"){
+                            $("#save-changes").prop('disabled',true)
+                        }
+                    }
+                });
+            });
+
+         
         });
     </script>
 {% endblock %}

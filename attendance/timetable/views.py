@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import HttpResponse,redirect
 from django.shortcuts import render,get_object_or_404
-from .forms import TimetableForm,TimetablesetForm,CreatetimetableForm
+from .forms import TimetableForm,TimetablesetForm,edit_timetableForm
 from .models import ClassroomModel,TimetableModel,TimetablesetModel,SubjectModel
 # Create your views here.
 def createtimetable(request,class_id=None,set_id=None):
@@ -62,7 +62,7 @@ def set_info(request,class_id=None,set_id=None):
     s_object=get_object_or_404(TimetablesetModel,id=set_id)
     return render(request,'timetable/set_info.html',{'c_object':c_object,'s_object':s_object})
 
-def showsubjects(request,class_id=None,set_id=None):
+def showsubjects(request,class_id,set_id):
     where_to_redirect=TimetableModel.objects.filter(set_name__id=set_id)
     if len(where_to_redirect)==0:
         c_object=get_object_or_404(ClassroomModel,id=class_id)
@@ -73,8 +73,8 @@ def showsubjects(request,class_id=None,set_id=None):
     s_object=get_object_or_404(TimetablesetModel,id=set_id)
     c_object=get_object_or_404(ClassroomModel,id=class_id)    
     #Subjects for the particular timetable
-    days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
     all_subjects=[]
+    days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
     for i in range(1,7):
         setsubjects=TimetableModel.objects.filter(set_name__id=set_id,day=i).order_by('hour')
         j=1
@@ -82,6 +82,7 @@ def showsubjects(request,class_id=None,set_id=None):
         if len(setsubjects)==0:
             all_subjects.append(['Free','Free','Free','Free','Free'])
             continue
+        #changes need to be done
         for s_in_t_object in setsubjects:
             while j<6:
                 if s_in_t_object.hour==j:
@@ -96,6 +97,18 @@ def showsubjects(request,class_id=None,set_id=None):
                 subject_list.append('Free')
                 j+=1
         all_subjects.append(subject_list)
-    all_subjects=zip(all_subjects,days)
-    
-    return render(request,'timetable/showsubjects.html',{'days':days,'all_subjects':all_subjects,'c_object':c_object,'s_object':s_object})
+    all_subjects=zip(all_subjects,days)#zip function combines the two iterator and returns the combined version of the iterator
+    subject_list=SubjectModel.objects.filter(classroom=c_object)
+    edit_timetable=edit_timetableForm(subject_list=subject_list,initial={'set_name':s_object})
+    return render(request,'timetable/showsubjects.html',{'all_subjects':all_subjects,'c_object':c_object,'s_object':s_object,'edit_timetable':edit_timetable})
+
+def edit_subjects(request,set_id):
+    if request.method=="POST":
+        s_object=get_object_or_404(TimetablesetModel,id=set_id)
+        subject_list=request.POST.getlist('subject_list[]')
+        print("hello")
+        print(subject_list)
+        for i in subject_list:
+            print(i)
+    return HttpResponse("saved")
+            

@@ -32,9 +32,9 @@ class TimetablesetForm(forms.ModelForm):
         model=TimetablesetModel
         fields=('name','from_date','to_date')
 
-class CreatetimetableForm(forms.ModelForm):
+class edit_timetableForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
-        self.choice=kwargs.pop('s_list')
+        self.choice=kwargs.pop('subject_list')
         super().__init__(*args,**kwargs)
         self.fields['subject']=forms.ModelChoiceField(queryset=self.choice)
     class Meta:
