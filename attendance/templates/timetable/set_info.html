@@ -14,5 +14,24 @@
         <h5>To date :<small>{{s_object.to_date}}</small></h5>
         <a href="{% url 'timetable:setchoose' c_object.id %}" class="btn btn-danger">Back</a>
         <a href="{% url 'timetable:showsubjects' c_object.id s_object.id %}" class="btn btn-info">View Timetable</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-set-modal" data-backdrop="static">Edit set</button>
+        <div class="modal fade" id="edit-set-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Edit the set</h2>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Classroom chosen : {{c_object}}</h4>
+                        <form method='POST' action="{% url 'timetable:set_info' c_object.id s_object.id %}">
+                            {% csrf_token %}
+                            {{t_set.as_p}}
+                            <button type="submit" class="btn btn-success float-right">Submit</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss='modal'>Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -39,7 +39,7 @@ hour_choices=(
 class TimetableModel(models.Model):
 	hour = models.PositiveIntegerField(choices=hour_choices)
 	day = models.PositiveIntegerField(choices=day_choices)
-	subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE)
+	subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE,null=True,blank=True)
 	set_name = models.ForeignKey(TimetablesetModel,on_delete=models.CASCADE)
 	
 	class Meta:
@@ -48,4 +48,7 @@ class TimetableModel(models.Model):
 		verbose_name_plural = 'Timetables'
     
 	def __str__(self):
-		return self.subject.sub_name
+		if self.subject is None:
+			return "Free"
+		else:
+		    return self.subject.sub_name
