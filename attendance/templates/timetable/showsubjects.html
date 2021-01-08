@@ -57,6 +57,7 @@
     <script>
         $(document).ready(function(){
             $("#save-changes").prop('disabled',true)
+            $("#cancel-changes").prop('disabled',true)
             var a,subject;
             var subject_list=[];
             $("#cancel_button").click(function(){
@@ -82,6 +83,7 @@
             $("#add_subject").click(function(){
                 var temp=[];
                 $("#save-changes").prop('disabled',false)
+                $("#cancel-changes").prop('disabled',false)
                 subject=$("#id_subject").val()
                 if(subject.length==0){
                     subject='Free'
@@ -117,7 +119,6 @@
                     data: JSON.stringify({'subject_list':subject_list}),
                     success:function(response){
                         if(response=="saved"){
-                            $("#save-changes").prop('disabled',true)
                             location.reload()
                         }
                     }
