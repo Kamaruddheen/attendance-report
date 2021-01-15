@@ -1,0 +1,25 @@
+    <h4>This timetable is just for viewing purpose</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Days/Hour</td>
+                <th>I</td>
+                <th>II</td>
+                <th>III</td>
+                <th>IV</td>
+                <th>V</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i,days in all_subjects %}
+            <tr>
+                <th>{{days}}</th>
+                {% for j in i %}
+                    <td id="{{forloop.parentloop.counter}}{{forloop.counter}}" name="{{j.id}}">{{j}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5>This timetable is valid from{{s_object.from_date}} to {{s_object.to_date}}</h5>
+    <a href="{% url 'timetable:showsubjects' c_object.id s_object.id %}" class="btn btn-info">Click here to add/edit timetable</a>

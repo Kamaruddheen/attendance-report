@@ -8,13 +8,29 @@
 
 {% block content %}
 <h5>You are in the classroom : <a href="{% url 'classroom:editclass' c_object.id %}">{{c_object}}</a> </h5>
-<ul>
-<h4>The sets for the particular class : </h4>
-{% for i in t_set_particular %}
-    <li><a href="{% url 'timetable:set_info' c_object.id i.id %}">{{i}}</a></li>
-{% endfor %}
-</ul>
+{{choose_set_object.as_p}}
 <a href="{% url 'timetable:createtimetableset' c_object.id %}">Create a new set</a>
-<br>
+<a href="#" class="d-none ml-5" id="edit-set">Edit the selected set</a>
+<div id="timetable-section" class="mb-2"></div>
 <a href="{% url 'classroom:editclass' c_object.id %}" class="btn btn-danger">Back</a>
+
+<script>
+    $(document).ready(function(){
+        $("#id_choose_set").change(function(){
+            $("#edit-set").removeClass('d-none')
+            var set_id=$(this).val()
+            $.ajax({
+                headers:{
+                    "X-CSRFTOKEN": "{{ csrf_token }}",
+                },
+                url:"{% url 'timetable:showsubjects1' c_object.id 12345 %}".replace(12345,set_id.toString()),
+                //it should be an integer '12345 because of the inner django process which is unknown to users'
+                type:'post',
+                success:function(response){
+                    $('#timetable-section').html(response)
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

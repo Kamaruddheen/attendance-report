@@ -30,7 +30,7 @@
         </tbody>
     </table>
     <h5>This timetable is valid from{{s_object.from_date}} to {{s_object.to_date}}</h5>
-    <a href="{% url 'timetable:set_info' c_object.id s_object.id %}" class="btn btn-danger">Back</a>
+    <a href="{% url 'timetable:setchoose' c_object.id %}" class="btn btn-danger">Back to Set choose</a>
     <a href="{% url 'timetable:createtimetable' c_object.id s_object.id %}" class="btn btn-info">Add subjects for this timetable</a>
     <button type="button" class="btn btn-success float-right" id="save-changes">Save changes</button>
     <button type="button" class="btn btn-danger float-right mr-2" id="cancel-changes">Cancel changes</button>
@@ -81,31 +81,35 @@
             });
 
             $("#add_subject").click(function(){
-                var temp=[];
-                $("#save-changes").prop('disabled',false)
-                $("#cancel-changes").prop('disabled',false)
-                subject=$("#id_subject").val()
-                if(subject.length==0){
-                    subject='Free'
-                    temp=[subject]
+                var subject_chosen_text=$("#id_subject option:selected").text()
+                if(subject==subject_chosen_text){
+                    alert("Can't edit this period in the particular day particular hour")
                 }
                 else{
-                    temp=[subject]
-                    //:selected selector selects the elements that are pre-selected;so there is no manadatory for the elements with the 'selected' attribute
-                    subject=$("#id_subject option:selected").text()
-                }
-               
-                $("td").each(function(){
-                    var find=$(this).attr('id')
-                    if(a==find){
-                        $(this).text($(this).text().concat("-->",subject))  
-                        var timetable_id=$(this).attr('name')
-                        temp.push(timetable_id) 
+                    var temp=[],subject_chosen;
+                    $("#save-changes").prop('disabled',false)
+                    $("#cancel-changes").prop('disabled',false)
+                    subject_chosen=$("#id_subject").val()
+                    if(subject_chosen.length==0){
+                        subject_chosen='Free'
+                        temp=[subject_chosen]
                     }
-                })
-                subject_list.push(temp)
-                //save=true
-                $("#timetable_modal").modal('hide')
+                    else{
+                        temp=[subject_chosen]
+                        //:selected selector selects the elements that are pre-selected;so there is no manadatory for the elements with the 'selected' attribute
+                    }
+               
+                    $("td").each(function(){
+                        var find=$(this).attr('id')
+                        if(a==find){
+                            $(this).text($(this).text().concat("-->",subject_chosen_text))  
+                            var timetable_id=$(this).attr('name')
+                            temp.push(timetable_id) 
+                        }
+                    })
+                    subject_list.push(temp)
+                    $("#timetable_modal").modal('hide')
+                }
             });
             
             $("#save-changes").click(function(){
