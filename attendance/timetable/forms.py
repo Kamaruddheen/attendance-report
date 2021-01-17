@@ -14,19 +14,19 @@ class TimetableForm(forms.ModelForm):
         self.choice = kwargs.pop('c_object', None)
         super().__init__(*args, **kwargs)
         self.fields['set_name'].widget.attrs.update(
-            {'id': 'set_name', 'class': 'form-control'})
+            {'id': 'set_name', 'class': 'custom-select input_cust capitalize text-center form-control'})
         self.fields['day'].widget.attrs.update(
-            {'id': 'day', 'class': 'form-control'})
+            {'id': 'day', 'class': 'custom-select input_cust capitalize text-center form-control'})
         self.fields['s1'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
-            attrs={'id': 's1', 'class': 'form-control', }), empty_label='Free', required=False)
+            attrs={'id': 's1', 'class': 'custom-select input_cust capitalize text-center form-control', }), empty_label='Free', required=False)
         self.fields['s2'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
-            attrs={'id': 's2', 'class': 'form-control'}), empty_label='Free', required=False)
+            attrs={'id': 's2', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
         self.fields['s3'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
-            attrs={'id': 's3', 'class': 'form-control'}), empty_label='Free', required=False)
+            attrs={'id': 's3', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
         self.fields['s4'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
-            attrs={'id': 's4', 'class': 'form-control'}), empty_label='Free', required=False)
+            attrs={'id': 's4', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
         self.fields['s5'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
-            attrs={'id': 's5', 'class': 'form-control'}), empty_label='Free', required=False)
+            attrs={'id': 's5', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
 
     class Meta:
         model = TimetableModel

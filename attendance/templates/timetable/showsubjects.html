@@ -79,7 +79,8 @@
                     <th class="br">{{days}}</th>
                     {% for subject in subjects %}
                     <td id="{{forloop.parentloop.counter}}{{forloop.counter}}" name="{{subject.id}}"
-                        data-hour="{{subject.get_hour_display}}" data-day="{{subject.get_day_display}}">{{subject}}</td>
+                        data-hour="{{subject.get_hour_display}}" data-day="{{subject.get_day_display}}"
+                        value="{{subject}}" class="capitalize">{{subject}}</td>
                     {% endfor %}
                 </tr>
                 {% endfor %}
@@ -88,23 +89,28 @@
     </div>
 </section>
 
-<section class="m-3">
+<section class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between pl-md-4 pt-md-2 m-3">
     <a href="{% url 'timetable:setchoose' c_object.id %}"
         class="btn border_white btn-cust neu_icon text-primary align-self-center ml-2">Back</a>
-    <button type="button" class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3"
-        id="save-changes">Save changes</button>
-    <button type="button" class="btn border_white btn-cust neu_icon text-danger align-self-center float-right mr-2"
-        id="cancel-changes">Cancel changes</button>
+    <div class="d-flex flex-column flex-md-row">
+        <button type="button"
+            class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3 my-2"
+            id="save-changes">Save&nbsp;changes</button>
+        <button type="button"
+            class="btn border_white btn-cust neu_icon text-danger align-self-center float-right mr-2 my-2"
+            id="cancel-changes">Cancel&nbsp;changes</button>
+    </div>
 </section>
 
-<!--Modal stuff-->
+<!-- Modal stuff-->
 <div class="modal fade" id="timetable_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border_white modal_box_shadow">
             <div class="modal-header ml-1 text_d_blue border_color_white">
                 <h3 class="modal-title capitalize">Change&nbsp;subject&nbsp;hour</h3>
-                <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+                <button type="button" class="close btn-cust pr-4 pt-4 d-none d-sm-block"
+                    data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form method="POST" id="create_timetable_form">
@@ -145,18 +151,12 @@
         var subject_list = [];
 
         $("td").click(function () {
-            subject = $(this).text()
+            subject = $(this).attr('value')
             timetable_subject_id = $(this).attr('name')
             if (subject != '-') {
-                // var day, hour;
                 a = $(this).attr('id')
-                // day = a[0]
-                // hour = a[1]
-                // $("#id_day").val(day)
-                // $("#id_hour").val(hour)
-                $("#value-day").text("Day : " + $(this).attr('data-day'))
-                $("#value-hour").text("Hour : " + $(this).attr('data-hour'))
-                // $("#id_day,#id_hour,#id_set_name").attr('disabled', true)
+                $("#value-day").html("Day : " + "<text class='text-primary'>" + $(this).attr('data-day') + "</text>")
+                $("#value-hour").html("Hour : " + "<text class='text-primary'>" + $(this).attr('data-hour') + "</text>")
                 //prop method is the best for setting the selected kind of elements
                 $("#id_subject option:contains(" + subject + ")").prop('selected', true)
                 $("#timetable_modal").modal('show')
@@ -166,7 +166,7 @@
         $("#add_subject").click(function () {
             var subject_chosen_text = $("#id_subject option:selected").text()
             if (subject == subject_chosen_text) {
-                alert("Can't edit this period in the particular day particular hour")
+                alert("You are trying to change the subject which is already exists.")
             }
             else {
                 var temp = [], subject_chosen;
@@ -185,7 +185,7 @@
                 $("td").each(function () {
                     var find = $(this).attr('id')
                     if (a == find) {
-                        $(this).text($(this).text().concat("-->", subject_chosen_text))
+                        $(this).html($(this).attr('value') + " <small class='text-primary'>(old)</small><br>" + subject_chosen_text + " <small class='text-success'>(new)</small>")
                         var timetable_id = $(this).attr('name')
                         temp.push(timetable_id)
                     }
