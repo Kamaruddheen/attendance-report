@@ -30,8 +30,8 @@
         {{ c_object }}
     </h5>
 </section>
-<section class="container d-flex flex-column flex-md-row mt-md-3" id="div_id_set_choose">
-    {{choose_set_object}}
+<section class="container d-flex flex-column flex-md-row mt-md-3 px-3" id="div_id_set_choose">
+    {{choose_set_object|crispy}}
     <div class="my-3 mt-md-0 mx-auto mx-md-0 ml-md-auto">
         <a href="{% url 'timetable:createtimetableset' c_object.id %}"
             class="btn border_white btn-cust neu_icon text-primary align-self-center mx-2 mb-3">Create&nbsp;Set</a>

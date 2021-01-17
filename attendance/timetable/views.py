@@ -92,6 +92,7 @@ def set_info(request,class_id=None,set_id=None):
 
 #Timetable show
 def showsubjects(request,class_id,set_id):
+    any_empty_subject = False
     where_to_redirect=TimetableModel.objects.filter(set_name__id=set_id)
     #To check whether any subject is in the timetable :
     if len(where_to_redirect)==0:
@@ -110,7 +111,8 @@ def showsubjects(request,class_id,set_id):
         j=1
         subject_list=[]
         if len(setsubjects)==0:
-            all_subjects.append(['----','----','----','----','----'])
+            all_subjects.append(['-','-','-','-','-'])
+            any_empty_subject = True
             continue
         for s_in_t_object in setsubjects:
             if s_in_t_object.hour==j:
@@ -120,7 +122,7 @@ def showsubjects(request,class_id,set_id):
     all_subjects=zip(all_subjects,days)#zip function combines the two iterator and returns the combined version of the iterator
     subject_list=SubjectModel.objects.filter(classroom=c_object)
     edit_timetable=edit_timetableForm(subject_list=subject_list,initial={'set_name':s_object})
-    return render(request,'timetable/showsubjects.html',{'all_subjects':all_subjects,'c_object':c_object,'s_object':s_object,'edit_timetable':edit_timetable})
+    return render(request,'timetable/showsubjects.html',{'all_subjects':all_subjects,'c_object':c_object,'s_object':s_object,'edit_timetable':edit_timetable,'is_empty':any_empty_subject})
     
 def showsubjects1(request,class_id,set_id):
     s_object=get_object_or_404(TimetablesetModel,id=set_id)

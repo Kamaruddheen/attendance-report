@@ -57,6 +57,8 @@ class edit_timetableForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['subject'] = forms.ModelChoiceField(
             queryset=self.choice, empty_label='Free')
+        self.fields['subject'].widget.attrs.update(
+            {'class': 'custom-select input_cust capitalize text-center form-control'})
 
     class Meta:
         model = TimetableModel
@@ -71,5 +73,5 @@ class choose_set_form(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['choose_set'].queryset = choice
         self.fields['choose_set'].widget.attrs.update(
-            {'class': 'custom-select input_cust capitalize text-center ml-sm-2 form-control col-md-4'})
-        self.fields['choose_set'].label = "Select Timetable set "
+            {'class': 'custom-select input_cust capitalize text-center form-control'})
+        self.fields['choose_set'].label = "Select Timetable set"
