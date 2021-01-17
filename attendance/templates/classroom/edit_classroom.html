@@ -7,7 +7,7 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <a href="{% url 'timetable:setchoose' get_obj.id %}" class="btn btn-info float-right">Create Timetable</a>
+            <a href="{% url 'timetable:setchoose' get_obj.id %}" class="btn btn-info float-right">Timetable</a>
             <h5>Classroom Id :<small>{{get_obj.id}}</small></h5>
             <h5>Course :<small>{{get_obj.course}}</small></h5>
             <h5>Year :<small>{{get_obj.get_year_display}}</small></h5>
