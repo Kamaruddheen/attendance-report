@@ -27,6 +27,11 @@ class TimetableForm(forms.ModelForm):
             attrs={'id': 's4', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
         self.fields['s5'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
             attrs={'id': 's5', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
+        self.fields['s1'].label = "Hour I"
+        self.fields['s2'].label = "Hour II"
+        self.fields['s3'].label = "Hour III"
+        self.fields['s4'].label = "Hour IV"
+        self.fields['s5'].label = "Hour V"
 
     class Meta:
         model = TimetableModel

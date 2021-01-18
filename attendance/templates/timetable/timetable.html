@@ -6,13 +6,23 @@
 <title>SAMS | Create Timetable</title>
 {% endblock %}
 
+{% block head %}
+<style>
+     #create_timetable_form label {
+          color: #062743;
+          font-size: 1.1rem;
+          font-family: 'arvo';
+     }
+</style>
+{% endblock %}
+
 {% block content %}
 <section class="container px-md-4 body_box_shadow border_white mx-md-3">
      <div class="text-center text_d_blue arvo my-4">
           <h3 class="m-0">Create&nbsp;Timetable Form</h3>
      </div>
      <form class="form needs-validation" action="{% url 'timetable:createtimetable' c_object.id set_id %}" method="POST"
-          novalidate>
+          id="create_timetable_form" novalidate>
           {% csrf_token %}
           <div class="form-row">
                <div class="form-group col-md-6 pr-md-2">

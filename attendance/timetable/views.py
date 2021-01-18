@@ -15,10 +15,13 @@ from queryset_sequence import QuerySetSequence
 def createtimetable(request, class_id, set_id):
     if request.method == 'POST':
         # The below day variable is used twice always so that is declared and initialised here
-        day = request.POST['day']
+        day = request.POST['day'] or 0
         if TimetableModel.objects.filter(set_name__id=set_id, day=day).exists():
-            messages.error(
-                request, "Can't add timetable for this particular day")
+            if day == 0:
+                messages.error(request, "Please select a Day")
+            else:
+                messages.error(
+                    request, "You already added timetable for this day. Go to \"Manage Timetable\" to edit")
             c_object = get_object_or_404(ClassroomModel, id=class_id)
             t = TimetableForm(request.POST or None, initial={
                               'set_name': set_id}, c_object=c_object)
