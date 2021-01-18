@@ -3,34 +3,50 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    <title>SAMS</title>
+<title>SAMS | Create Timetable Set</title>
+{% endblock %}
+
+{% block head %}
+<style>
+    #create_timetable_set_form label {
+        color: #062743;
+        font-size: 1.1rem;
+        font-family: 'arvo';
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<h5>You are in the classroom : <a href="{% url 'classroom:editclass' c_object.id %}">{{c_object}}</a> </h5>
-<form method="POST" action="{% url 'timetable:createtimetableset' c_object.id %}">
-    {% csrf_token %}
-    {{t_set.classroom.errors}}
-<div class="form-group">
-     <label for="name">Set name :</label>
-     {{t_set.name}}
-     {{t_set.name.errors}}
-</div>
-<div class="form-group">
-      <label for="from_date">From date :</label>
-      {{t_set.from_date}}
-      {{t_set.from_date.errors}}
-</div>
-<div class="form-group">
-    <label for="to_date">To date :</label>
-    {{t_set.to_date}}
-    {{t_set.to_date.errors}}
-</div>
-<input type="submit" class="btn btn-success float-right" value="Save your set">
-</form>  
-<br>
 {% if No_set %}
-    <h5>No sets created yet for this classroom</h5>
-{% endif %} 
-<br><a href="{{ request.META.HTTP_REFERER }}" class="btn btn-danger">Back</a>
+<h5>No sets created yet for this classroom</h5>
+{% endif %}
+<div class="row d-flex justify-content-center align-items-center m-3 m-md-0 mb-md-4">
+    <section class="container col-lg-6 col-xl-5 body_box_shadow border_white p-4 mx-md-3">
+        <div class="text-center text_d_blue arvo my-4">
+            <h3 class="m-0">Create&nbsp;Timetable Set Form</h3>
+        </div>
+        <form class="form needs-validation" method="POST" action="{% url 'timetable:createtimetableset' c_object.id %}"
+            id="create_timetable_set_form" novalidate>
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    {{t_set.name|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-12">
+                    {{t_set.from_date|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-12">
+                    {{t_set.to_date|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-12">
+                    <a href="{{ request.META.HTTP_REFERER }}"
+                        class="btn border_white btn-cust neu_icon text-primary align-self-center float-left">Back</a>
+                    <input type="submit"
+                        class="btn border_white btn-cust neu_icon text-success align-self-center float-right"
+                        value="Submit">
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
 {% endblock %}
