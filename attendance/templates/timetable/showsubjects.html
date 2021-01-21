@@ -151,9 +151,10 @@
         var subject_list = [];
 
         $("td").click(function () {
+            //subject variable(below) contains the old subject entry which is stored in the database earlier
             subject = $(this).attr('value')
-            timetable_subject_id = $(this).attr('name')
             if (subject != '-') {
+                //To identify which table data we are using 'a' variable below :
                 a = $(this).attr('id')
                 $("#value-day").html("Day : " + "<text class='text-primary'>" + $(this).attr('data-day') + "</text>")
                 $("#value-hour").html("Hour : " + "<text class='text-primary'>" + $(this).attr('data-hour') + "</text>")
@@ -165,34 +166,39 @@
 
         $("#add_subject").click(function () {
             var subject_chosen_text = $("#id_subject option:selected").text()
-            if (subject == subject_chosen_text) {
-                alert("You are trying to change the subject which is already exists.")
-            }
-            else {
-                var temp = [], subject_chosen;
-                $("#save-changes").prop('disabled', false)
-                $("#cancel-changes").prop('disabled', false)
-                subject_chosen = $("#id_subject").val()
-                if (subject_chosen.length == 0) {
-                    subject_chosen = 'Free'
-                    temp = [subject_chosen]
-                }
-                else {
-                    temp = [subject_chosen]
-                    //:selected selector selects the elements that are pre-selected;so there is no manadatory for the elements with the 'selected' attribute
-                }
-
-                $("td").each(function () {
-                    var find = $(this).attr('id')
-                    if (a == find) {
-                        $(this).html($(this).attr('value') + " <small class='text-primary'>(old)</small><br>" + subject_chosen_text + " <small class='text-success'>(new)</small>")
-                        var timetable_id = $(this).attr('name')
-                        temp.push(timetable_id)
+            var timetable_subject_id = $("#"+a).attr('name')
+            if(subject==subject_chosen_text){
+                $("#"+a).text(subject)
+                var j=-1//To find the index we are using j variable
+                for(i of subject_list){
+                    j++//'j' variable is incremented to find out the current index
+                    if(i[1]==timetable_subject_id){
+                        subject_list.splice(j,1)
+                        break
                     }
-                })
-                subject_list.push(temp)
-                $("#timetable_modal").modal('hide')
+                }
             }
+            else{
+                var check=false//to find out whether to add a new entry or update the old entry in the subject_list array
+                $("#"+a).html(subject + " <small class='text-primary'>(old)</small><br>" + subject_chosen_text + " <small class='text-success'>(new)</small>")
+                var subject_chosen_value=$("#id_subject").val()
+                if(subject_chosen_value.length==0){
+                    subject_chosen_value='Free'
+                }
+                for (i of subject_list){
+                    if(i[1]==timetable_subject_id){
+                        i[0]=subject_chosen_value
+                        check=true
+                        break
+                    }
+                }
+                if(check==false){
+                   subject_list.push([subject_chosen_value,timetable_subject_id])
+                }
+                $("#save-changes").prop('disabled', false)
+                $("#cancel-changes").prop('disabled', false) 
+            }
+            $("#timetable_modal").modal('hide')
         });
 
         $("#save-changes").click(function () {
@@ -219,3 +225,39 @@
     });
 </script>
 {% endblock %}
+
+<!--$("td").each(function () {
+    var find = $(this).attr('id')
+    if (a == find) {
+        $(this).text(subject)
+        $('#timetable_modal').modal('hide')
+    }
+})
+}
+else {
+temp = [], subject_chosen;
+$("#save-changes").prop('disabled', false)
+$("#cancel-changes").prop('disabled', false)
+subject_chosen = $("#id_subject").val()
+if (subject_chosen.length == 0) {
+    subject_chosen = 'Free'
+    temp = [subject_chosen]
+}
+else {
+    temp = [subject_chosen]
+    //:selected selector selects the elements that are pre-selected;so there is no manadatory for the elements with the 'selected' attribute
+}
+
+$("td").each(function () {
+    var find = $(this).attr('id')
+    if (a == find) {
+        $(this).html($(this).attr('value') + " <small class='text-primary'>(old)</small><br>" + subject_chosen_text + " <small class='text-success'>(new)</small>")
+        var timetable_id = $(this).attr('name')
+        temp.push(timetable_id)
+    }
+})
+subject_list.push(temp)
+$("#timetable_modal").modal('hide')
+}
+});
+-->

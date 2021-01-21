@@ -70,12 +70,19 @@ def createtimetableset(request, class_id):
         # The object returned by the save(commit=false) is the model instance not the form instance so we are able to access classroom field which is not included in the form
         t_set.classroom = c_object
         t_set.save()
+        messages.success(request,'Set gets stored successfully')
         return redirect('timetable:setchoose', class_id=class_id)
     return render(request, 'timetable/timetableset.html', {'t_set': t_set, 'c_object': c_object})
 
+def edit_set(request,set_id):
+    s_object=get_object_or_404(TimetablesetModel,set_name__id=set_id)
+    edit_set=TimetableForm(request.POST or None,instance=s_object)
+    if edit_set.is_valid():
+        edit_set.save()
+        messages.success('Changes made in the set are saved')
+
+
 # Choose your set
-
-
 def setchoose(request, class_id):
     c_object = get_object_or_404(ClassroomModel, id=class_id)
     if TimetablesetModel.objects.filter(classroom=c_object).exists():
@@ -94,27 +101,10 @@ def setchoose(request, class_id):
     t_set = TimetablesetForm()
     return render(request, 'timetable/timetableset.html', {'c_object': c_object, 't_set': t_set, 'No_set': 1})
 
-
-"""  # Set info page
-
-
-def set_info(request, class_id=None, set_id=None):
-    c_object = get_object_or_404(ClassroomModel, id=class_id)
-    s_object = get_object_or_404(TimetablesetModel, id=set_id)
-    t_set = TimetablesetForm(request.POST or None, instance=s_object)
-    if t_set.is_valid():
-        t_set.save()
-        messages.success(request, 'Changes made are saved')
-    return render(request, 'timetable/set_info.html', {'c_object': c_object, 's_object': s_object, 't_set': t_set})"""
-
 # Timetable show
-
-
 def showsubjects(request, class_id, set_id):
-    any_empty_subject = False
-    where_to_redirect = TimetableModel.objects.filter(set_name__id=set_id)
     # To check whether any subject is in the timetable :
-    if len(where_to_redirect) == 0:
+    if not TimetableModel.objects.filter(set_name__id=set_id).exists():
         c_object = get_object_or_404(ClassroomModel, id=class_id)
         t = TimetableForm(initial={'set_name': set_id}, c_object=c_object)
         messages.error(request, 'No subjects created for this timetable yet')
@@ -146,7 +136,6 @@ def showsubjects(request, class_id, set_id):
         subject_list=subject_list, initial={'set_name': s_object})
     return render(request, 'timetable/showsubjects.html', {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object, 'edit_timetable': edit_timetable, 'is_empty': any_empty_subject})
 
-
 def showsubjects1(request, class_id, set_id):
     s_object = get_object_or_404(TimetablesetModel, id=set_id)
     c_object = get_object_or_404(ClassroomModel, id=class_id)
@@ -156,11 +145,11 @@ def showsubjects1(request, class_id, set_id):
     for i in range(1, 7):
         setsubjects = TimetableModel.objects.filter(
             set_name__id=set_id, day=i).order_by('hour')
-        j = 1
-        subject_list = []
         if len(setsubjects) == 0:
             all_subjects.append(['----', '----', '----', '----', '----'])
             continue
+        j = 1
+        subject_list = []
         for s_in_t_object in setsubjects:
             if s_in_t_object.hour == j:
                 subject_list.append(s_in_t_object)
@@ -168,8 +157,10 @@ def showsubjects1(request, class_id, set_id):
         all_subjects.append(subject_list)
     # zip function combines the two iterator and returns the combined version of the iterator
     all_subjects = zip(all_subjects, days)
+    #edit set form
+    edit_set=TimetablesetForm()
     data = render(request, 'timetable/showsubjects1.html',
-                  {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object})
+                  {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object,"edit_set":edit_set})
     return HttpResponse(data)
 
 # Edit subjects in the timetable

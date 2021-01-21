@@ -1,4 +1,4 @@
-{% block head %}
+{% load crispy_forms_tags %}
 <style>
     /* Custom CSS */
     #view_table .table td {
@@ -26,8 +26,28 @@
         overflow-x: auto;
     }
 </style>
-{% endblock %}
+<!--Modal button-->
+<div class="d-flex justify-content-center justify-content-md-start">
+    <button
+        class="btn border_white btn-cust neu_icon text-info align-self-center my-3" data-toggle="modal" data-target="#edit-set-modal">Edit Set</button>
+</div>
+<!--Edit set modal-->
+<div class="modal" id="edit-set-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Edit the selected set here
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="#">
+                    {{edit_set.as_p}}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!--Timetable display-->
 <div class="table-responsive table_wrapper table_box_shadow border_white" id="view_table">
     <table class="table my-1 my-md-2">
         <thead>

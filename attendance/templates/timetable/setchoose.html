@@ -35,8 +35,6 @@
     <div class="my-3 mt-md-0 mx-auto mx-md-0 ml-md-auto">
         <a href="{% url 'timetable:createtimetableset' c_object.id %}"
             class="btn border_white btn-cust neu_icon text-primary align-self-center mx-2 mb-3">Create&nbsp;Set</a>
-        <a href="#" class="btn border_white btn-cust neu_icon text-success align-self-center mx-2 mb-3"
-            id="edit-set">Manage&nbsp;Set</a>
     </div>
 </section>
 <section id="timetable-section" class="container"></section>
@@ -44,7 +42,6 @@
 <script>
     $(document).ready(function () {
         $("#id_choose_set").change(function () {
-            $("#edit-set").removeClass('d-none')
             var set_id = $(this).val()
             $.ajax({
                 headers: {
