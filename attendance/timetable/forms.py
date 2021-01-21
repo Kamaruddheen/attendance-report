@@ -39,8 +39,8 @@ class TimetableForm(forms.ModelForm):
 
 
 class TimetablesetForm(forms.ModelForm):
-    from_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
-    to_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+    from_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    to_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = TimetablesetModel

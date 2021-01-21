@@ -74,9 +74,10 @@ def createtimetableset(request, class_id):
         return redirect('timetable:setchoose', class_id=class_id)
     return render(request, 'timetable/timetableset.html', {'t_set': t_set, 'c_object': c_object})
 
-def edit_set(request,set_id):
-    s_object=get_object_or_404(TimetablesetModel,set_name__id=set_id)
-    edit_set=TimetableForm(request.POST or None,instance=s_object)
+
+def edit_set(request, set_id):
+    s_object = get_object_or_404(TimetablesetModel, set_name__id=set_id)
+    edit_set = TimetableForm(request.POST or None, instance=s_object)
     if edit_set.is_valid():
         edit_set.save()
         messages.success('Changes made in the set are saved')
@@ -102,6 +103,8 @@ def setchoose(request, class_id):
     return render(request, 'timetable/timetableset.html', {'c_object': c_object, 't_set': t_set, 'No_set': 1})
 
 # Timetable show
+
+
 def showsubjects(request, class_id, set_id):
     # To check whether any subject is in the timetable :
     if not TimetableModel.objects.filter(set_name__id=set_id).exists():
@@ -136,6 +139,7 @@ def showsubjects(request, class_id, set_id):
         subject_list=subject_list, initial={'set_name': s_object})
     return render(request, 'timetable/showsubjects.html', {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object, 'edit_timetable': edit_timetable, 'is_empty': any_empty_subject})
 
+
 def showsubjects1(request, class_id, set_id):
     s_object = get_object_or_404(TimetablesetModel, id=set_id)
     c_object = get_object_or_404(ClassroomModel, id=class_id)
@@ -157,8 +161,8 @@ def showsubjects1(request, class_id, set_id):
         all_subjects.append(subject_list)
     # zip function combines the two iterator and returns the combined version of the iterator
     all_subjects = zip(all_subjects, days)
-    #edit set form
-    edit_set=TimetablesetForm()
+    # edit set form
+    edit_set = TimetablesetForm(instance=s_object)
     data = render(request, 'timetable/showsubjects1.html',
                   {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object, 'edit_set': edit_set})
     return HttpResponse(data)
