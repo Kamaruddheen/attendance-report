@@ -70,7 +70,7 @@ def createtimetableset(request, class_id):
         # The object returned by the save(commit=false) is the model instance not the form instance so we are able to access classroom field which is not included in the form
         t_set.classroom = c_object
         t_set.save()
-        messages.success(request,'Set gets stored successfully')
+        messages.success(request, 'Set gets stored successfully')
         return redirect('timetable:setchoose', class_id=class_id)
     return render(request, 'timetable/timetableset.html', {'t_set': t_set, 'c_object': c_object})
 
@@ -160,7 +160,7 @@ def showsubjects1(request, class_id, set_id):
     #edit set form
     edit_set=TimetablesetForm()
     data = render(request, 'timetable/showsubjects1.html',
-                  {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object,"edit_set":edit_set})
+                  {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object, 'edit_set': edit_set})
     return HttpResponse(data)
 
 # Edit subjects in the timetable

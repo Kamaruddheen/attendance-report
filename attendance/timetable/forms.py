@@ -39,14 +39,21 @@ class TimetableForm(forms.ModelForm):
 
 
 class TimetablesetForm(forms.ModelForm):
+    from_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+    to_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = TimetablesetModel
+        fields = ('name', 'from_date', 'to_date')
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update(
-            {'class': 'input_cust capitalize text-center form-control'})
+            {'class': 'input_cust capitalize form-control'})
         self.fields['from_date'].widget.attrs.update(
-            {'type': 'date', 'class': 'input_cust upper_case text-center form-control'})
+            {'class': 'input_cust upper_case text-center form-control'})
         self.fields['to_date'].widget.attrs.update(
-            {'type': 'date', 'class': 'input_cust upper_case text-center form-control'})
+            {'class': 'input_cust upper_case text-center form-control'})
 
     def clean(self):
         from_date = self.cleaned_data['from_date']
@@ -54,10 +61,6 @@ class TimetablesetForm(forms.ModelForm):
         if from_date > to_date:
             raise forms.ValidationError('date error')
         return self.cleaned_data
-
-    class Meta:
-        model = TimetablesetModel
-        fields = ('name', 'from_date', 'to_date')
 
 
 class edit_timetableForm(forms.ModelForm):

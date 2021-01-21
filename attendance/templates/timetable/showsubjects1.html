@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% block head %}
 <style>
     /* Custom CSS */
     #view_table .table td {
@@ -26,26 +27,50 @@
         overflow-x: auto;
     }
 </style>
+{% endblock %}
 <!--Modal button-->
 <div class="d-flex justify-content-center justify-content-md-start">
-    <button
-        class="btn border_white btn-cust neu_icon text-info align-self-center my-3" data-toggle="modal" data-target="#edit-set-modal">Edit Set</button>
+    <button class="btn border_white btn-cust neu_icon text-info align-self-center my-3" data-toggle="modal"
+        data-target="#edit-set-modal">Edit Set</button>
 </div>
-<!--Edit set modal-->
-<div class="modal" id="edit-set-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                Edit the selected set here
+
+<!-- Modal stuff-->
+<div class="modal fade" id="edit-set-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border_white modal_box_shadow">
+            <div class="modal-header ml-1 text_d_blue border_color_white">
+                <h3 class="modal-title capitalize">Edit&nbsp;Timetable&nbsp;Set</h3>
+                <button type="button" class="close btn-cust pr-4 pt-4 d-none d-sm-block"
+                    data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="#">
-                    {{edit_set.as_p}}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-12 pr-md-2">
+                            <div class="form-group col-md-12">
+                                {{edit_set.name|as_crispy_field}}
+                            </div>
+                            <div class="form-group col-md-12">
+                                {{edit_set.from_date|as_crispy_field}}
+                            </div>
+                            <div class="form-group col-md-12">
+                                {{edit_set.to_date|as_crispy_field}}
+                            </div>
+                        </div>
+                    </div>
                 </form>
+            </div>
+            <div class="modal-footer border_color_white">
+                <div class="col-12 d-flex justify-content-end">
+                    <!-- For submit and close buttons -->
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!--Timetable display-->
 <div class="table-responsive table_wrapper table_box_shadow border_white" id="view_table">
