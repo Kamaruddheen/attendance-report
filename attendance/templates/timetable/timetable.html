@@ -21,8 +21,8 @@
      <div class="text-center text_d_blue arvo my-4">
           <h3 class="m-0">Create&nbsp;Timetable Form</h3>
      </div>
-     <form class="form needs-validation" action="{% url 'timetable:createtimetable' c_object.id set_id %}" method="POST"
-          id="create_timetable_form" novalidate>
+     <form action="{% url 'timetable:createtimetable' c_object.id set_id %}" method="POST"
+          id="create_timetable_form">
           {% csrf_token %}
           <div class="form-row">
                <div class="form-group col-md-6 pr-md-2">

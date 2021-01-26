@@ -17,18 +17,18 @@
 {% endblock %}
 
 {% block content %}
-{% if No_set %}
-<h5>No sets created yet for this classroom</h5>
-{% endif %}
 <div class="row d-flex justify-content-center align-items-center m-3 m-md-0 mb-md-4">
     <section class="container col-lg-6 col-xl-5 body_box_shadow border_white p-4 mx-md-3">
         <div class="text-center text_d_blue arvo my-4">
             <h3 class="m-0">Create&nbsp;Timetable Set Form</h3>
         </div>
-        <form class="form needs-validation" method="POST" action="{% url 'timetable:createtimetableset' c_object.id %}"
-            id="create_timetable_set_form" novalidate>
+        <form method="POST" action="{% url 'timetable:createtimetableset' c_object.id %}"
+            id="create_timetable_set_form">
             {% csrf_token %}
             <div class="form-row">
+                {% if t_set.non_field_errors %}
+                    <div class="alert alert-block alert-danger"> <ul class="m-0"> <li>{{t_set.non_field_errors}}</li> </ul> </div>
+                {% endif %}
                 <div class="form-group col-md-12">
                     {{t_set.name|as_crispy_field}}
                 </div>
@@ -39,8 +39,8 @@
                     {{t_set.to_date|as_crispy_field}}
                 </div>
                 <div class="form-group col-md-12">
-                    <a href="{{ request.META.HTTP_REFERER }}"
-                        class="btn border_white btn-cust neu_icon text-primary align-self-center float-left">Back</a>
+                    <a href="{% url 'timetable:setchoose' c_object.id %}"
+                        class="btn border_white btn-cust neu_icon text-primary align-self-center float-left">Back to choosing set</a>
                     <input type="submit"
                         class="btn border_white btn-cust neu_icon text-success align-self-center float-right"
                         value="Submit">
@@ -49,4 +49,6 @@
         </form>
     </section>
 </div>
+<a href="{% url 'classroom:editclass' c_object.id %}"
+                        class="btn border_white btn-cust neu_icon text-primary align-self-center float-right">Back to classroom info</a>  
 {% endblock %}

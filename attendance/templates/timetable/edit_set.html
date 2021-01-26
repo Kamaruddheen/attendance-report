@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | Edit Timetable Set</title>
+{% endblock %}
+
+{% block content %}
+<!--Edit set modal-->
+<div class="modal fade" id="edit-set-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Edit the selected set here
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'timetable:edit_set' s_object.id %}">
+                    {% csrf_token %}
+                    {{edit_set|crispy}}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <a href="{% url 'timetable:setchoose' s_object.classroom.id %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#edit-set-modal").modal({backdrop:"static"});
+    });
+</script>
+{% endblock %}

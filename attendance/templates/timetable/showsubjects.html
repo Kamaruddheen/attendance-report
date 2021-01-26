@@ -115,7 +115,6 @@
             <div class="modal-body">
                 <form method="POST" id="create_timetable_form">
                     {% csrf_token %}
-                    <p id="daaa"></p>
                     <div class="form-row">
                         <div class="form-group col-md-12 pr-md-2">
                             <label class="requiredField" id="value-day"></label>
@@ -174,6 +173,10 @@
                     j++//'j' variable is incremented to find out the current index
                     if(i[1]==timetable_subject_id){
                         subject_list.splice(j,1)
+                        if(subject_list.length==0){
+                            $("#save-changes").prop('disabled', true)
+                            $("#cancel-changes").prop('disabled', true) 
+                        }
                         break
                     }
                 }

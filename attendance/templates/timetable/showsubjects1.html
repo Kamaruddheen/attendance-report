@@ -27,6 +27,7 @@
         overflow-x: auto;
     }
 </style>
+<<<<<<< Updated upstream
 {% endblock %}
 <!--Modal button-->
 <div class="d-flex justify-content-center justify-content-md-start">
@@ -69,6 +70,12 @@
             </div>
         </div>
     </div>
+=======
+
+<div class="d-flex justify-content-center justify-content-md-start">
+    <a href="{% url 'timetable:edit_set' s_object.id %}"
+        class="btn border_white btn-cust neu_icon text-info align-self-center my-3">Edit Set</a>
+>>>>>>> Stashed changes
 </div>
 
 
@@ -100,4 +107,15 @@
 <div class="d-flex justify-content-center justify-content-md-start">
     <a href="{% url 'timetable:showsubjects' c_object.id s_object.id %}"
         class="btn border_white btn-cust neu_icon text-info align-self-center my-3">Manage Timetable</a>
+<<<<<<< Updated upstream
 </div>
+=======
+</div>
+<script>
+    $(document).ready(function(){
+        $("#cancel").click(function(){
+            $("#edit-set-modal").modal('hide')
+        })
+    });
+</script>
+>>>>>>> Stashed changes

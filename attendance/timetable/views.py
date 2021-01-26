@@ -7,11 +7,10 @@ from .models import ClassroomModel, TimetableModel, TimetablesetModel, SubjectMo
 import json
 from datetime import date
 from queryset_sequence import QuerySetSequence
+
 # Create your views here.
 
 # Create timetable
-
-
 def createtimetable(request, class_id, set_id):
     if request.method == 'POST':
         # The below day variable is used twice always so that is declared and initialised here
@@ -60,20 +59,22 @@ def createtimetable(request, class_id, set_id):
         return render(request, 'timetable/timetable.html', {'form': t, 'c_object': c_object, 'set_id': set_id})
 
 # Create timetable set
-
-
 def createtimetableset(request, class_id):
     c_object = get_object_or_404(ClassroomModel, id=class_id)
-    t_set = TimetablesetForm(request.POST or None)
+    t_set = TimetablesetForm(request.POST or None,c_object=c_object)
     if t_set.is_valid():
         t_set = t_set.save(commit=False)
         # The object returned by the save(commit=false) is the model instance not the form instance so we are able to access classroom field which is not included in the form
         t_set.classroom = c_object
+        #This if statement is to set the default value for the set name that name is the classroom object( i.e.,classroom name)
+        if len(t_set.name)==0:
+            t_set.name=str(c_object)
         t_set.save()
         messages.success(request, 'Set gets stored successfully')
         return redirect('timetable:setchoose', class_id=class_id)
     return render(request, 'timetable/timetableset.html', {'t_set': t_set, 'c_object': c_object})
 
+<<<<<<< Updated upstream
 
 def edit_set(request, set_id):
     s_object = get_object_or_404(TimetablesetModel, set_name__id=set_id)
@@ -83,6 +84,8 @@ def edit_set(request, set_id):
         messages.success('Changes made in the set are saved')
 
 
+=======
+>>>>>>> Stashed changes
 # Choose your set
 def setchoose(request, class_id):
     c_object = get_object_or_404(ClassroomModel, id=class_id)
@@ -100,7 +103,8 @@ def setchoose(request, class_id):
         }
         return render(request, 'timetable/setchoose.html', context)
     t_set = TimetablesetForm()
-    return render(request, 'timetable/timetableset.html', {'c_object': c_object, 't_set': t_set, 'No_set': 1})
+    messages.error(request,'No sets yet created for this classroom')
+    return render(request, 'timetable/timetableset.html', {'c_object': c_object, 't_set': t_set})
 
 # Timetable show
 
@@ -161,15 +165,33 @@ def showsubjects1(request, class_id, set_id):
         all_subjects.append(subject_list)
     # zip function combines the two iterator and returns the combined version of the iterator
     all_subjects = zip(all_subjects, days)
+<<<<<<< Updated upstream
     # edit set form
     edit_set = TimetablesetForm(instance=s_object)
     data = render(request, 'timetable/showsubjects1.html',
                   {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object, 'edit_set': edit_set})
+=======
+    data = render(request, 'timetable/showsubjects1.html',
+                  {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object})
+>>>>>>> Stashed changes
     return HttpResponse(data)
 
+def edit_set(request,set_id):
+    s_object=get_object_or_404(TimetablesetModel,id=set_id)
+    edit_set=TimetablesetForm(request.POST or None,instance=s_object)
+    if edit_set.is_valid():
+        edit_set=edit_set.save(commit=False)
+        #This if statement is to set the default value for the set name that name is the classroom object( i.e.,classroom name)
+        if len(edit_set.name)==0:
+            #guys doubt here kindly anyone rectify why do we need to convert to a string
+            edit_set.name=str(edit_set.classroom)
+        edit_set.save()
+        messages.success(request,"Edit made in the set are successfully done")
+        return redirect("timetable:setchoose",class_id=s_object.classroom.id)
+    #In case submitted values in the form is not valid , the below code will run
+    return render(request,'timetable/edit_set.html',{'edit_set':edit_set,'s_object':s_object})
+
 # Edit subjects in the timetable
-
-
 def edit_subjects(request):
     if request.method == "POST":
         data = json.loads(request.body)

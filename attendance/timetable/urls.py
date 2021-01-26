@@ -8,4 +8,5 @@ urlpatterns=[
     path('showsubjects/<int:class_id>,<int:set_id>',showsubjects,name='showsubjects'),
     path('showsubjects1/<int:class_id>,<int:set_id>',showsubjects1,name='showsubjects1'),
     path('edit_subjects/',edit_subjects,name='edit_subjects'),
+    path('edit_set/<int:set_id>',edit_set,name='edit_set'),
 ]

@@ -47,19 +47,37 @@ class TimetablesetForm(forms.ModelForm):
         fields = ('name', 'from_date', 'to_date')
 
     def __init__(self, *args, **kwargs):
+        self.instance=kwargs.get('instance',None)
+        self.classroom=kwargs.pop('c_object',None)
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update(
+<<<<<<< Updated upstream
             {'class': 'input_cust capitalize form-control'})
         self.fields['from_date'].widget.attrs.update(
             {'class': 'input_cust upper_case text-center form-control'})
         self.fields['to_date'].widget.attrs.update(
             {'class': 'input_cust upper_case text-center form-control'})
+=======
+            {'class': 'input_cust capitalize text-center form-control'})
+        self.fields['from_date']=forms.DateField(widget=forms.DateInput(attrs=
+            {'type':'date', 'class': 'input_cust upper_case text-center form-control'}))
+        self.fields['to_date']=forms.DateField(widget=forms.DateInput(attrs=
+            {'type': 'date', 'class': 'input_cust upper_case text-center form-control'}))
+>>>>>>> Stashed changes
 
     def clean(self):
         from_date = self.cleaned_data['from_date']
         to_date = self.cleaned_data['to_date']
         if from_date > to_date:
             raise forms.ValidationError('date error')
+        else:
+            if self.classroom is not None:
+                queryset=TimetablesetModel.objects.filter(classroom=self.classroom)
+            elif self.instance is not None:
+                queryset=TimetablesetModel.objects.filter(classroom=self.instance.classroom).exclude(id=self.instance.id)
+            for i in queryset:
+                if (from_date>i.from_date and from_date<i.to_date) or (to_date>i.from_date and to_date<i.to_date) or (from_date==i.from_date or from_date==i.to_date or to_date==i.from_date or to_date==i.to_date) or (from_date<i.from_date and to_date>i.to_date):
+                    raise forms.ValidationError('Date with the specified range already exists')
         return self.cleaned_data
 
 
