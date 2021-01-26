@@ -19,7 +19,7 @@
                     {% csrf_token %}
                     {{edit_set|crispy}}
                     <button type="submit" class="btn btn-success">Submit</button>
-                    <a href="{% url 'timetable:setchoose' s_object.classroom.id %}" class="btn btn-secondary">Cancel</a>
+                    <a href="{% url 'timetable:setchoose' s_object.classroom.id %}" class="btn btn-secondary">Back to choosing set</a>
                 </form>
             </div>
         </div>

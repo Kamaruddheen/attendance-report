@@ -17,8 +17,7 @@ class TimetablesetModel(models.Model):
 		verbose_name_plural = 'Sets'
 	
 	def __str__(self):
-		return str(self.name) + "\t" +  "(" + str(self.from_date) + " to " + str(self.to_date) + ")"
-		# return self.name
+		return self.name + " ( " + self.from_date.strftime("%d") + "-" + self.from_date.strftime("%b") + "-" + self.from_date.strftime("%Y") +  " ) to ( " + self.to_date.strftime("%d") + "-" + self.to_date.strftime("%b") + "-" + self.to_date.strftime("%Y") +  " )"
 #foriegn key data are not string ;they belong to the particular model so we have to convert that to string to concatenate with the string 
 
 day_choices=(
