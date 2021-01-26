@@ -51,19 +51,11 @@ class TimetablesetForm(forms.ModelForm):
         self.classroom=kwargs.pop('c_object',None)
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update(
-<<<<<<< Updated upstream
-            {'class': 'input_cust capitalize form-control'})
-        self.fields['from_date'].widget.attrs.update(
-            {'class': 'input_cust upper_case text-center form-control'})
-        self.fields['to_date'].widget.attrs.update(
-            {'class': 'input_cust upper_case text-center form-control'})
-=======
             {'class': 'input_cust capitalize text-center form-control'})
         self.fields['from_date']=forms.DateField(widget=forms.DateInput(attrs=
             {'type':'date', 'class': 'input_cust upper_case text-center form-control'}))
         self.fields['to_date']=forms.DateField(widget=forms.DateInput(attrs=
             {'type': 'date', 'class': 'input_cust upper_case text-center form-control'}))
->>>>>>> Stashed changes
 
     def clean(self):
         from_date = self.cleaned_data['from_date']
