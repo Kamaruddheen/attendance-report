@@ -13,8 +13,6 @@ class TimetableForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.choice = kwargs.pop('c_object', None)
         super().__init__(*args, **kwargs)
-        self.fields['set_name'].widget.attrs.update(
-            {'id': 'set_name', 'class': 'custom-select input_cust capitalize text-center form-control'})
         self.fields['day'].widget.attrs.update(
             {'id': 'day', 'class': 'custom-select input_cust capitalize text-center form-control'})
         self.fields['s1'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
@@ -35,7 +33,7 @@ class TimetableForm(forms.ModelForm):
 
     class Meta:
         model = TimetableModel
-        fields = ('day', 'set_name')
+        fields = ('day',)
 
 
 class TimetablesetForm(forms.ModelForm):
@@ -84,7 +82,7 @@ class edit_timetableForm(forms.ModelForm):
 
     class Meta:
         model = TimetableModel
-        fields = ['set_name', 'day', 'hour', 'subject']
+        fields = ['day', 'hour', 'subject']
 
 
 class choose_set_form(forms.Form):

@@ -14,16 +14,12 @@ from queryset_sequence import QuerySetSequence
 def createtimetable(request, class_id, set_id):
     if request.method == 'POST':
         # The below day variable is used twice always so that is declared and initialised here
-        day = request.POST['day'] or 0
+        day = request.POST['day']
         if TimetableModel.objects.filter(set_name__id=set_id, day=day).exists():
-            if day == 0:
-                messages.error(request, "Please select a Day")
-            else:
-                messages.error(
-                    request, "You already added timetable for this day. Go to \"Manage Timetable\" to edit")
+            messages.error(
+                    request, "You have already added timetable for this day. Go to \"Manage Timetable\" to edit")
             c_object = get_object_or_404(ClassroomModel, id=class_id)
-            t = TimetableForm(request.POST or None, initial={
-                              'set_name': set_id}, c_object=c_object)
+            t = TimetableForm(request.POST, c_object=c_object)
             return render(request, 'timetable/timetable.html', {'form': t, 'c_object': c_object, 'set_id': set_id})
         else:
             for i in range(1, 6):
@@ -37,12 +33,11 @@ def createtimetable(request, class_id, set_id):
                     # foriegn key choices are stored as referenced objects but normal user defined choices are stored as the first element in the tuple defined
                     t_obj.subject = get_object_or_404(
                         SubjectModel, id=a)  # Subject gets initialized
-                a = request.POST['set_name']
-                t_obj.set_name = get_object_or_404(
-                    TimetablesetModel, id=a)  # set name gets initialized
                 t_obj.day = day  # day gets initialized
                 t_obj.hour = i  # hour gets initialized
+                t_obj.set_name=get_object_or_404(TimetablesetModel,id=set_id)
                 t_obj.save()
+            # end of the for loop
             check = TimetableModel.objects.filter(set_name__id=set_id)
             # To check whether maximum limit of the timetable are entered or not
             if len(check) >= 30:
@@ -51,11 +46,11 @@ def createtimetable(request, class_id, set_id):
                 return redirect('timetable:showsubjects', class_id=class_id, set_id=set_id)
             messages.success(request, 'Your timetable stored successfully.')
             c_object = get_object_or_404(ClassroomModel, id=class_id)
-            t = TimetableForm(initial={'set_name': set_id}, c_object=c_object)
+            t = TimetableForm(c_object=c_object)
             return render(request, 'timetable/timetable.html', {'form': t, 'c_object': c_object, 'set_id': set_id})
     else:
         c_object = get_object_or_404(ClassroomModel, id=class_id)
-        t = TimetableForm(initial={'set_name': set_id}, c_object=c_object)
+        t = TimetableForm(c_object=c_object)
         return render(request, 'timetable/timetable.html', {'form': t, 'c_object': c_object, 'set_id': set_id})
 
 # Create timetable set
@@ -113,22 +108,17 @@ def showsubjects(request, class_id, set_id):
     for i in range(1, 7):
         setsubjects = TimetableModel.objects.filter(
             set_name__id=set_id, day=i).order_by('hour')
-        j = 1
-        subject_list = []
         if len(setsubjects) == 0:
             all_subjects.append(['-', '-', '-', '-', '-'])
             any_empty_subject = True
             continue
-        for s_in_t_object in setsubjects:
-            if s_in_t_object.hour == j:
-                subject_list.append(s_in_t_object)
-                j += 1
-        all_subjects.append(subject_list)
+        all_subjects.append(setsubjects)
+    #end of the for loop
     # zip function combines the two iterator and returns the combined version of the iterator
     all_subjects = zip(all_subjects, days)
     subject_list = SubjectModel.objects.filter(classroom=c_object)
     edit_timetable = edit_timetableForm(
-        subject_list=subject_list, initial={'set_name': s_object})
+        subject_list=subject_list)
     return render(request, 'timetable/showsubjects.html', {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object, 'edit_timetable': edit_timetable, 'is_empty': any_empty_subject})
 
 
@@ -144,13 +134,8 @@ def showsubjects1(request, class_id, set_id):
         if len(setsubjects) == 0:
             all_subjects.append(['----', '----', '----', '----', '----'])
             continue
-        j = 1
-        subject_list = []
-        for s_in_t_object in setsubjects:
-            if s_in_t_object.hour == j:
-                subject_list.append(s_in_t_object)
-                j += 1
-        all_subjects.append(subject_list)
+        all_subjects.append(setsubjects)
+    #end of the for loop
     # zip function combines the two iterator and returns the combined version of the iterator
     all_subjects = zip(all_subjects, days)
     data = render(request, 'timetable/showsubjects1.html',
