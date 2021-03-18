@@ -66,7 +66,7 @@ class TimetablesetForm(forms.ModelForm):
             elif self.instance is not None:
                 queryset=TimetablesetModel.objects.filter(classroom=self.instance.classroom).exclude(id=self.instance.id)
             for i in queryset:
-                if (from_date>i.from_date and from_date<i.to_date) or (to_date>i.from_date and to_date<i.to_date) or (from_date==i.from_date or from_date==i.to_date or to_date==i.from_date or to_date==i.to_date) or (from_date<i.from_date and to_date>i.to_date):
+                if (from_date>=i.from_date and from_date<=i.to_date) or (to_date>=i.from_date and to_date<=i.to_date) or (from_date<i.from_date and to_date>i.to_date):
                     raise forms.ValidationError('Date with the specified range already exists')
         return self.cleaned_data
 

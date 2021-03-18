@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'livereload',  # livereload for development purpose only
+    # 'livereload',  # livereload for development purpose only
     'django.contrib.staticfiles',
     'crispy_forms',
     'user_module',
@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'livereload.middleware.LiveReloadScript', # livereload for development purpose only
+    # 'livereload.middleware.LiveReloadScript', # livereload for development purpose only
 ]
 
 ROOT_URLCONF = 'attendance.urls'
@@ -132,7 +132,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR/"static/", ]
-STATIC_DIR = BASE_DIR
+STATIC_DIR = BASE_DIR # for classroom app configuration
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     #Development Only
 
