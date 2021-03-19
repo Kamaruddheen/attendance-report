@@ -2,70 +2,59 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    <title>SAMS</title>
+<title>SAMS | {{get_obj|upper}} | Manage Classroom</title>
 {% endblock %}
 {% block content %}
-    <div class="card">
-        <div class="card-body">
-            <a href="{% url 'timetable:setchoose' get_obj.id %}" class="btn btn-info float-right">Timetable</a>
-            <h5>Classroom Id :<small>{{get_obj.id}}</small></h5>
-            <h5>Course :<small>{{get_obj.course}}</small></h5>
-            <h5>Year :<small>{{get_obj.get_year_display}}</small></h5>
-            <h5>Section :<small>{{get_obj.get_sec_display}}</small></h5>
-            <h5>Tutor :<small>{{get_obj.tutor}}</small></h5>
-        </div>
-        <div class="card-footer">
-            <a href="{% url 'classroom:manage_students' get_obj.id %}" class="btn btn-primary">Manage Students</a>
-            <button type="button" data-toggle="modal" data-target="#edit-modal" data-backdrop="static" class="btn btn-info float-right mx-2">Edit</button>
-            <a href="{% url 'classroom:createclass' %}" class="btn btn-secondary float-right">Back</a>
-        </div>
+<div class="card">
+    <div class="card-body">
+        <a href="{% url 'timetable:setchoose' get_obj.id %}" class="btn btn-info float-right">Timetable</a>
+        <h5>Classroom Id :<small>{{get_obj.id}}</small></h5>
+        <h5>Course :<small>{{get_obj.course}}</small></h5>
+        <h5>Year :<small>{{get_obj.get_year_display}}</small></h5>
+        <h5>Section :<small>{{get_obj.get_sec_display}}</small></h5>
+        <h5>Tutor :<small>{{get_obj.tutor}}</small></h5>
     </div>
-    <div class="modal fade" id="edit-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Edit a modal</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="{% url 'classroom:editclass' get_obj.id %}">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="id">Classroom Id:</label>
-                            {{editclass.id}}
-                        </div>
-                        <div class="form-group">
-                            <label for="course">Course :</label>
-                            {{editclass.course}}
-                            <p>{{editclass.course.errors}}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="year">Year</label>
-                            {{editclass.year}}
-                        </div>
-                        <div class="form-group">
-                            <label for="section">Section :</label>
-                            {{editclass.sec}}
-                        </div>
-                        <div class="form-group">
-                            <label for="tutor">Tutor :</label>
-                            {{editclass.tutor}}
-                        </div>
-                        <input type="submit" class="btn btn-success float-right mx-2">
-                        <a href="{% url 'classroom:editclass' get_obj.id %}" class="btn btn-secondary float-right">Cancel</a>
-                    </form>
+    <div class="card-footer">
+        <a href="{% url 'classroom:manage_students' get_obj.id %}" class="btn btn-primary">Manage Students</a>
+        <button type="button" data-toggle="modal" data-target="#edit-modal" data-backdrop="static"
+            class="btn btn-info float-right mx-2">Edit</button>
+        <a href="{% url 'classroom:createclass' %}" class="btn btn-secondary float-right">Back</a>
+    </div>
+</div>
+<div class="modal fade" id="edit-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border_white modal_box_shadow">
+            <div class="modal-header ml-1 text_d_blue border_color_white">
+                <h4>Edit&nbsp;a&nbsp;Classroom</h4>
+                <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="form needs-validation" method="POST" id="classroom_edit_form"
+                    action="{% url 'classroom:editclass' get_obj.id %}" novalidate>
+                    {% csrf_token %}
+                    {{ editclass|crispy }}
+                </form>
+            </div>
+            <div class="modal-footer border_color_white">
+                <div class="col-12 d-flex justify-content-end">
+                    <input type="submit" value="Save" name="submit" form="classroom_edit_form"
+                        class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+                    <a href="{% url 'classroom:editclass' get_obj.id %}"
+                        class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2">Cancel</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        $(document).ready(function(){
-            {% if editclass.errors %}
-            //modal backdrop using js should be coded 
-            //before initialize or show the modal like below
-                $("#edit-modal").modal({backdrop:'static'});
-                $("#edit-modal").modal('show');
-            {% endif %}
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        {% if editclass.errors %}
+        //modal backdrop using js should be coded 
+        //before initialize or show the modal like below
+        $("#edit-modal").modal({ backdrop: 'static' });
+        $("#edit-modal").modal('show');
+        {% endif %}
+    });
+</script>
 {% endblock %}
