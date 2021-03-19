@@ -10,14 +10,20 @@ from timetable.models import TimetablesetModel, TimetableModel
 from attendancess.models import AttendanceModel, AttendanceIdModel
 
 
+# List of Class they are going
 class ClassesView(LoginRequiredMixin, View):
     def get(self, request):
         date = request.GET.get('date', 0)
 
+        # Finding date
         if date == 0:
+            # Set date Today by default
             date = datetime.date.today()
         else:
+            # Getting the date from user
             date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+
+        # Finding the Day
         day = date.strftime("%A")
 
         days = {
@@ -34,10 +40,16 @@ class ClassesView(LoginRequiredMixin, View):
         # Get all the active time tables and extract the classes
         active_sets = []
         time_table_sets = TimetablesetModel.objects.all()
+        # print(type(time_table_sets))
         for set in time_table_sets:
+            # Date should be between from & to date of Timetable
             if set.from_date <= date <= set.to_date:
-                active_sets.append(set)
+                # Getting the currently active timetable of user requested date
+                active_sets.append(set)  # Storing in active set
 
+        # print(active_sets)
+        # ? active_sets should be in filter of Timetablemodel
+        
         classes = TimetableModel.objects.filter(
             set_name__in=time_table_sets, day=day, subject__handled_by=request.user).order_by('hour')
 
@@ -46,6 +58,7 @@ class ClassesView(LoginRequiredMixin, View):
 
         data = []
         for clas in classes:
+            # ! Filter must include hour also
             if AttendanceIdModel.objects.filter(date=date, subject=clas.subject).exists():
                 data.append((clas, True))
             else:
@@ -100,9 +113,7 @@ class AttendanceView(LoginRequiredMixin, View):
         date = request.session['date']
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
 
-        a = AttendanceIdModel(date=date,
-                              subject=subject,
-                              )
+        a = AttendanceIdModel(date=date, subject=subject,)
         a.save()
 
         attendance_id = a.id
