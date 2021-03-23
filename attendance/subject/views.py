@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.views import View
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.shortcuts import get_object_or_404
+from django import forms
 import os
 
-from .forms import CreateSubjectForm
-from .models import SubjectModel
+from .forms import CreateSubjectForm, CreateHourForm, HourFormSet, SubjectAddStudentsForm
+from .models import SubjectModel, HourModel
 from user_module.models import StaffModel
+from classroom.models import ClassroomModel
 
 
 def SubjectListView(request):
@@ -96,3 +99,87 @@ class SubjectDeleteView(LoginRequiredMixin, View):
 
         subject.delete()
         return redirect("subject:subject_list", permanent=True)
+
+
+def HourListView(request,class_id):
+    class_obj = get_object_or_404(ClassroomModel,id=class_id)
+    hour_obj = HourModel.objects.filter(classroom=class_obj)
+    context = {
+        'class_obj': class_obj,
+        'hour_obj': hour_obj,
+    }
+    return render(request,'subject/HourList.html',context=context)
+
+def HourDetailView(request,class_id,hour_id):
+    # class_obj = get_object_or_404(ClassroomModel,id=class_id)
+    hour_obj = get_object_or_404(HourModel,id=hour_id,classroom__id=class_id)
+    subjects = SubjectModel.objects.filter(hour=hour_obj)
+    context = {
+        'hour_obj': hour_obj,
+        'subjects': subjects,
+    }
+    return render(request,'subject/HourDetail.html',context=context)
+
+def HourEditView(request,class_id,hour_id):
+    hour_obj = get_object_or_404(HourModel,id=hour_id,classroom__id=class_id)
+    SubjectFormset = forms.inlineformset_factory(HourModel, SubjectModel, fields=('sub_name','handled_by',),formset=HourFormSet,extra=0,can_delete=False )
+    if request.method == "POST":
+        formset = SubjectFormset(request.POST,instance=hour_obj,prefix="subject_edit")
+        if formset.is_valid():
+            formset.save()
+            return redirect(hour_obj)
+        else:
+            print('not valid')
+    else:
+        formset = SubjectFormset(instance=hour_obj,prefix="subject_edit")
+    context = {
+        'formset': formset,
+    }
+    return render(request,'subject/HourEdit.html',context=context)
+
+def HourAddStudView(request,class_id,hour_id,sub_id):
+    sub_obj = get_object_or_404(SubjectModel,id=sub_id,hour__id=hour_id,hour__classroom__id=class_id)
+    sub_list = SubjectModel.objects.filter(hour=sub_obj.hour)
+    myForm = SubjectAddStudentsForm(request.POST or None,instance=sub_obj,request=request,sub_list=sub_list)
+    if myForm.is_valid():
+        myForm.save()
+    context = {
+        'sub_obj': sub_obj,
+        'form': myForm,
+    }
+    return render(request,'subject/HourAddStudent.html',context=context)
+
+
+def create_hour_view(request,class_id):
+    class_obj = get_object_or_404(ClassroomModel,id=class_id)
+    SubjectFormset =  forms.formset_factory(CreateSubjectForm, extra=0, min_num=1, validate_min=True)
+    if request.method == "POST":
+        myForm = CreateHourForm(request.POST)
+        formset = SubjectFormset(request.POST,prefix='subject_form')
+        if all([myForm.is_valid(),formset.is_valid()]):
+            hour_obj = myForm.save(commit=False)
+            hour_obj.classroom = class_obj
+            hour_obj.save()
+            print(hour_obj.id)
+            for inline_form in formset:
+                if inline_form.cleaned_data:
+                    sub_obj = inline_form.save(commit=False)
+                    sub_obj.hour = hour_obj
+                    sub_obj.save()
+                    print(sub_obj)
+                else:
+                    print('sub is not valid')
+            print('its all valid')
+            messages.success(request,'Created Successfully')
+            return redirect(hour_obj)
+        else:
+            print('its not valid')
+    else:
+        myForm = CreateHourForm()
+        formset = SubjectFormset(prefix='subject_form')
+    context = {
+        'class_obj': class_obj,
+        'form': myForm,
+        'formset': formset,
+    }
+    return render(request,'subject/create_hour.html',context=context)

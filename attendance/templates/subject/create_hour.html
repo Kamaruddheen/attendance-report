@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block head %}
+
+<script src="{% static 'formset_bootstrap/js/jquery.formset.js' %}" type="text/javascript"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<section class="container">
+	<h2 class="text-center">Create Hour</h2>
+
+	<form class="container" method="POST" novalidate>
+		{{ form|crispy }}
+		{% csrf_token %}
+		{{ formset.management_form }}
+		{% for f in formset %}
+			<section id="{{ f.prefix }}-row" class="formset_i">
+				{{ f|crispy}}
+			</section>
+		{% endfor %}
+
+		<input type="submit" name="submit" class="btn btn-info">
+	</form>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        $('.formset_i').formset({
+        	prefix: "{{ formset.prefix }}",
+        });
+    });
+</script>
+
+{% endblock %}

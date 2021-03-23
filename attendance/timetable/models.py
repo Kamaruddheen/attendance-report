@@ -1,7 +1,7 @@
 from django.db import models
 from classroom.models import ClassroomModel
 
-from subject.models import SubjectModel
+from subject.models import SubjectModel, HourModel
 # Create your models here.
 
 class TimetablesetModel(models.Model):

@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+
 <style>
     /* Custom CSS */
     #view_table .table td {
@@ -61,4 +62,8 @@
 <div class="d-flex justify-content-center justify-content-md-start">
     <a href="{% url 'timetable:showsubjects' c_object.id s_object.id %}"
         class="btn border_white btn-cust neu_icon text-info align-self-center my-3">Manage Timetable</a>
+    
+</div>
+<div class="d-flex justify-content-center justify-content-md-start">
+    <a href="#" class="btn border_white btn-cust neu_icon text-info align-self-center my-3">Auto Generate</a>
 </div>

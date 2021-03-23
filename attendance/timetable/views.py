@@ -3,7 +3,7 @@ from django.shortcuts import HttpResponse, redirect
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .forms import TimetableForm, TimetablesetForm, edit_timetableForm, choose_set_form
-from .models import ClassroomModel, TimetableModel, TimetablesetModel, SubjectModel
+from .models import ClassroomModel, TimetableModel, TimetablesetModel, SubjectModel, HourModel
 import json
 from datetime import date
 from queryset_sequence import QuerySetSequence
@@ -116,7 +116,7 @@ def showsubjects(request, class_id, set_id):
     #end of the for loop
     # zip function combines the two iterator and returns the combined version of the iterator
     all_subjects = zip(all_subjects, days)
-    subject_list = SubjectModel.objects.filter(classroom=c_object)
+    subject_list = HourModel.objects.filter(classroom=c_object)
     edit_timetable = edit_timetableForm(
         subject_list=subject_list)
     return render(request, 'timetable/showsubjects.html', {'all_subjects': all_subjects, 'c_object': c_object, 's_object': s_object, 'edit_timetable': edit_timetable, 'is_empty': any_empty_subject})

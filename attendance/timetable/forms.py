@@ -1,6 +1,6 @@
 from django import forms
 from .models import TimetableModel, TimetablesetModel
-from subject.models import SubjectModel
+from subject.models import SubjectModel, HourModel
 
 
 class TimetableForm(forms.ModelForm):
@@ -15,15 +15,15 @@ class TimetableForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['day'].widget.attrs.update(
             {'id': 'day', 'class': 'custom-select input_cust capitalize text-center form-control'})
-        self.fields['s1'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
+        self.fields['s1'] = forms.ModelChoiceField(queryset=HourModel.objects.filter(classroom=self.choice), widget=forms.Select(
             attrs={'id': 's1', 'class': 'custom-select input_cust capitalize text-center form-control', }), empty_label='Free', required=False)
-        self.fields['s2'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
+        self.fields['s2'] = forms.ModelChoiceField(queryset=HourModel.objects.filter(classroom=self.choice), widget=forms.Select(
             attrs={'id': 's2', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
-        self.fields['s3'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
+        self.fields['s3'] = forms.ModelChoiceField(queryset=HourModel.objects.filter(classroom=self.choice), widget=forms.Select(
             attrs={'id': 's3', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
-        self.fields['s4'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
+        self.fields['s4'] = forms.ModelChoiceField(queryset=HourModel.objects.filter(classroom=self.choice), widget=forms.Select(
             attrs={'id': 's4', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
-        self.fields['s5'] = forms.ModelChoiceField(queryset=SubjectModel.objects.filter(classroom=self.choice), widget=forms.Select(
+        self.fields['s5'] = forms.ModelChoiceField(queryset=HourModel.objects.filter(classroom=self.choice), widget=forms.Select(
             attrs={'id': 's5', 'class': 'custom-select input_cust capitalize text-center form-control'}), empty_label='Free', required=False)
         self.fields['s1'].label = "Hour I"
         self.fields['s2'].label = "Hour II"

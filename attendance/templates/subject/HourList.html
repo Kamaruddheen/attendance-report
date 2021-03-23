@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="container">
+	<h2 class="text-center">Hour List</h2>
+
+	<a href="{% url 'subject:create_hour' class_obj.id %}" class="btn btn-primary">Create Hour</a>
+
+	<div class="container">
+		{% for i in hour_obj %}
+			<p><a href="{{ i.get_absolute_url }}">{{ i.name }}</a></p>
+		{% endfor %}
+	</div>
+</section>
+
+{% endblock %}

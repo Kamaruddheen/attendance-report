@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'subject',
     'timetable',
     'attendancess',
+    'formset_bootstrap', # dynamic formset (bootstrap)
     'django_extensions'  # To Execute scripts
 ]
 
