@@ -2,23 +2,38 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-<title>SAMS | Subject | Add Students</title>
+<title>SAMS | {{ sub_obj.sub_name }} | Add Students</title>
+{% endblock %}
+
+{% block head %}
+<style>
+	.form-check-label {
+		color: #062743 !important;
+		font-family: 'Karla', sans-serif !important;
+		font-size: 20px !important;
+	}
+
+	.form-check-input {
+		margin-top: 7px;
+	}
+</style>
 {% endblock %}
 
 {% block content %}
 
-<section class="container">
-	<h2 class="text-center">{{ sub_obj.sub_name }} - Add Students</h2>
-
-	<div class="container">
-		<form method="POST">
-			{% csrf_token %}
-
-			{{ form|crispy }}
-
-			<input type="submit" class="btn btn-success" value="Add Students">
-		</form>
+<section class="container px-md-4 pb-4 body_box_shadow border_white mx-md-3">
+	<div class="text-center text_d_blue arvo my-4">
+		<h3 class="m-0">Add Students for {{ sub_obj.sub_name }}</h3>
 	</div>
+
+	<form
+		class="container form needs-validation d-flex flex-column justify-content-center justify-content-md-start align-items-center align-items-md-start"
+		method="POST" novalidate>
+		{% csrf_token %}
+		{{ form|crispy }}
+		<input type="submit" class="btn border_white btn-cust neu_icon text-success align-self-center"
+			value="Add Students">
+	</form>
 </section>
 
 {% endblock %}

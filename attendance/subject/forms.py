@@ -91,6 +91,7 @@ class SubjectAddStudentsForm(forms.ModelForm):
             pk__in=[i.id for i in other_students])
         self.fields['students'] = forms.ModelMultipleChoiceField(
             queryset=class_students, widget=forms.CheckboxSelectMultiple())
+        self.fields['students'].label = "Select your students"
 
     class Meta:
         model = SubjectModel
