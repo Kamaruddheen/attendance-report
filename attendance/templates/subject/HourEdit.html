@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-<title>SAMS | Subject Edit List</title>
+<title>SAMS | Edit Subjects</title>
 {% endblock %}
 
 {% block head %}
@@ -14,27 +14,73 @@
 
 {% block content %}
 
-<section class="container">
-	<h2 class="text-center">Edit Hour</h2>
-
-	<form method="POST">
+<section class="container px-md-4 pb-4 body_box_shadow border_white mx-md-3">
+	<div class="text-center text_d_blue arvo my-4">
+		<h3 class="m-0">Edit&nbsp;Subjects</h3>
+	</div>
+	<form class="container form needs-validation" method="POST" novalidate>
 		{% csrf_token %}
 		{{ formset.management_form }}
 		{% for f in formset %}
-		<div id="{{ f.prefix }}-row" class="formset_i">
-			{{ f|crispy }}
-		</div>
+		<section id="{{ f.prefix }}-row" class="formset_i form-row">
+			<div class="form-group col-md-12 text_d_blue arvo upper_case">Subject Details&nbsp;:</div>
+			<div class="form-group col-md-6 pr-md-2">
+				{{ f.sub_name|as_crispy_field }}
+			</div>
+			<div class="form-group col-md-6 pl-md-2">
+				{{ f.handled_by|as_crispy_field }}
+			</div>
+		</section>
 		{% endfor %}
-
-		<input type="submit" value="Save" class="btn btn-success">
+		<div
+			class="form-group col-12 d-flex flex-column flex-md-row justify-content-center justify-content-md-end mt-3 mt-md-0">
+			<button class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3 my-2"
+				type="submit">
+				Save&nbsp;changes
+			</button>
+			<button type="button"
+				class="btn border_white btn-cust neu_icon text-danger align-self-center float-right mr-2 my-2"
+				id="cancel-changes">Cancel&nbsp;changes</button>
+		</div>
 	</form>
-
 </section>
 
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('.formset_i').formset({
 			prefix: "{{ formset.prefix }}",
+		});
+	});
+
+	$(document).ready(function () {
+		// Disabling the cancel changes by default
+		$("#cancel-changes").prop('disabled', true);
+		$('[data-toggle="tooltip"]').tooltip();
+
+		// Adding 'Add Abother' button a css class 
+		$(".add-row").addClass("btn border_white btn-cust neu_icon text-primary align-self-center capitalize")
+
+		// Adding 'Remove' button a css class 
+		$(".delete-row").addClass("btn border_white btn-cust neu_icon text-danger align-self-center mb-4 capitalize");
+
+		//Adding 'Remove' button a css class while adding a new subject		
+		$(".add-row").on('click', function () {
+			$(".delete-row").addClass("btn border_white btn-cust neu_icon text-danger align-self-center mb-4 capitalize");
+		});
+
+		// cancel changes will reload the web page
+		$("#cancel-changes").click(function () {
+			location.reload();
+		});
+
+		// Removing a Subject will enable 'cancel changes' button
+		$(".delete-row").on('click', function () {
+			$("#cancel-changes").prop('disabled', false);
+		});
+
+		// Modifying any input or select field will enable 'cancel changes' button
+		$("input[type='text'],select").change(function () {
+			$("#cancel-changes").prop('disabled', false);
 		});
 	});
 </script>

@@ -51,7 +51,7 @@ class ClassesView(LoginRequiredMixin, View):
         # ? active_sets should be in filter of Timetablemodel
         
         classes = TimetableModel.objects.filter(
-            set_name__in=time_table_sets, day=day, subject__handled_by=request.user).order_by('hour')
+            set_name__in=active_sets, day=day, subject__handled_by=request.user).order_by('hour')
 
         date = date.strftime("%Y-%m-%d")
         request.session['date'] = date
