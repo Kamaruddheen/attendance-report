@@ -114,9 +114,27 @@ def HourDetailView(request,class_id,hour_id):
     # class_obj = get_object_or_404(ClassroomModel,id=class_id)
     hour_obj = get_object_or_404(HourModel,id=hour_id,classroom__id=class_id)
     subjects = SubjectModel.objects.filter(hour=hour_obj)
+    files = os.listdir(os.path.join(
+        settings.STATIC_DIR, "static\\img\\books\\"))
+    mylist = zip(subjects, files)
+
+    # if no. of subjects is greater than the no. of images
+    if len(subjects) > len(files):
+        value = None
+        value = len(subjects) - len(files)
+        for i in range(0, value):
+            files.append("book8.jpg")
+        # if no. of images is greater than the no. of subjects
+    elif len(files) > len(subjects):
+        pass
+
+    context = {
+        
+    }
+
     context = {
         'hour_obj': hour_obj,
-        'subjects': subjects,
+        'mylist': mylist,
     }
     return render(request,'subject/HourDetail.html',context=context)
 
