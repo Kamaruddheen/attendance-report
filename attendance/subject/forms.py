@@ -8,7 +8,7 @@ class CreateSubjectForm(forms.ModelForm):
 
     class Meta:
         model = SubjectModel
-        fields = ['sub_name','handled_by']
+        fields = ['sub_name', 'handled_by']
 
     def __init__(self, *args, **kwargs):
         # staff = kwargs.pop('staff')
@@ -33,17 +33,28 @@ class CreateSubjectForm(forms.ModelForm):
         # self.fields['sub_type'].label = "Subject Type"
         self.fields['handled_by'].label = "Handled By"
 
+
 class CreateHourForm(forms.ModelForm):
 
     class Meta:
         model = HourModel
-        fields = ['name','hour_type']
+        fields = ['name', 'hour_type']
+
+    def __init__(self, *args, **kwargs):
+        super(CreateHourForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'class': 'input_cust', 'placeholder': 'eg.Lang, EDC, SE, C++'})
+        self.fields['hour_type'].widget.attrs.update(
+            {'class': 'input_cust capitalize'})
+        self.fields['name'].label = "Hour"
+        self.fields['hour_type'].label = "Select your hour type"
+
 
 class HourFormSet(forms.BaseInlineFormSet):
     def __init__(self, *args, **kwargs):
-        super(HourFormSet,self).__init__(*args, **kwargs)
+        super(HourFormSet, self).__init__(*args, **kwargs)
         for form in self.forms:
-            form.empty_permitted=False
+            form.empty_permitted = False
 
     # def clean(self):
     #     if any(self.errors):
@@ -67,17 +78,19 @@ class HourFormSet(forms.BaseInlineFormSet):
 
 class SubjectAddStudentsForm(forms.ModelForm):
 
-    def __init__(self,*args,**kwargs):
-        request = kwargs.pop('request',None)
-        sub_list = kwargs.pop('sub_list',None)
-        super().__init__(*args,**kwargs)
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        sub_list = kwargs.pop('sub_list', None)
+        super().__init__(*args, **kwargs)
         sub_obj = self.instance
         other_students = sub_obj.students.none()
         for i in sub_list:
             if not i.id == sub_obj.id:
                 other_students = other_students.union(i.students.all())
-        class_students = sub_obj.hour.classroom.students.all().exclude(pk__in=[i.id for i in other_students])
-        self.fields['students'] = forms.ModelMultipleChoiceField(queryset=class_students,widget=forms.CheckboxSelectMultiple())
+        class_students = sub_obj.hour.classroom.students.all().exclude(
+            pk__in=[i.id for i in other_students])
+        self.fields['students'] = forms.ModelMultipleChoiceField(
+            queryset=class_students, widget=forms.CheckboxSelectMultiple())
 
     class Meta:
         model = SubjectModel

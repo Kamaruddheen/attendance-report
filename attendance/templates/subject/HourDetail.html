@@ -1,34 +1,38 @@
 {% extends 'base.html' %}
 
+{% block title %}
+<title>SAMS | Hour | Subject List</title>
+{% endblock %}
+
 {% block content %}
 
 <section class="container">
 	<h2 class="text-center">Hour Detail</h2>
 
 	<div class="container">
-			<p>{{ hour_obj.name }} - {{ hour_obj.get_hour_type_display }} - {{ hour_obj.classroom }}</p>
+		<p>{{ hour_obj.name }} - {{ hour_obj.get_hour_type_display }} - {{ hour_obj.classroom }}</p>
 
-			{% for s in subjects %}
-			<div class="card my-3">
-				<div class="card-body row text-center">
-					<div class="col-md-4">
-						<p>{{ s.sub_name }}</p>
-					</div>
-					<div class="col-md-4">
-						<p>{{ s.handled_by }}</p>
-					</div>
-					<div class="col-md-4">
-						<a href="{{ hour_obj.get_edit_url }}" class="mx-2">Edit</a>
-						<span>|</span>
-						<a href="{{ hour_obj.get_edit_url }}" class="mx-2">Delete</a>
-						{% if hour_obj.hour_type == 'sel' %}
-						<span>|</span>
-						<a href="{{ s.get_add_student_url }}" class="mx-2">Add Students</a>
-						{% endif %}
-					</div>
+		{% for s in subjects %}
+		<div class="card my-3">
+			<div class="card-body row text-center">
+				<div class="col-md-4">
+					<p>{{ s.sub_name }}</p>
+				</div>
+				<div class="col-md-4">
+					<p>{{ s.handled_by }}</p>
+				</div>
+				<div class="col-md-4">
+					<a href="{{ hour_obj.get_edit_url }}" class="mx-2">Edit</a>
+					<span>|</span>
+					<a href="{{ hour_obj.get_edit_url }}" class="mx-2">Delete</a>
+					{% if hour_obj.hour_type == 'sel' %}
+					<span>|</span>
+					<a href="{{ s.get_add_student_url }}" class="mx-2">Add Students</a>
+					{% endif %}
 				</div>
 			</div>
-			{% endfor %}
+		</div>
+		{% endfor %}
 	</div>
 </section>
 

@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+<title>SAMS | Hour List</title>
+{% endblock %}
+
 {% block content %}
 
 <section class="container">
@@ -9,7 +13,7 @@
 
 	<div class="container">
 		{% for i in hour_obj %}
-			<p><a href="{{ i.get_absolute_url }}">{{ i.name }}</a></p>
+		<p><a href="{{ i.get_absolute_url }}">{{ i.name }}</a></p>
 		{% endfor %}
 	</div>
 </section>

@@ -5,7 +5,7 @@ from classroom.models import ClassroomModel
 
 
 class HourModel(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)  # Lang, EDC, SE, PCD...
     classroom = models.ForeignKey(ClassroomModel,on_delete=models.CASCADE)
     hour_type = models.CharField(max_length=10,choices=(('reg','Regular'),('sel','Selective'),('lab','Lab')))
 
@@ -18,7 +18,9 @@ class HourModel(models.Model):
     def get_edit_url(self):
         return reverse('subject:edit_hour',args=[self.classroom.id,self.id])
 
-    # class Meta:
+    class Meta:
+        verbose_name = 'Hour'
+        verbose_name_plural = 'Hours'
         # constraints = [
         #     models.UniqueConstraint(
         #         fields=['name', 'classroom'], name="unique_sub_per_class")
@@ -26,8 +28,8 @@ class HourModel(models.Model):
 
 # Create your models here.
 class SubjectModel(models.Model):
-    # hour_name = models.CharField(max_length=50)
-    sub_name = models.CharField(max_length=50)
+    # hour_name = models.CharField(max_length=50)  # SE, lang, EDC
+    sub_name = models.CharField(max_length=50)  # Software Engineering, Tamil, French
     hour = models.ForeignKey(HourModel,on_delete=models.CASCADE,null=True)
     handled_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
