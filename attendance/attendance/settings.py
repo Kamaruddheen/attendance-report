@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'livereload',  # livereload for development purpose only
+    'livereload',  # livereload for development purpose only
     'django.contrib.staticfiles',
     'crispy_forms',
     'user_module',
@@ -59,7 +59,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'livereload.middleware.LiveReloadScript', # livereload for development purpose only
+    # livereload for development purpose only
+    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'attendance.urls'

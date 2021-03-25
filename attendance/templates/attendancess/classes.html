@@ -6,7 +6,7 @@
 
 {% block content %}
 <article class="mt-3">
-    <form class="form d-flex flex-column flex-md-row" action={% url 'attendancess:classes' %}>
+    <form class="form d-flex flex-column flex-md-row" action="{% url 'attendancess:classes' %}">
         <div class="form-group mb-md-0 pl-md-4 d-flex justify-content-center justify-content-md-start text_d_blue">
             <input class="btn mx-md-0 cust_date" type="date" value={{date}} name="date" data-toggle="tooltip"
                 title="Click the Date Icon" />
@@ -23,18 +23,18 @@
     <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 16.5rem;">
         <div class="card-body">
             {% if isPosted %}
-            <a href="{% url 'attendancess:check-attendance' %}?id={{class.subject.id}}&date={{date}}"
+            <a href="{% url 'attendancess:check-attendance' %}?id={{class.subject.id}}&date={{date}}&hournumber={{class.hour}}"
                 class="card-link stretched-link text-center">
-                <h5 class="capitalize">{{class.subject.sub_name}}</h5>
+                <h5 class="capitalize">{{class.subject.name}}</h5>
             </a>
             {% else %}
-            <a href="{% url 'attendancess:attendance' class.subject.id %}" class="card-link text-center stretched-link">
-                <h5 class="capitalize">{{class.subject.sub_name}}</h5>
+            <a href="{% url 'attendancess:attendance' class.subject.id class.hour %}?date={{date}}"
+                class="card-link text-center stretched-link">
+                <h5 class="capitalize">{{class.subject.name}}</h5>
             </a>
             {% endif %}
             <h6 class="capitalize text-center text-muted">
-                {{class.set_name.classroom.get_year_display}} {{class.set_name.classroom.course}}
-                {{class.set_name.classroom.sec|upper}}
+                {{class.set_name.classroom}}
             </h6>
         </div>
         <div class="card-footer border_color_white bg-transparent text-center text_d_blue py-3">

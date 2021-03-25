@@ -30,11 +30,16 @@
         Subject :
     </h5>
     <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        {{ subject.sub_name }}
+        {{ subject.sub_name }} ({{ hour.name|upper }})
+    </h5>
+</section>
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2">
+    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+        Hour : {{ hour_number }}
     </h5>
 </section>
 <section class="container px-0 px-md-4 mx-auto d-flex d-md-block justify-content-center">
-    <form class="form" action="." method="POST">
+    <form class="form" action="{% url 'attendancess:attendance' hour.id hour_number %}" method="POST">
         {% csrf_token %}
         <div class="table-responsive table_wrapper table_box_shadow border_white my-3" id="tab_res">
             <table class="table table-striped my-1 my-md-2">
