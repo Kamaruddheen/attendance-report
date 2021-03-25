@@ -32,7 +32,7 @@ def createtimetable(request, class_id, set_id):
                 else:
                     # foriegn key choices are stored as referenced objects but normal user defined choices are stored as the first element in the tuple defined
                     t_obj.subject = get_object_or_404(
-                        SubjectModel, id=a)  # Subject gets initialized
+                        HourModel, id=a)  # Subject gets initialized
                 t_obj.day = day  # day gets initialized
                 t_obj.hour = i  # hour gets initialized
                 t_obj.set_name=get_object_or_404(TimetablesetModel,id=set_id)
@@ -42,7 +42,7 @@ def createtimetable(request, class_id, set_id):
             # To check whether maximum limit of the timetable are entered or not
             if len(check) >= 30:
                 messages.info(
-                    request, 'You have filled all the 6 days for timetable')
+                    request, 'Your current entry saved and now You have filled all the 6 days for timetable')
                 return redirect('timetable:showsubjects', class_id=class_id, set_id=set_id)
             messages.success(request, 'Your timetable stored successfully.')
             c_object = get_object_or_404(ClassroomModel, id=class_id)
@@ -85,18 +85,19 @@ def setchoose(request, class_id):
             'c_object': c_object
         }
         return render(request, 'timetable/setchoose.html', context)
+    #Here classroom object is not sent to the form because the below form object just display the form not store the values using request.POST
     t_set = TimetablesetForm()
     messages.error(request,'No sets yet created for this classroom')
     return render(request, 'timetable/timetableset.html', {'c_object': c_object, 't_set': t_set})
 
-# Timetable show
 
+# Timetable show:
 
 def showsubjects(request, class_id, set_id):
     # To check whether any subject is in the timetable :
     if not TimetableModel.objects.filter(set_name__id=set_id).exists():
         c_object = get_object_or_404(ClassroomModel, id=class_id)
-        t = TimetableForm(initial={'set_name': set_id}, c_object=c_object)
+        t = TimetableForm(c_object=c_object)
         messages.error(request, 'No subjects created for this timetable yet')
         return render(request, 'timetable/timetable.html', {'form': t, 'c_object': c_object, 'set_id': set_id})
     # Code if subjects are present in the particular timetable :
@@ -111,11 +112,13 @@ def showsubjects(request, class_id, set_id):
         if len(setsubjects) == 0:
             all_subjects.append(['-', '-', '-', '-', '-'])
             any_empty_subject = True
+            #The any_empty_variable is to indicate that there is one day timetable unfilled so show fill subjects options in the front end
             continue
         all_subjects.append(setsubjects)
     #end of the for loop
     # zip function combines the two iterator and returns the combined version of the iterator
     all_subjects = zip(all_subjects, days)
+    print(all_subjects)
     subject_list = HourModel.objects.filter(classroom=c_object)
     edit_timetable = edit_timetableForm(
         subject_list=subject_list)
@@ -170,7 +173,7 @@ def edit_subjects(request):
                 s_object = None
             else:
                 # Implicitly on the left hand side code , subject_id is converted as a integer when comparing with integer values
-                s_object = get_object_or_404(SubjectModel, id=subject_id)
+                s_object = get_object_or_404(HourModel, id=subject_id)
 
             t_object = get_object_or_404(TimetableModel, id=timetable_id)
             t_object.subject = s_object
