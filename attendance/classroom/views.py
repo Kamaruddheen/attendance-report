@@ -17,37 +17,35 @@ def CreateClass(request):
         ClassroomObject = ClassroomForm(request.POST)
         if ClassroomObject.is_valid():
             ClassroomObject.save()
-            all_classrooms = ClassroomModel.objects.all()
             messages.success(request, "Classroom created")
-            return render(request, 'classroom/view_and_create_classroom.html', {'all_classrooms': all_classrooms})
-        all_classrooms = ClassroomModel.objects.all()
-        context = {
-            'all_classrooms': all_classrooms,
-            'form': ClassroomObject
-        }
-        return render(request, 'classroom/view_and_create_classroom.html', context=context)
-    else:
-        all_classrooms = ClassroomModel.objects.all()
-        ClassroomObject = ClassroomForm()
-        # image
-        files = os.listdir(os.path.join(
-            settings.STATIC_DIR, "static\\img\\classrooms\\"))
-        mylist = zip(all_classrooms, files)
+        else:
+            all_classrooms = ClassroomModel.objects.all()
+            context = {
+                'all_classrooms': all_classrooms,
+                'form': ClassroomObject
+            }
+            return render(request, 'classroom/view_and_create_classroom.html', context=context)
+    all_classrooms = ClassroomModel.objects.all()
+    ClassroomObject = ClassroomForm()
+    # image
+    files = os.listdir(os.path.join(
+        settings.STATIC_DIR, "static\\img\\classrooms\\"))
+    mylist = zip(all_classrooms, files)
 
-        # if no. of subjects is greater than the no. of images
-        if len(all_classrooms) > len(files):
-            value = None
-            value = len(all_classrooms) - len(files)
-            for i in range(0, value):
-                files.append("classroom11.jpg")
-            # if no. of images is greater than the no. of subjects
-        elif len(files) > len(all_classrooms):
-            pass
-        context = {
-            'form': ClassroomObject,
-            'mylist': mylist
-        }
-        return render(request, 'classroom/view_and_create_classroom.html', context=context)
+    # if no. of subjects is greater than the no. of images
+    if len(all_classrooms) > len(files):
+        value = None
+        value = len(all_classrooms) - len(files)
+        for i in range(0, value):
+            files.append("classroom11.jpg")
+        # if no. of images is greater than the no. of subjects
+    elif len(files) > len(all_classrooms):
+        pass
+    context = {
+        'form': ClassroomObject,
+        'mylist': mylist
+    }
+    return render(request, 'classroom/view_and_create_classroom.html', context=context)
 
 
 def editclass(request, id):
