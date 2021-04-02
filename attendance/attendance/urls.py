@@ -29,6 +29,7 @@ urlpatterns = [
     path('subjects/', include('subject.urls')),
     path('classroom/',include('classroom.urls')),
     path('timetable/',include('timetable.urls')),
+    path('dashboard/',include('dashboard.urls')),
 ]
 
 # urlpatterns += staticfiles_urlpatterns()

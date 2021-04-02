@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | Dashboard</title>
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<article class="row d-flex justify-content-center justify-content-md-between my-3 mx-0 mx-md-4">
+    <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 45rem;">
+        <div class="card-body">
+            <canvas id="stacked-bar"></canvas>
+        </div>
+    </section>
+    <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 20rem;">
+        <div class="card-body">
+            <canvas id="doughnut-chart"></canvas>
+        </div>
+        <div class="card-footer">
+            <h4 class="text-center text_d_blue">Attendance</h4>
+        </div>
+    </section>
+</article>
+
+<script>
+    // Doughnut
+    var config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                // data: {{ data| safe }},
+                data: ['72.73', '27.27'],
+                backgroundColor: [
+                    '#28a745', '#dc3545',
+                ],
+            }],
+            labels: [
+                'Present',
+                'Absent',
+            ]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Attendance Percentage',
+            },
+        }
+    };
+
+    // Stacked Bar chart
+    var stackedBar = new Chart({
+        labels: ['January', 'February', 'March'],
+        datasets: [{
+            label: 'Dataset 1',
+            backgroundColor: 'red',
+            data: [10, 20, 30, 40, 50, 60, 70],
+        }]
+    });
+
+    window.onload = function () {
+        // Doughnut
+        var ctx = document.getElementById('doughnut-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+
+        // Stacked Bar
+        var ctx1 = document.getElementById('stacked-bar').getContext('2d');
+        window.myBar = new Chart(ctx1, {
+            type: 'bar',
+            data: [5, 3],
+            options: {
+                title: {
+                    display: true,
+                    text: 'Chart.js Bar Chart - Stacked'
+                },
+                // tooltips: {
+                //     mode: 'index',
+                //     intersect: false
+                // },
+                responsive: true,
+                // scales: {
+                //     xAxes: [{
+                //         stacked: true,
+                //     }],
+                //     yAxes: [{
+                //         stacked: true
+                //     }]
+                // }
+            }
+        });
+    };
+
+</script>
+
+{% endblock %}

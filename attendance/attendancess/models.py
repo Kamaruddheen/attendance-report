@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from subject.models import SubjectModel, HourModel
-
+from classroom.models import ClassroomModel
 hour_choices = (
     (1, 'I'),
     (2, 'II'),
@@ -20,6 +20,7 @@ class AttendanceIdModel(models.Model):
                      ('cancel', 'Cancel'), ('calloff', 'Call Off'))
     status = models.CharField(max_length=10, choices=status_choice, blank=True)
     hour = models.PositiveIntegerField(choices=hour_choices)
+    classroom = models.ForeignKey(ClassroomModel, on_delete=models.PROTECT, null=True)
 
     class Meta:
         db_table = 'attendanceID'

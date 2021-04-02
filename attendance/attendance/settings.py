@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'subject',
     'timetable',
     'attendancess',
-    'formset_bootstrap', # dynamic formset (bootstrap)
+    'dashboard',
+    'formset_bootstrap',  # dynamic formset (bootstrap)
     'django_extensions'  # To Execute scripts
 ]
 
@@ -134,9 +135,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR/"static/", ]
-STATIC_DIR = BASE_DIR # for classroom app configuration
+STATIC_DIR = BASE_DIR  # for classroom app configuration
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     #Development Only
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Development Only
 
 # EMAIL_HOST = '<smtp.host>'
 # EMAIL_PORT = 587

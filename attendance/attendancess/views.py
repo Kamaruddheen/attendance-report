@@ -11,11 +11,11 @@ from timetable.models import TimetablesetModel, TimetableModel
 from attendancess.models import AttendanceModel, AttendanceIdModel
 from classroom.models import ClassroomModel
 
+
 # List of Class they are going
-
-
 class ClassesView(LoginRequiredMixin, View):
     def get(self, request):
+        # Requesting Date from User otherwise 0
         date = request.GET.get('date', 0)
 
         # Finding date
@@ -38,12 +38,12 @@ class ClassesView(LoginRequiredMixin, View):
             "Friday": 5,
             "Saturday": 6
         }
+        # Setting day for backend purpose
         day = days[day]
 
         # Get all the active time tables and extract the classes
         active_sets = []
         time_table_sets = TimetablesetModel.objects.all()
-        # print(type(time_table_sets))
         for set in time_table_sets:
             # Date should be between from & to date of Timetable
             if set.from_date <= date <= set.to_date:
@@ -51,10 +51,12 @@ class ClassesView(LoginRequiredMixin, View):
                 active_sets.append(set)  # Storing in active set
         classes = []
 
-        # active_sets are in filter of Timetablemodel
-        handled_by = SubjectModel.objects.filter(handled_by=request.user)
+        # List of Subjects Handled by Staff
+        handled_by = SubjectModel.objects.filter(
+            handled_by=request.user)  # Getting value as Queryset
         for subject in handled_by:
             if subject.hour:
+                # active_sets are in filter of Timetablemodel
                 classes.append(TimetableModel.objects.filter(
                     set_name__in=active_sets, day=day, subject__id=subject.hour.id).order_by('hour'))
 
@@ -62,13 +64,14 @@ class ClassesView(LoginRequiredMixin, View):
         request.session['date'] = date
 
         data = []
-        # Redirecting page for Attendance Entry & View Page
+        # Looping through timetable subject
         for clas in classes:
             for c in clas:
+                # Redirecting page for Attendance Entry & View Page
                 sub = get_object_or_404(
                     SubjectModel, hour=c.subject, handled_by=request.user)
-                if AttendanceIdModel.objects.filter(date=date, hour_fk=c.subject, subject=sub).exists():
-                    # True = Posted
+                if AttendanceIdModel.objects.filter(date=date, hour=c.hour, hour_fk=c.subject, subject=sub, classroom=sub.hour.classroom).exists():
+                    # True = already Posted
                     data.append((c, True))
                 else:
                     # False = Not Posted yet
@@ -83,15 +86,16 @@ class ClassesView(LoginRequiredMixin, View):
 
 class AttendanceView(LoginRequiredMixin, View):
     def get(self, request, hour_id, hour_number):
-
+        # Getting objects of HourModel, SubjectModel & ClassroomModel
         hour = get_object_or_404(HourModel, pk=hour_id)
         subject = get_object_or_404(
             SubjectModel, hour=hour, handled_by=request.user)
         classroom = get_object_or_404(ClassroomModel, id=hour.classroom.id)
 
+        # Getting the date
         date = request.GET.get('date', 0)
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-
+        # Getting the day
         day = date.strftime("%A")
 
         days = {
@@ -103,20 +107,22 @@ class AttendanceView(LoginRequiredMixin, View):
             "Friday": 5,
             "Saturday": 6
         }
+        # Setting day for backend purpose
         day = days[day]
 
         # Get all the active time tables and extract the classes
         active_sets = []
         time_table_sets = TimetablesetModel.objects.all()
-        # print(type(time_table_sets))
         for set in time_table_sets:
             # Date should be between from & to date of Timetable
             if set.from_date <= date <= set.to_date:
                 # Getting the currently active timetable of user requested date
                 active_sets.append(set)  # Storing in active set
 
+        # Finding given Hour number exists in the TimetableModel (verify hour)
         if not TimetableModel.objects.filter(
                 set_name__in=active_sets, day=day, subject=hour, hour=hour_number).exists():
+            # Redirecting them to classes page becoz hour doesn't exists in Timetable
             date = date.strftime("%Y-%m-%d")
             request.session['date'] = date
 
@@ -138,7 +144,7 @@ class AttendanceView(LoginRequiredMixin, View):
 
         # Checking already Posted or Not
         if AttendanceIdModel.objects.filter(date=date, hour_fk=hour,
-                                            subject=subject, hour=hour_number).exists():
+                                            subject=subject, hour=hour_number, classroom=classroom).exists():
             # if already posted redirect them to attendance class page
             messages.info(
                 request, 'You have already entered attendance for this Date')
@@ -159,20 +165,11 @@ class AttendanceView(LoginRequiredMixin, View):
         return render(request, 'attendancess/attendance.html', context)
 
     def post(self, request, hour_id, hour_number):
-
+        # Getting objects of HourModel, SubjectModel & ClassroomModel
         hour = get_object_or_404(HourModel, pk=hour_id)
         subject = get_object_or_404(
             SubjectModel, hour=hour, handled_by=request.user)
         classroom = get_object_or_404(ClassroomModel, id=hour.classroom.id)
-
-        # Checking whether the subject id is belonging to the current user
-        # if not subject.handled_by == request.user:
-        #     context = {
-        #         "msg": "You are not allowed to view this page."
-        #     }
-        #     return render(request, "error.html", context)
-
-        # students = subject.students.all().order_by("username")
 
         # Fetching students details
         if hour.hour_type == 'sel':
@@ -186,12 +183,13 @@ class AttendanceView(LoginRequiredMixin, View):
         date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
 
         # Checking already Posted or Not
-        if not AttendanceIdModel.objects.filter(date=date, hour_fk=hour,
-                                                subject=subject, hour=hour_number).exists():
+        if not AttendanceIdModel.objects.filter(date=date, hour_fk=hour, subject=subject,
+                                                hour=hour_number, classroom=classroom).exists():
+            # Creating a new Data in AttendanceIdModel
             a = AttendanceIdModel(date=date, hour_fk=hour,
-                                  subject=subject, hour=hour_number)
+                                  subject=subject, hour=hour_number, classroom=classroom)
             a.save()
-
+            # Getting the id of the AttendanceIdModel to store it in AttendanceModel
             attendance_id = a.id
         else:
             # if already posted redirect them to attendance class page
@@ -217,7 +215,7 @@ class AttendanceView(LoginRequiredMixin, View):
 
 class CheckAttendanceView(LoginRequiredMixin, View):
     def get(self, request):
-
+        # Getting the values of hourModel.id, date, hour number & Subject object using hourModel
         hour_id = request.GET.get('id')
         date = request.GET.get('date')
         hour_number = request.GET.get('hournumber')
