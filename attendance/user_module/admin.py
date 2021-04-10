@@ -6,13 +6,15 @@ from .models import *
 
 # Register your models here.
 
+
 @admin.register(User)
 class UserAdmin(DjangoUserAdmin):
     """Define admin model for custom User model with no email field."""
 
     fieldsets = (
-        (None, {'fields': ('username','email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'user_type')}),
+        (None, {'fields': ('username', 'email', 'password')}),
+        (_('Personal info'), {
+         'fields': ('first_name', 'last_name', 'user_type')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
@@ -20,12 +22,12 @@ class UserAdmin(DjangoUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username','email', 'first_name', 'last_name', 'user_type', 'password1', 'password2'),
+            'fields': ('username', 'email', 'first_name', 'last_name', 'user_type', 'password1', 'password2'),
         }),
     )
     list_display = ('username', 'first_name', 'user_type', 'email', 'is_staff')
-    search_fields = ('email', 'first_name', 'last_name','user_type')
-    ordering = ('username', 'user_type', )
+    search_fields = ('email', 'first_name', 'last_name', 'user_type')
+    ordering = ('user_type', 'username', )
 
 
 class StaffModelAdmin(admin.ModelAdmin):

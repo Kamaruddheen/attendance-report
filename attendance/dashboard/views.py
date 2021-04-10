@@ -30,3 +30,15 @@ def dashboard_view(request):
         'labels': labels,
         'data': data,
     })
+
+
+# Particular student data
+def student_details(request):
+    rollno = request.POST.get('rollno', None)
+    # print(rollno)
+    data = AttendanceModel.objects.filter(
+        rollno=rollno).order_by('attendance_id')
+    details = {
+        'data': data
+    }   
+    return render(request, "dashboard/dashboard.html", details)

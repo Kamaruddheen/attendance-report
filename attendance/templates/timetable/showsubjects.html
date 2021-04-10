@@ -93,7 +93,6 @@
     <a href="{% url 'timetable:setchoose' c_object.id %}"
         class="btn border_white btn-cust neu_icon text-primary align-self-center ml-2">Back to choosing set</a>
     <div class="d-flex flex-column flex-md-row">
-        <a href="#" class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3 my-2">Auto Generate</a>
         <button type="button"
             class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3 my-2"
             id="save-changes">Save&nbsp;changes</button>
@@ -166,41 +165,41 @@
 
         $("#add_subject").click(function () {
             var subject_chosen_text = $("#id_subject option:selected").text()
-            var timetable_subject_id = $("#"+a).attr('name')
-            if(subject==subject_chosen_text){
-                $("#"+a).text(subject)
-                var j=-1//To find the index we are using j variable
-                for(i of subject_list){
+            var timetable_subject_id = $("#" + a).attr('name')
+            if (subject == subject_chosen_text) {
+                $("#" + a).text(subject)
+                var j = -1//To find the index we are using j variable
+                for (i of subject_list) {
                     j++//'j' variable is incremented to find out the current index
-                    if(i[1]==timetable_subject_id){
-                        subject_list.splice(j,1)
-                        if(subject_list.length==0){
+                    if (i[1] == timetable_subject_id) {
+                        subject_list.splice(j, 1)
+                        if (subject_list.length == 0) {
                             $("#save-changes").prop('disabled', true)
-                            $("#cancel-changes").prop('disabled', true) 
+                            $("#cancel-changes").prop('disabled', true)
                         }
                         break
                     }
                 }
             }
-            else{
-                var check=false//to find out whether to add a new entry or update the old entry in the subject_list array
-                $("#"+a).html(subject + " <small class='text-primary'>(old)</small><br>" + subject_chosen_text + " <small class='text-success'>(new)</small>")
-                var subject_chosen_value=$("#id_subject").val()
-                if(subject_chosen_value.length==0){
-                    subject_chosen_value='Free'
+            else {
+                var check = false//to find out whether to add a new entry or update the old entry in the subject_list array
+                $("#" + a).html(subject + " <small class='text-primary'>(old)</small><br>" + subject_chosen_text + " <small class='text-success'>(new)</small>")
+                var subject_chosen_value = $("#id_subject").val()
+                if (subject_chosen_value.length == 0) {
+                    subject_chosen_value = 'Free'
                 }
-                for (i of subject_list){
-                    if(i[1]==timetable_subject_id){
-                        i[0]=subject_chosen_value
-                        check=true
+                for (i of subject_list) {
+                    if (i[1] == timetable_subject_id) {
+                        i[0] = subject_chosen_value
+                        check = true
                         break
                     }
                 }
-                if(check==false){
-                   subject_list.push([subject_chosen_value,timetable_subject_id])
+                if (check == false) {
+                    subject_list.push([subject_chosen_value, timetable_subject_id])
                 }
                 $("#save-changes").prop('disabled', false)
-                $("#cancel-changes").prop('disabled', false) 
+                $("#cancel-changes").prop('disabled', false)
             }
             $("#timetable_modal").modal('hide')
         });

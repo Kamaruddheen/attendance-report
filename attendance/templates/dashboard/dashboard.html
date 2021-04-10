@@ -11,13 +11,13 @@
 {% endblock %}
 
 {% block content %}
-
+<article class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+    <label for="">Student Roll No.</label>
+    <input type="text" class="input_cust text_d_blue form-control col-2 mx-2" id="rollno">
+    <button type="button" class="btn border_white btn-cust neu_icon align-self-center text-primary ml-2"
+        id="student-rollno">Submit</button>
+</article>
 <article class="row d-flex justify-content-center justify-content-md-between my-3 mx-0 mx-md-4">
-    <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 45rem;">
-        <div class="card-body">
-            <canvas id="stacked-bar"></canvas>
-        </div>
-    </section>
     <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 20rem;">
         <div class="card-body">
             <canvas id="doughnut-chart"></canvas>
@@ -34,7 +34,7 @@
         type: 'doughnut',
         data: {
             datasets: [{
-                // data: {{ data| safe }},
+                // data: {{ data }},
                 data: ['72.73', '27.27'],
                 backgroundColor: [
                     '#28a745', '#dc3545',
@@ -54,48 +54,31 @@
         }
     };
 
-    // Stacked Bar chart
-    var stackedBar = new Chart({
-        labels: ['January', 'February', 'March'],
-        datasets: [{
-            label: 'Dataset 1',
-            backgroundColor: 'red',
-            data: [10, 20, 30, 40, 50, 60, 70],
-        }]
-    });
-
     window.onload = function () {
         // Doughnut
         var ctx = document.getElementById('doughnut-chart').getContext('2d');
         window.myPie = new Chart(ctx, config);
 
-        // Stacked Bar
-        var ctx1 = document.getElementById('stacked-bar').getContext('2d');
-        window.myBar = new Chart(ctx1, {
-            type: 'bar',
-            data: [5, 3],
-            options: {
-                title: {
-                    display: true,
-                    text: 'Chart.js Bar Chart - Stacked'
-                },
-                // tooltips: {
-                //     mode: 'index',
-                //     intersect: false
-                // },
-                responsive: true,
-                // scales: {
-                //     xAxes: [{
-                //         stacked: true,
-                //     }],
-                //     yAxes: [{
-                //         stacked: true
-                //     }]
-                // }
-            }
-        });
     };
 
+    $(document).ready(function () {
+        $("#student-rollno").click(function () {
+            var rollno = $("#rollno").val();
+            $.ajax({
+                headers: {
+                    "X-CSRFTOKEN": "{{ csrf_token }}",
+                    'contentType': 'application/json;charset=utf-8',
+                },
+                url: "{% url 'dashboard:student_roll_no' %}",
+                type: 'post',
+                data: { 'rollno': rollno },
+                dataType: 'json',
+                success: function (response) {
+                    alert(details)
+                }
+            });
+        });
+    });
 </script>
 
 {% endblock %}
