@@ -9,7 +9,7 @@ class AttendanceIdModelAdmin(admin.ModelAdmin):
 
 
 class AttendanceModelAdmin(admin.ModelAdmin):
-    list_display = ['attendance_id', 'rollno', 'status']
+    list_display = ['id', 'attendance_id', 'rollno', 'status']
 
 
 admin.site.register(AttendanceIdModel, AttendanceIdModelAdmin)

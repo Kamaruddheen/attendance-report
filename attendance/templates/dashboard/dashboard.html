@@ -7,28 +7,134 @@
 {% endblock %}
 
 {% block head %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js"
+    integrity="sha512-dnUg2JxjlVoXHVdSMWDYm2Y5xcIrJg1N+juOuRi0yLVkku/g26rwHwysJDAMwahaDfRpr1AxFz43ktuMPr/l1A=="
+    crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
-<article class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+<article class="row d-none justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
     <label for="">Student Roll No.</label>
     <input type="text" class="input_cust text_d_blue form-control col-2 mx-2" id="rollno">
     <button type="button" class="btn border_white btn-cust neu_icon align-self-center text-primary ml-2"
         id="student-rollno">Submit</button>
 </article>
-<article class="row d-flex justify-content-center justify-content-md-between my-3 mx-0 mx-md-4">
-    <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 20rem;">
+<article class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+    <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
+        <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body h5 mb-0">
+                Students
+            </h2>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="mb-0 h3 font-weight-bold card-title">{{ total }}</h5>
+        </div>
+    </section>
+    <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
+        <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body h5 mb-0">
+                Staffs
+            </h2>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="mb-0 h3 font-weight-bold card-title">{{ staff }}</h5>
+        </div>
+    </section>
+    <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
+        <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body h5 mb-0">
+                Present
+            </h2>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="mb-0 h3 font-weight-bold card-title text-success">{{ present }}</h5>
+        </div>
+    </section>
+    <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
+        <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body h5 mb-0">
+                Absent
+            </h2>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="mb-0 h3 font-weight-bold card-title text-danger">{{ absent }}</h5>
+        </div>
+    </section>
+</article>
+<article class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+    <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 18rem;">
         <div class="card-body">
             <canvas id="doughnut-chart"></canvas>
         </div>
-        <div class="card-footer">
-            <h4 class="text-center text_d_blue">Attendance</h4>
+        <div class="card-footer border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body font_size_normal mb-0">
+                Attendance
+            </h2>
+        </div>
+    </section>
+    <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 35rem;">
+        <div class="card-body">
+            <canvas id="class-bar-chart" data-url="{% url 'dashboard:attendance_classwise' %}"></canvas>
+        </div>
+        <div class="card-footer border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body font_size_normal mb-0">
+                Attendance by Class
+            </h2>
         </div>
     </section>
 </article>
 
 <script>
+    $(function () {
+
+        var $attendance_by_class = $("#class-bar-chart");
+        $.ajax({
+            url: $attendance_by_class.data("url"),
+            success: function (data1) {
+
+                console.log(data1)
+
+                var ctx1 = $attendance_by_class[0].getContext("2d");
+
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: data1.labels,
+                        datasets: [
+                            {
+                                label: 'Present',
+                                data: data1.present,
+                                backgroundColor: '#062743',
+
+                            },
+                            {
+                                label: 'Absent',
+                                data: data1.absent,
+                                backgroundColor: 'grey',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        title: {
+                            display: true,
+                            text: 'Attendance Classwise'
+                        },
+                        scales: {
+                            x: {
+                                stacked: true,
+                            },
+                            y: {
+                                stacked: true,
+                                beginAtZero: true
+                            }
+                        },
+                    }
+                });
+
+            }
+        });
+    });
     // Doughnut
     var config = {
         type: 'doughnut',
@@ -49,7 +155,7 @@
             responsive: true,
             title: {
                 display: true,
-                text: 'Attendance Percentage',
+                text: 'Overall Attendance',
             },
         }
     };

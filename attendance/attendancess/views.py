@@ -190,7 +190,7 @@ class AttendanceView(LoginRequiredMixin, View):
                                   subject=subject, hour=hour_number, classroom=classroom)
             a.save()
             # Getting the id of the AttendanceIdModel to store it in AttendanceModel
-            attendance_id = a.id
+            attendance_id = a
         else:
             # if already posted redirect them to attendance class page
             messages.info(
@@ -237,7 +237,18 @@ class CheckAttendanceView(LoginRequiredMixin, View):
         data = AttendanceModel.objects.filter(
             attendance_id=attendance_id.id).order_by('rollno')
 
+        Total_count = AttendanceModel.objects.filter(
+            attendance_id=attendance_id.id).count()
+        Present_count = AttendanceModel.objects.filter(
+            attendance_id=attendance_id.id, status="Present").count()
+        Absent_count = AttendanceModel.objects.filter(
+            attendance_id=attendance_id.id, status="Absent").count()
+        print(Total_count)
+
         context = {
+            'total': Total_count,
+            'present': Present_count,
+            'absent': Absent_count,
             'hour_number': hour_number,
             'hour': subject,
             "data": data,

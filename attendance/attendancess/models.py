@@ -20,7 +20,8 @@ class AttendanceIdModel(models.Model):
                      ('cancel', 'Cancel'), ('calloff', 'Call Off'))
     status = models.CharField(max_length=10, choices=status_choice, blank=True)
     hour = models.PositiveIntegerField(choices=hour_choices)
-    classroom = models.ForeignKey(ClassroomModel, on_delete=models.PROTECT, null=True)
+    classroom = models.ForeignKey(
+        ClassroomModel, on_delete=models.PROTECT, null=True)
 
     class Meta:
         db_table = 'attendanceID'
@@ -29,7 +30,8 @@ class AttendanceIdModel(models.Model):
 
 
 class AttendanceModel(models.Model):
-    attendance_id = models.PositiveIntegerField()
+    attendance_id = models.ForeignKey(
+        AttendanceIdModel, on_delete=models.PROTECT)
     rollno = models.CharField(max_length=10)
     status = models.CharField(max_length=10)  # Present/Absent
 

@@ -1,34 +1,68 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 
-from attendancess.models import AttendanceIdModel, AttendanceModel
+from attendancess.models import *
+from user_module.models import *
+from classroom.models import *
 
 
 def dashboard_view(request):
-    labels = []
     data = []
-    Present = 0
-    Absent = 0
+    Present_count = 0
+    Absent_count = 0
 
-    queryset = AttendanceModel.objects.order_by('attendance_id')
-    for clas in queryset:
-        labels.append(clas.rollno)
-        if clas.status == 'Present':
-            # data.append(1)
-            Present += 1
-        elif clas.status == 'Absent':
-            Absent += 1
-            # data.append(0)
+    # Total Present & Absent Status
+    Present_count = AttendanceModel.objects.filter(status="Present").count()
+    Absent_count = AttendanceModel.objects.filter(status="Absent").count()
 
-    total = float(Present) + float(Absent)
-    Present_per = "{:.2f}".format((Present / total) * 100)
-    Absent_per = "{:.2f}".format((Absent / total) * 100)
+    total = float(Present_count) + float(Absent_count)
+    Present_per = "{:.2f}".format((Present_count / total) * 100)
+    Absent_per = "{:.2f}".format((Absent_count / total) * 100)
 
+    # passing presentage data for doughnut chart
     data = [Present_per, Absent_per]
 
-    # context =
-    return render(request, "dashboard/dashboard.html", {
-        'labels': labels,
+    # Total number of students
+    total_stud_count = AttendanceModel.objects.values(
+        'rollno').distinct().count()
+    staff_count = User.objects.filter(user_type=2).count()
+
+    context = {
         'data': data,
+        'total': total_stud_count,
+        'staff': staff_count,
+        'present': Present_count,
+        'absent': Absent_count,
+    }
+    return render(request, "dashboard/dashboard.html", context=context)
+
+
+def attendance_classwise(request):
+    classes = []
+    present = []
+    absent = []
+
+    list_of_classrooms = AttendanceIdModel.objects.values(
+        'classroom').distinct()
+    print(list_of_classrooms)
+    for clas in list_of_classrooms:
+        cla = ClassroomModel.objects.filter(id=clas['classroom'])
+        for c in cla:
+            classes.append(str(c).upper())
+        class_present = AttendanceModel.objects.filter(
+            attendance_id__classroom=clas['classroom'], status="Present").count()
+        class_absent = AttendanceModel.objects.filter(
+            attendance_id__classroom=clas['classroom'], status="Absent").count()
+        present.append(class_present)
+        absent.append(class_absent)
+
+    print(classes)
+    print(present, absent)
+
+    return JsonResponse({
+        'labels': classes,
+        'present': present,
+        'absent': absent,
     })
 
 
@@ -40,5 +74,5 @@ def student_details(request):
         rollno=rollno).order_by('attendance_id')
     details = {
         'data': data
-    }   
+    }
     return render(request, "dashboard/dashboard.html", details)
