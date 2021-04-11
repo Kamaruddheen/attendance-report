@@ -19,6 +19,13 @@
     <button type="button" class="btn border_white btn-cust neu_icon align-self-center text-primary ml-2"
         id="student-rollno">Submit</button>
 </article>
+<!-- List of Classes -->
+<ul>
+    {% for class in classes %}
+    <li class="capitalize">{{ class }}</li>
+    {% endfor %}
+</ul>
+<!-- Overall Totals -->
 <article class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
     <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
         <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
@@ -27,7 +34,8 @@
             </h2>
         </div>
         <div class="card-body text-center">
-            <h5 class="mb-0 h3 font-weight-bold card-title">{{ total }}</h5>
+            <h5 class="mb-0 h3 font-weight-bold card-title" data-url="{% url 'dashboard:all_data' %}" id="tot_student">
+            </h5>
         </div>
     </section>
     <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
@@ -37,7 +45,8 @@
             </h2>
         </div>
         <div class="card-body text-center">
-            <h5 class="mb-0 h3 font-weight-bold card-title">{{ staff }}</h5>
+            <h5 class="mb-0 h3 font-weight-bold card-title" data-url="{% url 'dashboard:all_data' %}" id="tot_staff">
+            </h5>
         </div>
     </section>
     <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
@@ -47,7 +56,8 @@
             </h2>
         </div>
         <div class="card-body text-center">
-            <h5 class="mb-0 h3 font-weight-bold card-title text-success">{{ present }}</h5>
+            <h5 class="mb-0 h3 font-weight-bold card-title text-success" data-url="{% url 'dashboard:all_data' %}"
+                id="tot_present"></h5>
         </div>
     </section>
     <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
@@ -57,21 +67,25 @@
             </h2>
         </div>
         <div class="card-body text-center">
-            <h5 class="mb-0 h3 font-weight-bold card-title text-danger">{{ absent }}</h5>
+            <h5 class="mb-0 h3 font-weight-bold card-title text-danger" data-url="{% url 'dashboard:all_data' %}"
+                id="tot_absent"></h5>
         </div>
     </section>
 </article>
+<!-- Statistical Data -->
 <article class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+    <!-- Doughnut Chart -->
     <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 18rem;">
         <div class="card-body">
-            <canvas id="doughnut-chart"></canvas>
+            <canvas id="doughnut-chart" data-url="{% url 'dashboard:all_data' %}"></canvas>
         </div>
         <div class="card-footer border_color_white bg-transparent text-center text_d_blue py-3">
             <h2 class="text-body font_size_normal mb-0">
-                Attendance
+                Overall Attendance
             </h2>
         </div>
     </section>
+    <!-- Stacked Bar Chart -->
     <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 35rem;">
         <div class="card-body">
             <canvas id="class-bar-chart" data-url="{% url 'dashboard:attendance_classwise' %}"></canvas>
@@ -86,13 +100,53 @@
 
 <script>
     $(function () {
-
+        // Overall Totals
+        // Total Students
+        var $tot_student = $("#tot_student");
+        $.ajax({
+            url: $tot_student.data("url"),
+            success: function (data1) {
+                $("#tot_student").html(data1.total);
+            }
+        });
+        // Total Staffs
+        var $tot_staff = $("#tot_staff");
+        $.ajax({
+            url: $tot_staff.data("url"),
+            success: function (data1) {
+                $("#tot_staff").html(data1.staff);
+            }
+        });
+        // Total Present
+        var $tot_present = $("#tot_present");
+        $.ajax({
+            url: $tot_present.data("url"),
+            success: function (data1) {
+                $("#tot_present").html(data1.present);
+            }
+        });
+        // Total Absent
+        var $tot_absent = $("#tot_absent");
+        $.ajax({
+            url: $tot_absent.data("url"),
+            success: function (data1) {
+                $("#tot_absent").html(data1.absent);
+            }
+        });
+        // Class-wise attendance in stacked bar chart
         var $attendance_by_class = $("#class-bar-chart");
         $.ajax({
             url: $attendance_by_class.data("url"),
             success: function (data1) {
+                var delayed;
+                const footer = (tooltipItems) => {
+                    let sum = 0;
 
-                console.log(data1)
+                    tooltipItems.forEach(function (tooltipItem) {
+                        sum += tooltipItem.parsed.y;
+                    });
+                    return 'Sum: ' + sum;
+                };
 
                 var ctx1 = $attendance_by_class[0].getContext("2d");
 
@@ -104,30 +158,108 @@
                             {
                                 label: 'Present',
                                 data: data1.present,
-                                backgroundColor: '#062743',
-
+                                backgroundColor: '#0e5593',
+                                borderColor: "#0e5593",
+                                borderWidth: 2,
+                                borderRadius: 5,
+                                borderSkipped: false,
+                                pointStyle: 'star',
                             },
                             {
                                 label: 'Absent',
                                 data: data1.absent,
-                                backgroundColor: 'grey',
+                                backgroundColor: 'cyan',
+                                borderColor: "#daeaf6",
+                                borderWidth: 2,
+                                borderRadius: 5,
+                                borderSkipped: false,
+                                pointStyle: 'triangle',
                             }
                         ]
                     },
                     options: {
                         responsive: true,
-                        title: {
-                            display: true,
-                            text: 'Attendance Classwise'
+                        animation: {
+                            onComplete: () => {
+                                delayed = true;
+                            },
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            },
                         },
                         scales: {
                             x: {
                                 stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Classes',
+                                    color: '#062743',
+                                    font: {
+                                        family: 'karla',
+                                        size: 20,
+                                        weight: 'bold',
+                                        lineHeight: 1.0,
+                                    },
+                                    padding: { top: 8, left: 0, right: 0, bottom: 0 }
+                                }
                             },
                             y: {
                                 stacked: true,
-                                beginAtZero: true
+                                beginAtZero: true,
                             }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    usePointStyle: true,
+                                },
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    footer: footer,
+                                },
+                            },
+                        },
+                    }
+                });
+
+            }
+        });
+        // Overall percentage of Present & Absent in doughnut pie chart 
+        var $overall_perc = $("#doughnut-chart");
+        $.ajax({
+            url: $overall_perc.data("url"),
+            success: function (data1) {
+
+                var ctx2 = $overall_perc[0].getContext("2d");
+
+                new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Present", "Absent"],
+                        datasets: [{
+                            data: data1.overall_perc,
+                            backgroundColor: [
+                                '#28a745', '#dc3545',
+                            ],
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    usePointStyle: true,
+                                },
+                            },
                         },
                     }
                 });
@@ -135,37 +267,6 @@
             }
         });
     });
-    // Doughnut
-    var config = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                // data: {{ data }},
-                data: ['72.73', '27.27'],
-                backgroundColor: [
-                    '#28a745', '#dc3545',
-                ],
-            }],
-            labels: [
-                'Present',
-                'Absent',
-            ]
-        },
-        options: {
-            responsive: true,
-            title: {
-                display: true,
-                text: 'Overall Attendance',
-            },
-        }
-    };
-
-    window.onload = function () {
-        // Doughnut
-        var ctx = document.getElementById('doughnut-chart').getContext('2d');
-        window.myPie = new Chart(ctx, config);
-
-    };
 
     $(document).ready(function () {
         $("#student-rollno").click(function () {
