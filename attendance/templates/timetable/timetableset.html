@@ -17,6 +17,14 @@
 {% endblock %}
 
 {% block content %}
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 justify-content-center my-3 mt-md-0">
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+        Classroom :
+    </h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+        {{ c_object }}
+    </h5>
+</section>
 <div class="row d-flex justify-content-center align-items-center m-3 m-md-0 mb-md-4">
     <section class="container col-lg-6 col-xl-5 body_box_shadow border_white p-4 mx-md-3">
         <div class="text-center text_d_blue arvo my-4">
@@ -27,7 +35,11 @@
             {% csrf_token %}
             <div class="form-row">
                 {% if t_set.non_field_errors %}
-                    <div class="alert alert-block alert-danger"> <ul class="m-0"> <li>{{t_set.non_field_errors}}</li> </ul> </div>
+                <div class="alert alert-block alert-danger">
+                    <ul class="m-0">
+                        <li>{{t_set.non_field_errors}}</li>
+                    </ul>
+                </div>
                 {% endif %}
                 <div class="form-group col-md-12">
                     {{t_set.name|as_crispy_field}}
@@ -40,7 +52,8 @@
                 </div>
                 <div class="form-group col-md-12">
                     <a href="{% url 'timetable:setchoose' c_object.id %}"
-                        class="btn border_white btn-cust neu_icon text-primary align-self-center float-left">Back to choosing set</a>
+                        class="btn border_white btn-cust neu_icon text-primary align-self-center float-left">Back to
+                        choosing set</a>
                     <input type="submit"
                         class="btn border_white btn-cust neu_icon text-success align-self-center float-right"
                         value="Submit">
@@ -50,5 +63,5 @@
     </section>
 </div>
 <a href="{% url 'classroom:editclass' c_object.id %}"
-                        class="btn border_white btn-cust neu_icon text-primary align-self-center float-right">Back to classroom info</a>  
+    class="btn border_white btn-cust neu_icon text-primary align-self-center float-right">Back to classroom info</a>
 {% endblock %}

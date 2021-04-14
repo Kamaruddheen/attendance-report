@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.urls import reverse
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
@@ -135,7 +135,7 @@ class AttendanceView(LoginRequiredMixin, View):
         if hour.hour_type == 'sel':
             # For Selective class Fetching student details from Subject
             students = subject.students.all().order_by("username")
-        elif hour.hour_type == 'reg' or hour.hour_type == 'lab':
+        elif hour.hour_type == 'core' or hour.hour_type == 'noncore' or hour.hour_type == 'lab':
             # For Regular & Lab class Fetching student details from Classroom
             students = classroom.students.all().order_by("username")
 
@@ -175,7 +175,7 @@ class AttendanceView(LoginRequiredMixin, View):
         if hour.hour_type == 'sel':
             # For Selective class Fetching student details from Subject
             students = subject.students.all().order_by("username")
-        elif hour.hour_type == 'reg' or hour.hour_type == 'lab':
+        elif hour.hour_type == 'core' or hour.hour_type == 'noncore' or hour.hour_type == 'lab':
             # For Regular & Lab class Fetching student details from Classroom
             students = classroom.students.all().order_by("username")
 
@@ -242,8 +242,7 @@ class CheckAttendanceView(LoginRequiredMixin, View):
         Present_count = AttendanceModel.objects.filter(
             attendance_id=attendance_id.id, status="Present").count()
         Absent_count = AttendanceModel.objects.filter(
-            attendance_id=attendance_id.id, status="Absent").count()
-        print(Total_count)
+            attendance_id=attendance_id.id, status="Absent").count()        
 
         context = {
             'total': Total_count,

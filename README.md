@@ -37,12 +37,12 @@ Then, Go to: https://localhost:8000 or http://127.0.0.1:8000
     - password : Testpass123
     
  - #### Staff accounts
-    - username : Staff, Staff1, Staff2
+    - username : All Normal Staff account
     - password : teststaff
 
  - #### Student accounts
-    - username : 18BCM552	
+    <!-- - username : 18BCM552	
     - password : test4321
 
     - username : 18BCM516
-    - password : test4321
+    - password : test4321 -->

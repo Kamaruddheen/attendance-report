@@ -73,7 +73,18 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="d-none d-md-none justify-content-end mx-3" id="drop">
+	<a href="#submit_bottom"
+		class="btn border_white h1 font-weight-bold btn-cust neu_icon text-primary align-self-center float-md-right">&darr;</a>
+</div>
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 my-3 mt-md-0">
+	<h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+		Classroom :
+	</h5>
+	<h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+		{{ class_obj }}
+	</h5>
+</section>
 <div class="row d-flex justify-content-center align-items-center m-3 m-md-0">
 	<div class="container col-lg-8 col-xl-7 body_box_shadow border_white p-4 mx-md-3">
 		<div class="row d-flex flex-column">
@@ -111,7 +122,8 @@
 			{% endfor %}
 			<div class="form-group col-md-12">
 				<input type="submit" name="add_stud_form" form="student_create_form" value="Submit"
-					class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3">
+					class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3"
+					id="submit_bottom">
 			</div>
 		</form>
 	</div>
@@ -147,7 +159,8 @@
 				<div class="modal-footer border_color_white">
 					<div class="col-12 d-flex justify-content-end">
 						<input type="submit" value="Upload" name="add_stud_csv_form" form="add_stud_csv_form"
-							class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+							class="btn border_white btn-cust neu_icon text-success align-self-center mr-2"
+							id="submit_btn">
 						<button class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2"
 							data-dismiss="modal" type="button">Cancel</button>
 					</div>
@@ -165,5 +178,10 @@
 		$("#add_stud_csv").modal({ backdrop: 'static' });
 		$("#add_stud_csv").modal('show');
 		{% endif %}
+
+		$("#submit_btn").click(function () {
+			$("drop").removeClass("d-none d-md-none").addClass("d-flex d-md-block");
+		})
+
 	});
 </script>

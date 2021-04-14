@@ -4,9 +4,10 @@ from .views import *
 app_name = 'classroom'
 
 urlpatterns = [
-    path('createclass/', CreateClass, name='createclass'),
-    path('editclass/<int:id>/', editclass, name='editclass'),
-    path('<int:id>/students/', ManageStudents, name='manage_students'), #get request will list all students and post request will delete particular student
-    path('<int:id>/students/add/', AddStudents, name='add_students'),
-    path('<int:id>/students/update/', ajax_update_student, name='update_student'),
+    path('', CreateClass, name='createclass'),
+    path('manage/<int:id>/', editclass, name='editclass'),
+    # get request will list all students and post request will delete particular student
+    path('students/<int:id>/', ManageStudents, name='manage_students'),
+    path('students/<int:id>/add/', AddStudents, name='add_students'),
+    path('students/<int:id>/update/', ajax_update_student, name='update_student'),
 ]

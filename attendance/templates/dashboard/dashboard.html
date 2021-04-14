@@ -10,6 +10,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js"
     integrity="sha512-dnUg2JxjlVoXHVdSMWDYm2Y5xcIrJg1N+juOuRi0yLVkku/g26rwHwysJDAMwahaDfRpr1AxFz43ktuMPr/l1A=="
     crossorigin="anonymous"></script>
+<style>
+    .nav .nav-item .active {
+        color: #062743 !important;
+        background-color: #daeaf6 !important;
+        border: 1px solid #c9d7e2;
+        border-color: #daeaf6 !important;
+        border-top-left-radius: .50rem !important;
+        border-top-right-radius: .50rem !important;
+        border-bottom-left-radius: 0rem !important;
+        border-bottom-right-radius: 0rem !important;
+        background: #daeaf6;
+        box-shadow: inset 5px 5px 10px #c2d0db,
+            inset -5px -5px 10px #daeaf6;
+    }
+
+    .nav-tabs {
+        border-top-left-radius: .50rem !important;
+        border-top-right-radius: .50rem !important;
+        border-bottom-left-radius: 0rem !important;
+        border-bottom-right-radius: 0rem !important;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -19,12 +41,27 @@
     <button type="button" class="btn border_white btn-cust neu_icon align-self-center text-primary ml-2"
         id="student-rollno">Submit</button>
 </article>
-<!-- List of Classes -->
-<ul>
+<!-- List of Classes Menu -->
+<ul class="nav nav-tabs my-4 mx-0 mx-md-4 mt-md-0" style="border-color: #c9d7e2;" id="class_list">
+    <li class="nav-item">
+        <button type="button"
+            class="nav-link nav-tabs mx-1 btn border_white btn-cust neu_icon text_d_blue align-self-center active font-weight-bold"
+            id="class_all">All</button>
+    </li>
     {% for class in classes %}
-    <li class="capitalize">{{ class }}</li>
+    <li class="nav-item">
+        <button type="button"
+            class="nav-link nav-tabs btn border_white btn-cust neu_icon text_d_blue align-self-center capitalize mx-1 classroom"
+            data-classid="{{ class.id }}">
+            {{ class }}
+        </button>
+    </li>
     {% endfor %}
 </ul>
+<ul>
+
+</ul>
+<!-- * Dashboard -->
 <!-- Overall Totals -->
 <article class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
     <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
@@ -99,6 +136,35 @@
 </article>
 
 <script>
+    // Declaring it as global for data updating purpose
+    // Overall percentage of Present & Absent in doughnut pie chart 
+    var $overall_perc = $("#doughnut-chart");
+    var ctx2 = $overall_perc[0].getContext("2d");
+    var mychart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: ["Present", "Absent"],
+            datasets: [{
+                data: [50, 50],
+                backgroundColor: [
+                    '#28a745', '#dc3545',
+                ],
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                    },
+                },
+            },
+        }
+    });
+
+
+
     $(function () {
         // Overall Totals
         // Total Students
@@ -145,7 +211,7 @@
                     tooltipItems.forEach(function (tooltipItem) {
                         sum += tooltipItem.parsed.y;
                     });
-                    return 'Sum: ' + sum;
+                    return 'Total: ' + sum;
                 };
 
                 var ctx1 = $attendance_by_class[0].getContext("2d");
@@ -238,34 +304,12 @@
         $.ajax({
             url: $overall_perc.data("url"),
             success: function (data1) {
-
-                var ctx2 = $overall_perc[0].getContext("2d");
-
-                new Chart(ctx2, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ["Present", "Absent"],
-                        datasets: [{
-                            data: data1.overall_perc,
-                            backgroundColor: [
-                                '#28a745', '#dc3545',
-                            ],
-                        }],
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    usePointStyle: true,
-                                },
-                            },
-                        },
-                    }
-                });
-
+                // Updating the data for overall percentage
+                mychart.data.datasets[0].data = data1.overall_perc;
+                mychart.update('show');
             }
         });
+
     });
 
     $(document).ready(function () {
@@ -284,6 +328,40 @@
                     alert(details)
                 }
             });
+        });
+
+        $(".classroom").click(function () {
+            $("#class_list .nav-item button").removeClass("active font-weight-bold");
+            $(this).addClass("active font-weight-bold");
+            var $class_id = $(this).data("classid");
+            // $("#tot_student").html($class_id);
+            $.ajax({
+                headers: {
+                    "X-CSRFTOKEN": "{{ csrf_token }}",
+                    'contentType': 'application/json;charset=utf-8',
+                },
+                url: "{% url 'dashboard:all_data' %}",
+                type: 'post',
+                data: { 'class_id': $class_id },
+                dataType: 'json',
+                success: function (data1) {
+                    // Overall Totals
+                    $("#tot_student").html(data1.total);
+                    $("#tot_staff").html(data1.staff);
+                    $("#tot_present").html(data1.present);
+                    $("#tot_absent").html(data1.absent);
+                    // Updating the percentage for particular classroom
+                    mychart.data.datasets[0].data = data1.overall_perc;
+                    mychart.update('show');
+                }
+            });
+        });
+
+        $("#class_all").click(function () {
+            $("#class_list .nav-item button").removeClass("active font-weight-bold");
+            $("#class_all").addClass("active font-weight-bold");
+
+            location.reload();
         });
     });
 </script>

@@ -13,7 +13,14 @@
 {% endblock %}
 
 {% block content %}
-
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 my-3 mt-md-0">
+	<h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+		Classroom&nbsp;:
+	</h5>
+	<h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+		{{ class_obj }}
+	</h5>
+</section>
 <section class="container px-md-4 pb-4 body_box_shadow border_white mx-md-3">
 	<div class="text-center text_d_blue arvo my-4">
 		<h3 class="m-0">Create&nbsp;Hour&nbsp;& Subject Form</h3>
@@ -57,12 +64,23 @@
 	$(document).ready(function () {
 		$('[data-toggle="tooltip"]').tooltip();
 
-		$(".add-row").addClass("btn border_white btn-cust neu_icon text-primary align-self-center capitalize");
+		$(".add-row").addClass("d-none btn border_white btn-cust neu_icon text-primary align-self-center capitalize");
 		$(".delete-row").addClass("btn border_white btn-cust neu_icon text-danger align-self-center mb-5 capitalize")
 
 		$(".add-row").on('click', function () {
 			$(".delete-row").addClass("btn border_white btn-cust neu_icon text-danger align-self-center mb-5 capitalize")
 		});
+
+		$("#id_hour_type").on('change', function () {
+			var hour_type = $("#id_hour_type").val();
+			if (hour_type === "sel") {
+				$(".add-row").removeClass("d-none");
+			}
+			else {
+				$(".add-row").addClass("d-none");
+			}
+		});
+
 	});
 </script>
 

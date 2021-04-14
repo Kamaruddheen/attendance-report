@@ -1,7 +1,8 @@
-from django.conf import settings
 from django.db import models
+
 from subject.models import SubjectModel, HourModel
 from classroom.models import ClassroomModel
+
 hour_choices = (
     (1, 'I'),
     (2, 'II'),

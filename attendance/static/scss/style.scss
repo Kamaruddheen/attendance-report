@@ -25,6 +25,12 @@
     } 
 }
 
+/* Html Scrollbar Effect */
+
+html{
+    scroll-behavior: smooth;
+}
+
 body {
     background-color:#daeaf6;
     font-family: 'Karla', sans-serif !important;    
