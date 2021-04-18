@@ -183,5 +183,23 @@
 			$("drop").removeClass("d-none d-md-none").addClass("d-flex d-md-block");
 		})
 
+		// Mouse scrolling based on user screen height
+		var h = document.documentElement.clientHeight - 150;
+
+		$(document).on('mousewheel DOMMouseScroll', function (e) {
+			window.addEventListener("wheel", e => e.preventDefault(), { passive: false })
+
+			if (e.originalEvent.wheelDelta / 120 < 0) { // if Mouse wheel up
+
+				$("body,html").scrollTop(h);
+				h = h + document.documentElement.clientHeight;
+			}
+			else if (e.originalEvent.wheelDelta / 120 > 0) { // if Mouse wheel down
+
+				$("body,html").scrollTop(h - document.documentElement.clientHeight - document.documentElement.clientHeight);
+				h = h - document.documentElement.clientHeight;
+			}
+		});
+
 	});
 </script>

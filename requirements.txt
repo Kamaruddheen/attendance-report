@@ -4,3 +4,4 @@ django-crispy-forms==1.9.2
 django-livereload-server==0.3.2
 django-extensions
 django-formset-bootstrap==1.4.0.dev3	#temporary
+django-querysetsequence==0.14

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.hashers import make_password
 from django.views import View
 from django.http import Http404
 
@@ -17,6 +18,7 @@ def createstaffview(request):
     if myForm.is_valid():
         form_obj = myForm.save(commit=False)
         form_obj.user_type = 2
+        form_obj.password = make_password(form_obj.password)
         form_obj.save()
         messages.success(request, 'Staff Created Successfully')
         return redirect('create_staff')

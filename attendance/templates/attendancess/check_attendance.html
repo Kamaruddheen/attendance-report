@@ -22,6 +22,14 @@
     <h1>Attendance Report</h1>
     <small class="upper_case text-body">{{ date }}</small>
 </section>
+<section class="pl-md-5 d-flex flex-column flex-md-row pt-md-2 mt-md-0">
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+        Classroom&nbsp;:
+    </h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+        {{ class_obj }}
+    </h5>
+</section>
 <section class="pl-md-5 d-flex flex-column flex-md-row pt-md-2">
     <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
         Subject :
@@ -51,7 +59,7 @@
     </h5>
 </section>
 <section class="container px-0 px-md-5 mx-auto d-flex d-md-block justify-content-center">
-    <div class="table-responsive table_wrapper table_box_shadow border_white my-3" id="tab_res">
+    <div data-simplebar class="table-responsive table_wrapper table_box_shadow border_white my-3" id="tab_res">
         <table class="table table-striped my-1 my-md-2">
             <thead>
                 <tr class="text-center text_d_blue">

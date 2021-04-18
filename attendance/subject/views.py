@@ -27,7 +27,6 @@ def HourListView(request, class_id):
 
 
 def HourDetailView(request, class_id, hour_id):
-    # class_obj = get_object_or_404(ClassroomModel,id=class_id)
     hour_obj = get_object_or_404(HourModel, id=hour_id, classroom__id=class_id)
     subjects = SubjectModel.objects.filter(hour=hour_obj)
     files = os.listdir(os.path.join(
@@ -40,13 +39,9 @@ def HourDetailView(request, class_id, hour_id):
         value = len(subjects) - len(files)
         for i in range(0, value):
             files.append("book8.jpg")
-        # if no. of images is greater than the no. of subjects
+    # if no. of images is greater than the no. of subjects
     elif len(files) > len(subjects):
         pass
-
-    context = {
-
-    }
 
     context = {
         'hour_obj': hour_obj,

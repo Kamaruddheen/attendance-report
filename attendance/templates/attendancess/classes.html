@@ -24,12 +24,12 @@
         <div class="card-body">
             {% if isPosted %}
             <a href="{% url 'attendancess:check-attendance' %}?id={{class.subject.id}}&date={{date}}&hournumber={{class.hour}}"
-                class="card-link stretched-link text-center">
+                target="_blank" rel="noopener noreferrer" class="card-link stretched-link text-center">
                 <h5 class="capitalize">{{class.subject.name}}</h5>
             </a>
             {% else %}
-            <a href="{% url 'attendancess:attendance' class.subject.id class.hour %}?date={{date}}"
-                class="card-link text-center stretched-link">
+            <a href="{% url 'attendancess:attendance' class.subject.id class.hour %}?date={{date}}" target="_blank"
+                rel="noopener noreferrer" class="card-link text-center stretched-link">
                 <h5 class="capitalize">{{class.subject.name}}</h5>
             </a>
             {% endif %}

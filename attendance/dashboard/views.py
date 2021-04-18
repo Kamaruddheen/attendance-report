@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from datetime import datetime, timedelta, date
 
 from attendancess.models import AttendanceIdModel, AttendanceModel
 from user_module.models import User
@@ -11,8 +12,8 @@ from subject.models import HourModel, SubjectModel
 def dashboard_view(request):
     classes = []
 
-    # collecting class list
-    list_of_classrooms = AttendanceIdModel.objects.values(
+    # collecting class list in order of classroom by year then classroom of sec
+    list_of_classrooms = AttendanceIdModel.objects.order_by('classroom__year', 'classroom__sec').values(
         'classroom').distinct()
 
     for clas in list_of_classrooms:
@@ -33,15 +34,16 @@ def attendance_classwise(request):
     present = []
     absent = []
 
-    # collecting class list
-    list_of_classrooms = AttendanceIdModel.objects.values(
+    # collecting class list in order of classroom by year then classroom of sec
+    list_of_classrooms = AttendanceIdModel.objects.order_by('classroom__year', 'classroom__sec').values(
         'classroom').distinct()
 
     for clas in list_of_classrooms:
         cla = ClassroomModel.objects.filter(id=clas['classroom'])
         for c in cla:
             # storing name of class
-            classes.append(str(c).upper())
+            classes.append(str(c.get_year_display()).upper() +
+                           " " + str(c.sec).upper())
         class_present = AttendanceModel.objects.filter(
             attendance_id__classroom=clas['classroom'], status="Present").count()
         class_absent = AttendanceModel.objects.filter(
@@ -58,8 +60,147 @@ def attendance_classwise(request):
     })
 
 
+# finding the last day of month from given_date year (month)
+def last_day_of_month(any_day):
+    # this will never fail
+    # get close to the end of the month for any day, and add 4 days 'over'
+    next_month = any_day.replace(day=28) + timedelta(days=4)
+    # subtract the number of remaining 'overage' days to get last day of current month, or said programattically said, the previous day of the first of next month
+    return next_month - timedelta(days=next_month.day)
+
+
+# Class-wise Attendance stacked-bar chart (date)
+def all_day_calender(request):
+    # Date wise + getting the date from user
+    dates = []
+    present = []
+    absent = []
+    given_date = request.POST['current_date']
+
+    # collecting previous date list-
+    sdate = datetime.strptime(
+        given_date, "%Y-%m-%d").date() - timedelta(days=4)
+    edate = datetime.strptime(
+        given_date, "%Y-%m-%d").date() + timedelta(days=3)
+
+    list_of_dates = [
+        sdate+timedelta(days=x) for x in range((edate-sdate).days) if datetime.strptime(str(sdate+timedelta(days=x)), "%Y-%m-%d").date().strftime("%A") != "Sunday"
+    ]
+
+    # Fetching attendance Present & Absent count
+    for date1 in list_of_dates:
+        class_present = AttendanceModel.objects.filter(
+            attendance_id__date=date1, status="Present").count()
+        class_absent = AttendanceModel.objects.filter(
+            attendance_id__date=date1, status="Absent").count()
+        dates.append(date1.day)
+        # storing total present of particular class
+        present.append(class_present)
+        # storing total absent of particular class
+        absent.append(class_absent)
+
+    return JsonResponse({
+        'labels': dates,
+        'present': present,
+        'absent': absent,
+    })
+
+
+# Class-wise Attendance stacked-bar chart (week)
+def all_week_calender(request):
+    dates = []
+    present = []
+    absent = []
+    list_of_dates = []
+    given_date = request.POST['current_date'] or date.today()
+
+    # change str of date to date type
+    dt = datetime.strptime(str(given_date), '%Y-%m-%d').date()
+    # first and last date of the month
+    initial_day_of_month = dt.replace(day=1)
+    next_month = (dt.replace(day=28) + timedelta(days=4))
+    last_day_of_month = next_month - timedelta(days=next_month.day)
+
+    while last_day_of_month != 0:
+        # starting & ending date of the week
+        start = initial_day_of_month - \
+            timedelta(days=initial_day_of_month.weekday())
+        end = start + timedelta(days=5)
+
+        # if Starting date is in previous month then changing it into first date of given_date month
+        if start.month < end.month:
+            start = initial_day_of_month
+
+        # if Ending date is in next month then changing it into last date of given_date month
+        if next_month.month == end.month:
+            end = last_day_of_month
+            last_day_of_month = 0
+
+        # starting & ending date is between the given_date month then append to list
+        if start.month == dt.month:
+            list_of_dates.append((start, end))
+
+        # Changing date to next week
+        initial_day_of_month = end + timedelta(days=2)
+
+    # Fetching attendance Present & Absent count
+    for iteration, date1 in enumerate(list_of_dates):
+        # if attendance data should be between start date and end date for generating data within that week
+        class_present = AttendanceModel.objects.filter(
+            attendance_id__date__gte=(date1[0]), attendance_id__date__lte=date1[1], status="Present").count()
+        class_absent = AttendanceModel.objects.filter(
+            attendance_id__date__gte=(date1[0]), attendance_id__date__lte=date1[1], status="Absent").count()
+        dates.append("Week " + str(iteration + 1))
+        # storing total present of particular class
+        present.append(class_present)
+        # storing total absent of particular class
+        absent.append(class_absent)
+
+    return JsonResponse({
+        'labels': dates,
+        'present': present,
+        'absent': absent,
+    })
+
+
+# Class-wise Attendance stacked-bar chart (month)
+def all_month_calender(request):
+    dates = []
+    present = []
+    absent = []
+    list_of_dates = []
+    given_date = request.POST['current_date'] or date.today()
+
+    # change str of date to date type
+    dt = datetime.strptime(str(given_date), '%Y-%m-%d').date()
+
+    for x in range(1, 13):
+        end = last_day_of_month(dt.replace(month=x))
+        start = end.replace(day=1)
+        list_of_dates.append((start, end))
+
+    # Fetching attendance Present & Absent count
+    for date1 in list_of_dates:
+        # if attendance data should be between start date and end date for generating data within that month
+        class_present = AttendanceModel.objects.filter(
+            attendance_id__date__gte=(date1[0]), attendance_id__date__lte=date1[1], status="Present").count()
+        class_absent = AttendanceModel.objects.filter(
+            attendance_id__date__gte=(date1[0]), attendance_id__date__lte=date1[1], status="Absent").count()
+        dates.append(date1[0].strftime("%b"))
+        # storing total present of particular class
+        present.append(class_present)
+        # storing total absent of particular class
+        absent.append(class_absent)
+
+    return JsonResponse({
+        'labels': dates,
+        'present': present,
+        'absent': absent,
+    })
+
+
 # Overall Percentage
-def over_per():
+def all_per():
     overall_percentage = []
     Present_count, Absent_count, Present_per, Absent_per = 0, 0, 0, 0
 
@@ -82,7 +223,7 @@ def over_per():
 
 
 # Overall Totals
-def over_tot():
+def all_tot():
     # Total number of students
     total_stud_count = AttendanceModel.objects.values(
         'rollno').distinct().count()
@@ -144,12 +285,13 @@ def class_tot(att_obj, classroom_id):
 # Class-wise all type of data
 def all_data(request):
     # * Default
-    # Percentage of All Data
-    overall_percentage = over_per()
-    # Student, Staff, Present, Absent
-    total_stud_count, staff_count, Present_count, Absent_count = over_tot()
+    if request.method == "GET":
+        # Percentage of All Data
+        overall_percentage = all_per()
+        # Student, Staff, Present, Absent
+        total_stud_count, staff_count, Present_count, Absent_count = all_tot()
 
-    if request.method == "POST":
+    elif request.method == "POST":
         classroom_id = request.POST.get('class_id', None)
         Attendance_id_obj = AttendanceIdModel.objects.filter(
             classroom__id=classroom_id)
@@ -167,7 +309,7 @@ def all_data(request):
         'staff': staff_count,
         'present': Present_count,
         'absent': Absent_count,
-        'overall_perc': overall_percentage
+        'overall_perc': overall_percentage,
     })
 
 

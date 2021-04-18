@@ -24,6 +24,14 @@
   }
 }
 
+.simplebar-content-wrapper {
+  overflow: auto;
+}
+
+.simplebar-scrollbar::before {
+  background-color: #b8b9be;
+}
+
 /* Html Scrollbar Effect */
 html {
   scroll-behavior: smooth;

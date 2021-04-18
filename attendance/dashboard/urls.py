@@ -9,4 +9,6 @@ urlpatterns = [
     path('student/', student_details, name="student_roll_no"),
     path('attendance_classwise/', attendance_classwise,
          name='attendance_classwise'),
+    path('attendance_calender/', all_day_calender,
+         name='attendance_calender'),
 ]

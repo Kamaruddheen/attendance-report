@@ -49,16 +49,19 @@ class ClassesView(LoginRequiredMixin, View):
             if set.from_date <= date <= set.to_date:
                 # Getting the currently active timetable of user requested date
                 active_sets.append(set)  # Storing in active set
-        classes = []
+        classes, sub_id = [], []
 
         # List of Subjects Handled by Staff
         handled_by = SubjectModel.objects.filter(
             handled_by=request.user)  # Getting value as Queryset
         for subject in handled_by:
             if subject.hour:
-                # active_sets are in filter of Timetablemodel
-                classes.append(TimetableModel.objects.filter(
-                    set_name__in=active_sets, day=day, subject__id=subject.hour.id).order_by('hour'))
+                # List of Subject they(staffs) are taking
+                sub_id.append(subject.hour.id)
+
+        # active_sets are in TimetableSet filter of Timetablemodel
+        classes.append(TimetableModel.objects.filter(
+            set_name__in=active_sets, day=day, subject__id__in=tuple(sub_id)).order_by('hour'))
 
         date = date.strftime("%Y-%m-%d")
         request.session['date'] = date
@@ -156,6 +159,7 @@ class AttendanceView(LoginRequiredMixin, View):
         date = date.strftime("%d-%m-%Y")
 
         context = {
+            'class_obj': classroom,
             'hour_number': hour_number,
             'students': students,
             'subject': subject,
@@ -195,6 +199,9 @@ class AttendanceView(LoginRequiredMixin, View):
             # if already posted redirect them to attendance class page
             messages.info(
                 request, 'You have already entered attendance for this Date')
+
+            date = request.session['date']
+            del request.session['date']
 
             return redirect(reverse("attendancess:classes")+"?date="+date, permanent=True)
 
@@ -242,9 +249,10 @@ class CheckAttendanceView(LoginRequiredMixin, View):
         Present_count = AttendanceModel.objects.filter(
             attendance_id=attendance_id.id, status="Present").count()
         Absent_count = AttendanceModel.objects.filter(
-            attendance_id=attendance_id.id, status="Absent").count()        
+            attendance_id=attendance_id.id, status="Absent").count()
 
         context = {
+            'class_obj': attendance_id.classroom,
             'total': Total_count,
             'present': Present_count,
             'absent': Absent_count,

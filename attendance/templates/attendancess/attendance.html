@@ -23,7 +23,15 @@
 {% block content %}
 <section class="text-center text_d_blue arvo mt-2 mb-3 mt-md-0" style="margin-bottom: 35px;">
     <h1>Attendance Entry</h1>
-    <small class="upper_case text-body">{{ date }}</small>
+    <small class="upper_case text-body" name="date">{{ date }}</small>
+</section>
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 mt-md-0">
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+        Classroom&nbsp;:
+    </h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+        {{ class_obj }}
+    </h5>
 </section>
 <section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2">
     <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
@@ -41,7 +49,7 @@
 <section class="container px-0 px-md-4 mx-auto d-flex d-md-block justify-content-center">
     <form class="form" action="{% url 'attendancess:attendance' hour.id hour_number %}" method="POST">
         {% csrf_token %}
-        <div class="table-responsive table_wrapper table_box_shadow border_white my-3" id="tab_res">
+        <div data-simplebar class="table-responsive table_wrapper table_box_shadow border_white my-3" id="tab_res">
             <table class="table table-striped my-1 my-md-2">
                 <thead>
                     <tr class="text-center text_d_blue">
