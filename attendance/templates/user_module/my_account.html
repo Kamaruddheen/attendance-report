@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | My Account</title>
+{% endblock %}
+
+{% block head %}
+<style>
+    #account_update_form label {
+        color: #062743;
+        font-size: 1.1rem;
+        font-family: 'arvo';
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row d-flex justify-content-center align-items-center m-3 m-md-0 mb-md-4">
+    <div class="container col-lg-8 col-xl-6 body_box_shadow border_white p-4 mx-md-3">
+        <div class="text-center text_d_blue arvo my-4 mt-md-0 mb-md-4">
+            <h3 class="m-0">Edit&nbsp;Account</h3>
+        </div>
+        <form class="form form-row needs-validation" action="{% url 'account_edit' request.user.id %}" method="POST"
+            id="account_update_form" novalidate>
+            {% csrf_token %}
+            <div class="form-group col-md-12">
+                {{ form.username|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.first_name|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.last_name|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form.email|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-12">
+                <a href="{% url 'password_change' %}" type="button"
+                    class="btn border_white btn-cust neu_icon text-primary align-self-center float-left">
+                    Change&nbsp;Password
+                </a>
+                <button type="submit" form="account_update_form"
+                    class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-md-3">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

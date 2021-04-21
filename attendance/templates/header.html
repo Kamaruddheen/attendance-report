@@ -1,0 +1,60 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-md bg_l_bluish_white py-md-3 px-md-5 px-sm-3 mb-md-3" style="z-index: 1040;"
+    id="top_navbar">
+    <div class="container-fluid justify-content-between">
+        <!-- * Brand Logo -->
+        <a class="navbar-brand d-flex" href="{% url 'homepage' %}" style="min-width: 7rem">
+            <img src="{% static 'img/logo.jpg' %}" width="40" class="rounded-circle" />
+            <h6 class="my-auto ml-3 text_d_blue arvo d-none d-md-block" style="font-size: 2.1rem;">SAMS</h6>
+        </a>
+        <!-- Other Menus -->
+        <article class="d-flex flex-row">
+            <section class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
+                <!-- Notification Icon -->
+                <a class="nav-link text_d_blue rounded-pill neu_icon mr-2" href="#">
+                    <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="bell" role="img"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="1.2em" height="1.2em">
+                        <path fill="currentColor"
+                            d="M439.39 362.29c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71zM67.53 368c21.22-27.97 44.42-74.33 44.53-159.42 0-.2-.06-.38-.06-.58 0-61.86 50.14-112 112-112s112 50.14 112 112c0 .2-.06.38-.06.58.11 85.1 23.31 131.46 44.53 159.42H67.53zM224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64z">
+                        </path>
+                    </svg>
+                </a>
+                {% if user.is_authenticated %}
+                <a href="#" class="nav-link d-none d-sm-flex align-items-center rounded-pill neu_icon mr-2">
+                    <span class="d-none d-sm-flex capitalize text_d_blue">{{ user.username}}</span>
+                    <!-- For now profile pic won't be enabled -->
+                    <div class="navbar-tool-icon-box d-none">
+                        <img class="rounded-circle d-none" src="{% static 'img/profile.png' %}" width="30"
+                            style="border: 2px solid white" alt="Profile" />
+                    </div>
+                </a>
+                <a class="nav-link text_d_blue rounded-pill neu_icon mr-2 d-none d-md-block"
+                    href="{% url 'logout' %}">Logout
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em">
+                        <path fill="currentColor"
+                            d="M180 448H96c-53 0-96-43-96-96V160c0-53 43-96 96-96h84c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H96c-17.7 0-32 14.3-32 32v192c0 17.7 14.3 32 32 32h84c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm117.9-303.1l77.6 71.1H184c-13.3 0-24 10.7-24 24v32c0 13.3 10.7 24 24 24h191.5l-77.6 71.1c-10.1 9.2-10.4 25-.8 34.7l21.9 21.9c9.3 9.3 24.5 9.4 33.9.1l152-150.8c9.5-9.4 9.5-24.7 0-34.1L353 88.3c-9.4-9.3-24.5-9.3-33.9.1l-21.9 21.9c-9.7 9.6-9.3 25.4.7 34.6z">
+                        </path>
+                    </svg>
+                </a>
+                {% else %}
+                <a class="nav-link text_d_blue rounded-pill neu_icon mr-2 d-none d-md-block"
+                    href="{% url 'login' %}">Login
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em">
+                        <path fill="currentColor"
+                            d="M137.2 110.3l21.9-21.9c9.3-9.3 24.5-9.4 33.9-.1L344.9 239c9.5 9.4 9.5 24.7 0 34.1L193 423.7c-9.4 9.3-24.5 9.3-33.9-.1l-21.9-21.9c-9.7-9.7-9.3-25.4.8-34.7l77.6-71.1H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h191.5l-77.6-71.1c-10-9.1-10.4-24.9-.7-34.5zM512 352V160c0-53-43-96-96-96h-84c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h84c17.7 0 32 14.3 32 32v192c0 17.7-14.3 32-32 32h-84c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h84c53 0 96-43 96-96z">
+                        </path>
+                    </svg>
+                </a>
+                {% endif %}
+                <!-- * Hamburger Button-->
+                <button class="navbar-toggler collapsed btn-cust btn" type="button" data-toggle="collapse"
+                    data-target="#navbarCollapse" aria-expanded="false" id="btn_ham">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+            </section>
+        </article>
+    </div>
+</nav>

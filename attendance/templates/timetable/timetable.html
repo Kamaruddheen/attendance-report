@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | Create Timetable</title>
+{% endblock %}
+
+{% block head %}
+<style>
+     #create_timetable_form label {
+          color: #062743;
+          font-size: 1.1rem;
+          font-family: 'arvo';
+     }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 my-3 mt-md-0">
+     <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+          Classroom :
+     </h5>
+     <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+          {{ c_object }}
+     </h5>
+</section>
+<section class="container px-md-4 body_box_shadow border_white mx-md-3">
+     <div class="text-center text_d_blue arvo my-4">
+          <h3 class="m-0">Create&nbsp;Timetable Form</h3>
+     </div>
+     <form action="{% url 'timetable:createtimetable' c_object.id set_id %}" method="POST" id="create_timetable_form">
+          {% csrf_token %}
+          <div class="form-row">
+               <div class="form-group col-md-6 pl-md-2">
+                    {{ form.day|as_crispy_field }}
+               </div>
+               <div class="form-group col-md-6 pr-md-2">
+                    {{ form.s1|as_crispy_field }}
+               </div>
+               <div class="form-group col-md-6 pl-md-2">
+                    {{ form.s2|as_crispy_field }}
+               </div>
+               <div class="form-group col-md-6 pr-md-2">
+                    {{ form.s3|as_crispy_field }}
+               </div>
+               <div class="form-group col-md-6 pl-md-2">
+                    {{ form.s4|as_crispy_field }}
+               </div>
+               <div class="form-group col-md-6 pr-md-2">
+                    {{ form.s5|as_crispy_field }}
+               </div>
+               <div
+                    class="form-group col-12 d-flex flex-column flex-md-row justify-content-center justify-content-md-end">
+                    <a href="{% url 'timetable:setchoose' c_object.id %}"
+                         class="btn border_white btn-cust neu_icon text-primary align-self-center mt-2 mt-md-0">Back to
+                         choose set</a>
+                    <a href="{% url 'timetable:showsubjects' c_object.id set_id %}"
+                         class="btn border_white btn-cust neu_icon text-primary align-self-center mt-2 mt-md-0">Back to
+                         Timetable</a>
+                    <input type="submit" class="btn border_white btn-cust neu_icon text-success align-self-center mr-2"
+                         value="Save & Continue">
+               </div>
+          </div>
+     </form>
+</section>
+<script>
+     $(document).ready(function () {
+          $("#set_name").prop('disabled', true);
+          $("form").on('submit', function () {
+               $("#set_name").prop('disabled', false);
+          });
+     })
+</script>
+{% endblock %}

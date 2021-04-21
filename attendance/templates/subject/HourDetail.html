@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>SAMS | {{ hour_obj.classroom|upper }} | {{ hour_obj.name|upper }} | Subject List</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center text_d_blue arvo my-4 mt-md-0 mb-md-4">
+	{% if hour_obj.hour_type == 'sel' %}
+	<h1 class="m-0">List of Subjects</h1>
+	{% elif hour_obj.hour_type == 'reg' %}
+	<h1 class="m-0">Subject</h1>
+	{% elif hour_obj.hour_type == 'lab' %}
+	<h1 class="m-0">Lab</h1>
+	{% endif %}
+	<h6 class="mt-3 capitalize">{{ hour_obj.classroom }}</h6>
+	<p class="mt-2 capitalize text-muted">{{ hour_obj.name }} - {{ hour_obj.get_hour_type_display }}</p>
+</div>
+<article class="row d-flex justify-content-center mx-0">
+	{% for s,file in mylist %}
+	<section class="card body_box_shadow border_white mb-4 m-md-2" style="width: 22rem;">
+		<div class="card-header border-0 bg-transparent p-3">
+			{% with "img/books/"|add:file|default:"book10.jpg" as image_static %}
+			<img src="{% static image_static %}" class="card-img-top img_border_radius" alt="{{ s.sub_name }}">
+			{% endwith %}
+		</div>
+		<div class="card-body py-0 pb-1 text_d_blue">
+			<h3 class="text-center capitalize pb-1">{{ s.sub_name }}</h3>
+			<div class="d-flex flex-row justify-content-center">
+				<a href="{{ hour_obj.get_edit_url }}" class="mx-2 text-success">Edit</a>
+				<span>|</span>
+				<a href="#Delete" class="mx-2 text-danger">Delete</a>
+				{% if hour_obj.hour_type == 'sel' %}
+				<span>|</span>
+				<a href="{{ s.get_add_student_url }}" class="mx-2 text-info">Add Students</a>
+				{% endif %}
+			</div>
+		</div>
+		<div class="card-footer d-flex flex-row border_color_white bg-transparent text_d_blue">
+			<h6 class="upper_case font_size_normal font-weight-bold">Staff&nbsp;:</h6>
+			<h6 class="input-group capitalize font_size_normal ml-2">
+				<svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="chalkboard-teacher" role="img"
+					xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em" height="1.2em"
+					class="mr-1 mr-md-2 text-body">
+					<g class="fa-group">
+						<path fill="currentColor"
+							d="M640 49.59v316.82c0 27.34-21.53 49.59-48 49.59H343.79c-.9-2.53-1.86-5.05-2.9-7.54A144.52 144.52 0 0 0 298.51 352H576V64H224v49.1a127 127 0 0 0-59.46-17h-.33c-1.4 0-2.8-.08-4.21-.08V49.59C160 22.25 181.53 0 208 0h384c26.47 0 48 22.25 48 49.59z"
+							class="fa-secondary"></path>
+						<path fill="currentColor"
+							d="M208 352a22.88 22.88 0 0 0-7.06 1.09A131.91 131.91 0 0 1 160 360a132 132 0 0 1-40.95-6.91 22.82 22.82 0 0 0-7-1.09A112 112 0 0 0 0 464.62C.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38A112 112 0 0 0 208 352zm-48-32a96 96 0 1 0-96-96 96 96 0 0 0 96 96zm64-256v49.09a129 129 0 0 1 26.51 20.4 128 128 0 0 1 0 181 132.13 132.13 0 0 1-10.14 9.14A143.89 143.89 0 0 1 298.51 352H384v-64h128v64h64V64z"
+							class="fa-primary"></path>
+					</g>
+				</svg>
+				{{ s.handled_by }}
+			</h6>
+		</div>
+	</section>
+	{% endfor %}
+	</div>
+</article>
+
+{% endblock %}

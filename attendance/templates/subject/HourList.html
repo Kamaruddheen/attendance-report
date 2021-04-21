@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>SAMS | {{ class_obj|upper }} | Hour List</title>
+{% endblock %}
+
+{% block content %}
+<section class="text-center text_d_blue arvo mt-3 mb-3 mt-md-0" style="margin-bottom: 35px;">
+	<h1>List of Hour</h1>
+</section>
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2">
+	<h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+		Classroom :
+	</h5>
+	<h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+		{{ class_obj }}
+	</h5>
+</section>
+<article class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+	{% for hour,sub_count in hour_obj %}
+	<section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 16.5rem;">
+		<div class="card-body">
+			<a href="{{ hour.get_absolute_url }}" class="card-link text-center stretched-link">
+				<h3 class="text_d_blue p-2  my-0">{{ hour.name|upper }}</h3>
+			</a>
+		</div>
+		<div class="card-footer border_color_white bg-transparent text-center text_d_blue py-3">
+			<h2 class="float-left h5 mb-0 text_d_blue">
+				{% with ''|center:sub_count as range %}
+				{% for _ in range %}
+				<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="book-open" role="img"
+					xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" viewBox="0 0 576 512"
+					class="mr-2 mr-md-2">
+					<path fill="currentColor"
+						d="M542.22 32.05c-54.8 3.11-163.72 14.43-230.96 55.59-4.64 2.84-7.27 7.89-7.27 13.17v363.87c0 11.55 12.63 18.85 23.28 13.49 69.18-34.82 169.23-44.32 218.7-46.92 16.89-.89 30.02-14.43 30.02-30.66V62.75c.01-17.71-15.35-31.74-33.77-30.7zM264.73 87.64C197.5 46.48 88.58 35.17 33.78 32.05 15.36 31.01 0 45.04 0 62.75V400.6c0 16.24 13.13 29.78 30.02 30.66 49.49 2.6 149.59 12.11 218.77 46.95 10.62 5.35 23.21-1.94 23.21-13.46V100.63c0-5.29-2.62-10.14-7.27-12.99z">
+					</path>
+				</svg>
+				{% endfor %}
+				{% endwith %}
+			</h2>
+			{% if hour.hour_type == 'sel' %}
+			<span class="badge badge_box_shadow border_white text-info float-right">Selective</span>
+			{% elif hour.hour_type == 'core' %}
+			<span class="badge badge_box_shadow border_white text-primary float-right">Core</span>
+			{% elif hour.hour_type == 'noncore' %}
+			<span class="badge badge_box_shadow border_white text-success float-right">Non-Core</span>
+			{% elif hour.hour_type == 'lab' %}
+			<span class="badge badge_box_shadow border_white text-muted float-right">Lab</span>
+			{% endif %}
+		</div>
+	</section>
+	{% endfor %}
+</article>
+<section class="ml-md-4 d-flex justify-content-center justify-content-md-start">
+	<a href="{% url 'subject:create_hour' class_obj.id %}" target="_blank" rel="noopener noreferrer"
+		class="btn border_white btn-cust neu_icon text-success align-self-center">Create&nbsp;Subject</a>
+</section>
+
+{% endblock %}

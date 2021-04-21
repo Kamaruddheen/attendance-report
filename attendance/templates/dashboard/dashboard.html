@@ -1,0 +1,560 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | Dashboard</title>
+{% endblock %}
+
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js"
+    integrity="sha512-dnUg2JxjlVoXHVdSMWDYm2Y5xcIrJg1N+juOuRi0yLVkku/g26rwHwysJDAMwahaDfRpr1AxFz43ktuMPr/l1A=="
+    crossorigin="anonymous"></script>
+<style>
+    .nav .nav-item .active {
+        color: #062743 !important;
+        background-color: #daeaf6 !important;
+        border: 1px solid #c9d7e2;
+        border-color: #daeaf6 !important;
+        border-top-left-radius: .50rem !important;
+        border-top-right-radius: .50rem !important;
+        border-bottom-left-radius: 0rem !important;
+        border-bottom-right-radius: 0rem !important;
+        background: #daeaf6;
+        box-shadow: inset 5px 5px 10px #c2d0db,
+            inset -5px -5px 10px #daeaf6;
+    }
+
+    .nav-tabs {
+        border-top-left-radius: .50rem !important;
+        border-top-right-radius: .50rem !important;
+        border-bottom-left-radius: 0rem !important;
+        border-bottom-right-radius: 0rem !important;
+    }
+
+    .nav-tabs:hover {
+        font-weight: 700 !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Date -->
+<article class="form d-flex flex-column flex-md-row mt-3">
+    <div class="form-group mb-md-0 pl-md-4 d-flex justify-content-center justify-content-md-start text_d_blue">
+        <input class="btn mx-md-0 cust_date" type="date" id="datePicker" name="date" data-toggle="tooltip"
+            title="Click the Date Icon" />
+    </div>
+</article>
+<article class="row d-none justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+    <label for="">Student Roll No.</label>
+    <input type="text" class="input_cust text_d_blue form-control col-2 mx-2" id="rollno">
+    <button type="button" class="btn border_white btn-cust neu_icon align-self-center text-primary ml-2"
+        id="student-rollno">Submit</button>
+</article>
+<!-- List of Classes Menu -->
+<ul class="nav nav-tabs my-4 mx-0 mx-md-4 mt-md-0 d-flex justify-content-center justify-content-md-start align-items-center"
+    style="border-color: #c9d7e2;" id="class_list">
+    <li class="nav-item">
+        <button type="button"
+            class="nav-link nav-tabs m-2 btn border_white btn-cust neu_icon text_d_blue align-self-center active font-weight-bold"
+            id="class_all">All</button>
+    </li>
+    {% for class in classes %}
+    <li class="nav-item">
+        <button type="button"
+            class="nav-link nav-tabs btn border_white btn-cust neu_icon text_d_blue align-self-center capitalize m-2 classroom"
+            data-classid="{{ class.id }}">
+            {{ class }}
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+<!-- * Dashboard -->
+<!-- Overall Totals -->
+<article class="row d-none justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+    <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
+        <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body h5 mb-0">
+                Students
+            </h2>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="mb-0 h3 font-weight-bold card-title" data-url="{% url 'dashboard:all_data' %}" id="tot_student">
+            </h5>
+        </div>
+    </section>
+    <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
+        <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body h5 mb-0">
+                Staffs
+            </h2>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="mb-0 h3 font-weight-bold card-title" data-url="{% url 'dashboard:all_data' %}" id="tot_staff">
+            </h5>
+        </div>
+    </section>
+    <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
+        <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body h5 mb-0">
+                Present
+            </h2>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="mb-0 h3 font-weight-bold card-title text-success" data-url="{% url 'dashboard:all_data' %}"
+                id="tot_present"></h5>
+        </div>
+    </section>
+    <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
+        <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body h5 mb-0">
+                Absent
+            </h2>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="mb-0 h3 font-weight-bold card-title text-danger" data-url="{% url 'dashboard:all_data' %}"
+                id="tot_absent"></h5>
+        </div>
+    </section>
+</article>
+<!-- Calender-wise Line Chart -->
+<section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 40rem;">
+    <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
+        <h2 class="text-right font_size_normal mb-0 ml-4">
+            Day&nbsp;Week&nbsp;Month&nbsp;
+        </h2>
+    </div>
+    <div class="card-body">
+        <canvas id="calender-line-chart" data-url="{% url 'dashboard:attendance_calender' %}"></canvas>
+    </div>
+</section>
+<!-- Statistical Data -->
+<article class="row d-noe justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
+    <!-- Doughnut Chart -->
+    <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 18rem;">
+        <div class="card-body">
+            <canvas id="doughnut-chart" data-url="{% url 'dashboard:all_data' %}"></canvas>
+        </div>
+        <div class="card-footer border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body font_size_normal mb-0">
+                Overall Attendance
+            </h2>
+        </div>
+    </section>
+    <!-- Stacked Bar Chart -->
+    <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 35rem;">
+        <div class="card-body">
+            <canvas id="class-bar-chart" data-url="{% url 'dashboard:attendance_classwise' %}"></canvas>
+        </div>
+        <div class="card-footer border_color_white bg-transparent text-center text_d_blue py-3">
+            <h2 class="text-body font_size_normal mb-0">
+                Attendance by Class
+            </h2>
+        </div>
+    </section>
+</article>
+
+<script>
+    // Current date
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+    $('#datePicker').val(today);
+    // Declaring it as global for data updating purpose
+    // Overall percentage of Present & Absent in doughnut pie chart 
+    var $overall_perc = $("#doughnut-chart");
+    var ctx2 = $overall_perc[0].getContext("2d");
+    var mychart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: ["Present", "Absent"],
+            datasets: [{
+                data: [50, 50],
+                backgroundColor: [
+                    // '#28a745', '#dc3545',
+                    '#0e5593', '#062743'
+                ],
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                    },
+                },
+            },
+        }
+    });
+
+    var delayed; // animation
+    // Footer total number of present & absent for most of the charts
+    const footer = (tooltipItems) => {
+        let sum = 0;
+
+        tooltipItems.forEach(function (tooltipItem) {
+            sum += tooltipItem.parsed.y;
+        });
+        return 'Total: ' + sum;
+    };
+
+    var $calender_data = $("#calender-line-chart");
+    var cal1 = $calender_data[0].getContext("2d");
+    var class_chart = new Chart(cal1, {
+        type: 'line',
+        data: {
+            labels: [
+                "Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"
+            ],
+            datasets: [
+                {
+                    label: 'Present',
+                    data: [90, 80, 70, 76, 90, 65, 84],
+                    backgroundColor: '#0e559350',
+                    borderColor: "#0e5593",
+                    borderWidth: 3,
+                    borderRadius: 4,
+                    color: '#062743',
+                    borderSkipped: false,
+                    pointStyle: 'circle',
+                    pointRadius: .8,
+                    fill: "start",
+                },
+                {
+                    label: 'Absent',
+                    data: [10, 30, 30, 24, 10, 35, 16],
+                    backgroundColor: '#06274350',
+                    borderColor: "#062743",
+                    borderWidth: 3,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    pointStyle: 'circle',
+                    pointRadius: .8,
+                    fill: "start",
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            animation: {
+                onComplete: () => {
+                    delayed = true;
+                },
+                delay: (context) => {
+                    let delay = 0;
+                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                        delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                    }
+                    return delay;
+                },
+                y: {
+                    easing: 'easeInOutElastic',
+                    from: (ctx) => {
+                        if (ctx.type === 'data') {
+                            if (ctx.mode === 'default' && !ctx.dropped) {
+                                ctx.dropped = true;
+                                return 0;
+                            }
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Days',
+                        color: '#062743',
+                        font: {
+                            family: 'karla',
+                            size: 20,
+                            // weight: 'bold',
+                            lineHeight: 1.0,
+                        },
+                        padding: { top: 8, left: 0, right: 0, bottom: 0 }
+                    },
+                    beginAtZero: true,
+                    grid: {
+                        display: false,
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Attendance',
+                        color: '#062743',
+                        font: {
+                            family: 'karla',
+                            size: 20,
+                            // weight: 'bold',
+                            lineHeight: 1.0,
+                        },
+                        padding: { top: 8, left: 0, right: 0, bottom: 0 }
+                    },
+                    beginAtZero: true,
+                    grid: {
+                        display: false,
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: "index"
+            },
+            plugins: {
+                filler: {
+                    propagate: false,
+                    drawTime: 'beforeDatasetsDraw'
+                },
+                pointBackgroundColor: '#fff',
+                radius: 10,
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                    },
+                    position: {
+                        display: false
+                    },
+                },
+                tooltip: {
+                    position: "nearest",
+                    callbacks: {
+                        footer: footer,
+                    },
+                },
+            },
+            elements: {
+                line: {
+                    // Smooth curved line
+                    tension: true ? 0.4 : 0
+                },
+            }
+
+        }
+    });
+
+    $(function () {
+        // Overall Totals
+        // Total Students
+        var $tot_student = $("#tot_student");
+        $.ajax({
+            url: $tot_student.data("url"),
+            success: function (data1) {
+                $("#tot_student").html(data1.total);
+            }
+        });
+        // Total Staffs
+        var $tot_staff = $("#tot_staff");
+        $.ajax({
+            url: $tot_staff.data("url"),
+            success: function (data1) {
+                $("#tot_staff").html(data1.staff);
+            }
+        });
+        // Total Present
+        var $tot_present = $("#tot_present");
+        $.ajax({
+            url: $tot_present.data("url"),
+            success: function (data1) {
+                $("#tot_present").html(data1.present);
+            }
+        });
+        // Total Absent
+        var $tot_absent = $("#tot_absent");
+        $.ajax({
+            url: $tot_absent.data("url"),
+            success: function (data1) {
+                $("#tot_absent").html(data1.absent);
+            }
+        });
+        // Class-wise attendance in stacked bar chart
+        var $attendance_by_class = $("#class-bar-chart");
+        $.ajax({
+            url: $attendance_by_class.data("url"),
+            success: function (data1) {
+
+                var ctx1 = $attendance_by_class[0].getContext("2d");
+
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: data1.labels,
+                        datasets: [
+                            {
+                                label: 'Present',
+                                data: data1.present,
+                                backgroundColor: '#0e5593',
+                                borderColor: "#ffffff00",
+                                borderWidth: 2,
+                                borderRadius: 5,
+                                borderSkipped: false,
+                                pointStyle: 'star',
+                            },
+                            {
+                                label: 'Absent',
+                                data: data1.absent,
+                                // backgroundColor: 'cyan',
+                                // borderColor: "#daeaf6",
+                                backgroundColor: "#062743",
+                                borderColor: "#ffffff00",
+                                borderWidth: 2,
+                                borderRadius: 5,
+                                borderSkipped: false,
+                                pointStyle: 'triangle',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            onComplete: () => {
+                                delayed = true;
+                            },
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            },
+                        },
+                        scales: {
+                            x: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Classes',
+                                    color: '#062743',
+                                    font: {
+                                        family: 'karla',
+                                        size: 20,
+                                        weight: 'bold',
+                                        lineHeight: 1.0,
+                                    },
+                                    padding: { top: 8, left: 0, right: 0, bottom: 0 }
+                                },
+                                grid: {
+                                    display: false,
+                                },
+                            },
+                            y: {
+                                stacked: true,
+                                beginAtZero: true,
+                                grid: {
+                                    display: false,
+                                },
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    usePointStyle: true,
+                                },
+                            },
+                            tooltip: {
+                                position: "nearest",
+                                callbacks: {
+                                    footer: footer,
+                                },
+                            },
+                        },
+                    }
+                });
+
+            }
+        });
+        // Overall percentage of Present & Absent in doughnut pie chart 
+        var $overall_perc = $("#doughnut-chart");
+        $.ajax({
+            url: $overall_perc.data("url"),
+            success: function (data1) {
+                // Updating the data for overall percentage
+                mychart.data.datasets[0].data = data1.overall_perc;
+                mychart.update('show');
+            }
+        });
+        // Overall percentage of Present & Absent in doughnut pie chart 
+        var $calender_all = $("#calender-line-chart");
+        var current_date = $('#datePicker').val()
+        $.ajax({
+            headers: {
+                "X-CSRFTOKEN": "{{ csrf_token }}",
+                'contentType': 'application/json;charset=utf-8',
+            },
+            url: $calender_all.data("url"),
+            type: 'post',
+            data: { 'current_date': current_date },
+            success: function (data1) {
+                // Updating the data for Line chart
+                class_chart.data.labels = data1.labels;
+                class_chart.data.datasets[0].data = data1.present;
+                class_chart.data.datasets[1].data = data1.absent;
+                class_chart.update('show');
+            }
+        });
+    });
+
+    $(document).ready(function () {
+
+        $("#student-rollno").click(function () {
+            var rollno = $("#rollno").val();
+            $.ajax({
+                headers: {
+                    "X-CSRFTOKEN": "{{ csrf_token }}",
+                    'contentType': 'application/json;charset=utf-8',
+                },
+                url: "{% url 'dashboard:student_roll_no' %}",
+                type: 'post',
+                data: { 'rollno': rollno },
+                dataType: 'json',
+                success: function (response) {
+                    alert(details)
+                }
+            });
+        });
+
+        $(".classroom").click(function () {
+            $("#class_list .nav-item button").removeClass("active font-weight-bold");
+            $(this).addClass("active font-weight-bold");
+            var $class_id = $(this).data("classid");
+            // $("#tot_student").html($class_id);
+            $.ajax({
+                headers: {
+                    "X-CSRFTOKEN": "{{ csrf_token }}",
+                    'contentType': 'application/json;charset=utf-8',
+                },
+                url: "{% url 'dashboard:all_data' %}",
+                type: 'post',
+                data: { 'class_id': $class_id },
+                dataType: 'json',
+                success: function (data1) {
+                    // Overall Totals
+                    $("#tot_student").html(data1.total);
+                    $("#tot_staff").html(data1.staff);
+                    $("#tot_present").html(data1.present);
+                    $("#tot_absent").html(data1.absent);
+                    // Updating the percentage for particular classroom
+                    mychart.data.datasets[0].data = data1.overall_perc;
+                    mychart.update('show');
+                }
+            });
+        });
+
+        $("#class_all").click(function () {
+            $("#class_list .nav-item button").removeClass("active font-weight-bold");
+            $("#class_all").addClass("active font-weight-bold");
+
+            location.reload();
+        });
+    });
+</script>
+
+{% endblock %}

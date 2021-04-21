@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>SAMS | Attendance Entry</title>
+{% endblock %}
+
+{% block head %}
+<!-- Custom Css -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/toggle.css' %}">
+<style>
+    /* Custom CSS */
+    #tab_res .table td {
+        border-color: #ffffff;
+    }
+
+    #tab_res .table th {
+        border: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="text-center text_d_blue arvo mt-2 mb-3 mt-md-0" style="margin-bottom: 35px;">
+    <h1>Attendance Entry</h1>
+    <small class="upper_case text-body" name="date">{{ date }}</small>
+</section>
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 mt-md-0">
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+        Classroom&nbsp;:
+    </h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+        {{ class_obj }}
+    </h5>
+</section>
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2">
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+        Subject :
+    </h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+        {{ subject.sub_name }} ({{ hour.name|upper }})
+    </h5>
+</section>
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2">
+    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+        Hour : {{ hour_number }}
+    </h5>
+</section>
+<section class="container px-0 px-md-4 mx-auto d-flex d-md-block justify-content-center">
+    <form class="form" action="{% url 'attendancess:attendance' hour.id hour_number %}" method="POST">
+        {% csrf_token %}
+        <div data-simplebar class="table-responsive table_wrapper table_box_shadow border_white my-3" id="tab_res">
+            <table class="table table-striped my-1 my-md-2">
+                <thead>
+                    <tr class="text-center text_d_blue">
+                        <th class="upper_case">ID</th>
+                        <th class="upper_case">Username</th>
+                        <th class="upper_case">
+                            Status
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                                data-toggle="tooltip" data-placement="top" title="Select particular status to change"
+                                class="ml-2" style="fill: #062743;">
+                                <path fill-rule="evenodd"
+                                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                            </svg>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr scope="row" class="text-center text_d_blue">
+                        <td class="upper_case"> {{ forloop.counter }} </td>
+                        <td class="upper_case"> {{ student.username }} </td>
+                        <td>
+                            <input class="present-status" name="{{student.username}}" type="checkbox" checked
+                                data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-on="Present"
+                                data-off="Absent">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <input type="button" id="confirm-modal-button" value="Submit" data-toggle="modal" data-target="#confirm-modal"
+            class="btn border_white btn-cust neu_icon text-primary align-self-center ">
+
+        <!--modal-->
+        <div class="modal fade" id="confirm-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content border_white modal_box_shadow">
+                    <div class="modal-header ml-1 text_d_blue border_color_white pb-1">
+                        <h3 class="modal-title capitalize">Please check once again</h3>
+                    </div>
+                    <div class="modal-body text_d_blue pl-4">
+
+                    </div>
+                    <div class="modal-footer text_d_blue border_color_white py-2">
+                        <input type="submit"
+                            class="btn border_white btn-cust neu_icon text-success align-self-center ml-2" value="Post">
+                        <button type="button"
+                            class="btn border_white btn-cust neu_icon text-danger align-self-center mr-2"
+                            data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<script>
+    absentees = []
+    $(function () {
+        $('.present-status').change(function () {
+            if ($(this).prop("checked") == false) {
+                absentees.push($(this).attr('name'));
+            }
+            else if ($(this).prop("checked") == true) {
+                index = absentees.indexOf($(this).attr('name'));
+                if (index > -1) {
+                    absentees.splice(index, 1);
+                }
+            }
+            console.log(absentees);
+        });
+    });
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('#confirm-modal-button').on('click', function () {
+            string = "<strong>Absentees&nbsp;:</strong>&nbsp;<label class='h5 text-danger font-weight-bold'>" + absentees.length + "</label>";
+            absentees.sort();
+            for (i = 0; i < absentees.length; i++) {
+                string += "<h5 class='mb-1 pl-5'>" + absentees[i] + "</h5>";
+            }
+            $(".modal-body").html(string);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+hour,day,subject,set_name
+I,Monday,SE,4
+II,Monday,PCD,4
+IV,Monday,CN,4
+V ,Monday,OSP,4
+I,Tuesday,PCD,4
+II,Tuesday,SE,4
+III,Tuesday,Elective course,4
+V ,Tuesday,CN,4
+I,Wednesday,OSP,4
+II,Wednesday,CN,4
+III,Wednesday,Elective course,4
+V ,Wednesday,SE,4
+II,Thursday,OSP,4
+III,Thursday,Elective course,4
+V ,Thursday,SE,4
+II,Friday,OSP,4
+III,Friday,Elective course,4
+V ,Friday,PCD,4
+I,Saturday,CN,4
+II,Saturday,PCD,4

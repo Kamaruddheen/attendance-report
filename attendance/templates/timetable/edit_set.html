@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | Edit Timetable Set</title>
+{% endblock %}
+
+{% block head %}
+<style>
+    #timetable_set_edit_form label {
+        color: #062743;
+        font-size: 1.1rem;
+        font-family: 'arvo';
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!--Modal to display Timetable Set Edit form-->
+<div class="modal fade" id="edit-set-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border_white modal_box_shadow">
+            <div class="modal-header ml-1 text_d_blue border_color_white">
+                <h3 class="modal-title capitalize">Edit&nbsp;Timetable&nbsp;Set</h3>
+                <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal"
+                    id="close_button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="form needs-validation" method="POST" id="timetable_set_edit_form"
+                    action="{% url 'timetable:edit_set' s_object.id %}" novalidate>
+                    {% csrf_token %}
+                    {{ edit_set|crispy }}
+                </form>
+            </div>
+            <div class="modal-footer border_color_white">
+                <div class="col-12 d-flex justify-content-end">
+                    <input type="submit" value="Save" name="submit" form="timetable_set_edit_form"
+                        class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
+                    <a href="{% url 'timetable:setchoose' s_object.classroom.id %}"
+                        class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#edit-set-modal").modal({ backdrop: "static" });
+
+        $("#close_button").click(function () {
+            window.location.href = "{% url 'timetable:setchoose' s_object.classroom.id %}"
+        })
+    });
+</script>
+{% endblock %}

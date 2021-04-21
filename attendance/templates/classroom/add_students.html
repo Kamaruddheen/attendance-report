@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>SAMS | Add Students</title>
+{% endblock %}
+
+{% block head %}
+<style>
+	#student_create_form label {
+		color: #062743;
+		font-size: 1.1rem;
+		font-family: 'arvo';
+	}
+
+	.file_upload_label {
+		color: #062743;
+		font-size: 1.1rem;
+		font-family: 'arvo';
+		padding-left: 5px;
+		padding-bottom: 5px;
+	}
+
+	/* Customizing Bootstrap - Neumorphism-Ui */
+
+	.file_upload_cust {
+		margin-top: 3px;
+		font-size: 1.1rem;
+		font-family: 'Karla', sans-serif;
+		color: #062743 !important;
+		background-color: #daeaf6 !important;
+		border: 1px solid #c9d7e2;
+		border-radius: 2rem !important;
+		box-shadow: inset 5px 5px 10px #c2d0db,
+			inset -5px -5px 10px #daeaf6;
+	}
+
+	.file_upload_cust:focus {
+		border: 2px solid #c9d7e2;
+		outline: none !important;
+		box-shadow: inset 5px 5px 10px #c2d0db,
+			inset -5px -5px 10px #e5f6ff;
+	}
+
+	.file_upload_cust:hover {
+		box-shadow: inset 5px 5px 10px #c2d0db,
+			inset -5px -5px 10px #e5f6ff;
+	}
+
+	.file_upload_cust:active {
+		outline: none !important;
+	}
+
+	.custom-file-label::after {
+		text-align: center !important;
+		vertical-align: middle !important;
+		color: #007bff !important;
+		background-color: #daeaf6;
+		border: 2px solid #c9d7e2;
+		border-radius: 2rem !important;
+		box-shadow: 5px 5px 10px #c2d0db,
+			-5px -5px 10px #e5f6ff;
+	}
+
+	.invalid_upload {
+		display: block;
+		width: 100%;
+		font-size: 80%;
+		color: #dc3545;
+		padding: 0px 0px 0px 15px;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-none d-md-none justify-content-end mx-3" id="drop">
+	<a href="#submit_bottom"
+		class="btn border_white h1 font-weight-bold btn-cust neu_icon text-primary align-self-center float-md-right">&darr;</a>
+</div>
+<section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 my-3 mt-md-0">
+	<h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
+		Classroom :
+	</h5>
+	<h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
+		{{ class_obj }}
+	</h5>
+</section>
+<div class="row d-flex justify-content-center align-items-center m-3 m-md-0">
+	<div class="container col-lg-8 col-xl-7 body_box_shadow border_white p-4 mx-md-3">
+		<div class="row d-flex flex-column">
+			<div class="text-center text_d_blue arvo mb-3">
+				<h3 class="m-0">Add Students</h3>
+			</div>
+			<small class="text-dark text-center mb-3">
+				Create a multiple student account at once.
+			</small>
+			<button class="btn border_white btn-cust neu_icon text-primary align-self-center" data-toggle="modal"
+				data-target="#add_stud_csv">Upload CSV</button>
+			<h5 class="text-dark text-center mt-3">
+				(or)
+			</h5>
+			<small class="text-dark text-center mb-3">
+				Just create a single student account.
+			</small>
+		</div>
+		<form class="form form-row edit_form needs-validation" method="POST" id="student_create_form" novalidate>
+			{{ formset.management_form }}
+			{% for form in formset %}
+			{% csrf_token %}
+			<div class="form-group col-md-12">
+				{{ form.username|as_crispy_field }}
+			</div>
+			<div class="form-group col-md-6">
+				{{ form.first_name|as_crispy_field }}
+			</div>
+			<div class="form-group col-md-6">
+				{{ form.last_name|as_crispy_field }}
+			</div>
+			<div class="form-group col-md-12">
+				{{ form.email|as_crispy_field }}
+			</div>
+			{% endfor %}
+			<div class="form-group col-md-12">
+				<input type="submit" name="add_stud_form" form="student_create_form" value="Submit"
+					class="btn border_white btn-cust neu_icon text-success align-self-center float-right mr-3"
+					id="submit_bottom">
+			</div>
+		</form>
+	</div>
+</div>
+<!-- Add Student CSV Modal Form -->
+<div class="modal fade" id="add_stud_csv" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content border_white modal_box_shadow">
+			<form class="form edit_form needs-validation" method="POST" id="add_stud_csv_form"
+				enctype="multipart/form-data" novalidate>
+				<div class="modal-header ml-1 text_d_blue border_color_white">
+					<h3 class="modal-title">Upload File</h3>
+					<button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body mt-3 pt-0">
+					{% csrf_token %}
+					{% for field in csv_form %}
+					<div class="fieldWrapper" id="file_div">
+						<label class="file_upload_label" for="{{ field.id_for_label }}">File Upload</label>
+						<div class="input-group mb-3">
+							<div class="custom-file">
+								{{ field }}
+								<label class="custom-file-label file_upload_cust" for="{{ field.id_for_label }}"
+									aria-describedby="inputGroup">Choose *.csv file</label>
+							</div>
+						</div>
+						{% for error in field.errors %}
+						<strong class="invalid_upload">{{ error|escape }}</strong>
+						{% endfor %}
+					</div>
+					{% endfor %}
+				</div>
+				<div class="modal-footer border_color_white">
+					<div class="col-12 d-flex justify-content-end">
+						<input type="submit" value="Upload" name="add_stud_csv_form" form="add_stud_csv_form"
+							class="btn border_white btn-cust neu_icon text-success align-self-center mr-2"
+							id="submit_btn">
+						<button class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2"
+							data-dismiss="modal" type="button">Cancel</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		{% if csv_form.errors %}
+		$("#add_stud_csv").modal({ backdrop: 'static' });
+		$("#add_stud_csv").modal('show');
+		{% endif %}
+
+		$("#submit_btn").click(function () {
+			$("drop").removeClass("d-none d-md-none").addClass("d-flex d-md-block");
+		})
+
+		// Mouse scrolling based on user screen height
+		var h = document.documentElement.clientHeight - 150;
+
+		$(document).on('mousewheel DOMMouseScroll', function (e) {
+			window.addEventListener("wheel", e => e.preventDefault(), { passive: false })
+
+			if (e.originalEvent.wheelDelta / 120 < 0) { // if Mouse wheel up
+
+				$("body,html").scrollTop(h);
+				h = h + document.documentElement.clientHeight;
+			}
+			else if (e.originalEvent.wheelDelta / 120 > 0) { // if Mouse wheel down
+
+				$("body,html").scrollTop(h - document.documentElement.clientHeight - document.documentElement.clientHeight);
+				h = h - document.documentElement.clientHeight;
+			}
+		});
+
+	});
+</script>

@@ -1,2 +1,10 @@
 # Python bytecode files can be omitted
 *.pyc
+# Vscode custom settings
+.vscode
+*.json
+# layout sample file
+sample.html
+# node_modules
+attendance/node_modules
+package-lock.json

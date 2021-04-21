@@ -1,0 +1,65 @@
+{% load crispy_forms_tags %}
+
+<style>
+    /* Custom CSS */
+    #view_table .table td {
+        border: 0;
+    }
+
+    #view_table .table th {
+        border: 0;
+    }
+
+    .bbr {
+        border-bottom: 1px solid #ffffff !important;
+        border-right: 1px solid #ffffff !important;
+    }
+
+    .br {
+        border-right: 1px solid #ffffff !important;
+    }
+
+    .bb {
+        border-bottom: 1px solid #ffffff !important;
+    }
+
+    #main_content {
+        overflow-x: auto;
+    }
+</style>
+
+<div class="d-flex justify-content-center justify-content-md-start">
+    <a href="{% url 'timetable:edit_set' s_object.id %}"
+        class="btn border_white btn-cust neu_icon text-info align-self-center my-3">Edit Set</a>
+</div>
+
+
+<!--Timetable display-->
+<div class="table-responsive table_wrapper table_box_shadow border_white" id="view_table">
+    <table class="table my-1 my-md-2">
+        <thead>
+            <tr class="text-center text_d_blue">
+                <th scope="col" class="upper_case bbr">Day&nbsp;Order&nbsp;/&nbsp;Period</td>
+                <th scope="col" class="bb">1</td>
+                <th scope="col" class="bb">2</td>
+                <th scope="col" class="bb">3</td>
+                <th scope="col" class="bb">4</td>
+                <th scope="col" class="bb">5</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subjects, days in all_subjects %}
+            <tr scope="row" class="text-center text_d_blue">
+                <th class="br">{{days}}</th>
+                {% for subject in subjects %}
+                <td id="{{forloop.parentloop.counter}}{{forloop.counter}}" name="{{subject.id}}">{{subject|title}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-center justify-content-md-start">
+    <a href="{% url 'timetable:showsubjects' c_object.id s_object.id %}"
+        class="btn border_white btn-cust neu_icon text-info align-self-center my-3">Manage Timetable</a>
+</div>
