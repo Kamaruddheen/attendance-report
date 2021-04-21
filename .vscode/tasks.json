@@ -1,0 +1,69 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        // live reload
+        {
+            "label": "live-reload",
+            "type": "shell",
+            "command": "python manage.py livereload",
+            "options": {
+                "cwd": "${workspaceFolder}/attendance/"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        // run server
+        {
+            "label": "run-server",
+            "type": "shell",
+            "command": "python manage.py runserver localhost:8000",
+            "options": {
+                "cwd": "${workspaceFolder}/attendance/",
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+        },
+        // open chrome with localhost:8000
+        {
+            "label": "launch-chrome",
+            "type": "shell",
+            "command": "chrome.exe http://localhost:8000/",
+            "options": {
+                "cwd": "C:\\Program Files (x86)\\Google\\Chrome\\Application"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        // [3 in 1] Short Cut Key : Ctrl + Shift + B
+        {
+            "label": "runserver",
+            "dependsOn": [
+                "live-reload",
+                "run-server",
+                "launch-chrome",
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+    ]
+}

@@ -1,7 +1,8 @@
 # Python bytecode files can be omitted
 *.pyc
-# Vscode custome settings
+# Vscode custom settings
 .vscode
+*.json
 # layout sample file
 sample.html
 # node_modules
