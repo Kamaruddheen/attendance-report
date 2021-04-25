@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler404, handler500, handler403, handler400
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from django.conf import settings
@@ -31,6 +32,11 @@ urlpatterns = [
     path('attendance/', include('attendancess.urls')),
     path('dashboard/', include('dashboard.urls')),
 ]
+
+handler404 = view_404
+handler403 = view_403
+handler403 = view_403
+handler500 = view_500
 
 # urlpatterns += staticfiles_urlpatterns()
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

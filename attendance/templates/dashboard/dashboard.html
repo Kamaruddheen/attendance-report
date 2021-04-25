@@ -35,6 +35,10 @@
     .nav-tabs:hover {
         font-weight: 700 !important;
     }
+
+    .cur_pointer {
+        cursor: pointer;
+    }
 </style>
 {% endblock %}
 
@@ -80,7 +84,7 @@
             </h2>
         </div>
         <div class="card-body text-center">
-            <h5 class="mb-0 h3 font-weight-bold card-title" data-url="{% url 'dashboard:all_data' %}" id="tot_student">
+            <h5 class="mb-0 h3 font-weight-bold card-title" id="tot_student">
             </h5>
         </div>
     </section>
@@ -91,7 +95,7 @@
             </h2>
         </div>
         <div class="card-body text-center">
-            <h5 class="mb-0 h3 font-weight-bold card-title" data-url="{% url 'dashboard:all_data' %}" id="tot_staff">
+            <h5 class="mb-0 h3 font-weight-bold card-title" id="tot_staff">
             </h5>
         </div>
     </section>
@@ -102,8 +106,7 @@
             </h2>
         </div>
         <div class="card-body text-center">
-            <h5 class="mb-0 h3 font-weight-bold card-title text-success" data-url="{% url 'dashboard:all_data' %}"
-                id="tot_present"></h5>
+            <h5 class="mb-0 h3 font-weight-bold card-title text-success" id="tot_present"></h5>
         </div>
     </section>
     <section class="card card_box_shadow border_white mb-4 mx-2 mx-md-3" style="width: 13rem;">
@@ -113,17 +116,22 @@
             </h2>
         </div>
         <div class="card-body text-center">
-            <h5 class="mb-0 h3 font-weight-bold card-title text-danger" data-url="{% url 'dashboard:all_data' %}"
-                id="tot_absent"></h5>
+            <h5 class="mb-0 h3 font-weight-bold card-title text-danger" id="tot_absent"></h5>
         </div>
     </section>
 </article>
 <!-- Calender-wise Line Chart -->
 <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 40rem;">
     <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
-        <h2 class="text-right font_size_normal mb-0 ml-4">
-            Day&nbsp;Week&nbsp;Month&nbsp;
-        </h2>
+        <span class="badge badge_box_shadow border_white text-primary float-right mx-2 cur_pointer">
+            Month
+        </span>
+        <span class="badge badge_box_shadow border_white text-primary float-right mx-2 cur_pointer">
+            Week
+        </span>
+        <span class="badge badge_box_shadow border_white text_d_blue float-right mx-2">
+            Day
+        </span>
     </div>
     <div class="card-body">
         <canvas id="calender-line-chart" data-url="{% url 'dashboard:attendance_calender' %}"></canvas>
@@ -157,14 +165,26 @@
 
 <script>
     // Current date
-    var now = new Date();
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+    // var now = new Date();
+    // var day = ("0" + now.getDate()).slice(-2);
+    // var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    // var today = now.getFullYear() + "-" + (month) + "-" + (day);
 
-    $('#datePicker').val(today);
-    // Declaring it as global for data updating purpose
-    // Overall percentage of Present & Absent in doughnut pie chart 
+    // $('#datePicker').val(today);
+
+    var delayed; // animation
+    // Footer total number of present & absent for most of the charts
+    const footer = (tooltipItems) => {
+        let sum = 0;
+
+        tooltipItems.forEach(function (tooltipItem) {
+            sum += tooltipItem.parsed.y;
+        });
+        return 'Total: ' + sum;
+    };
+
+    // Declaring charts as global for data updating purpose
+    // Overall percentage of Present & Absent in doughnut [pie chart]
     var $overall_perc = $("#doughnut-chart");
     var ctx2 = $overall_perc[0].getContext("2d");
     var mychart = new Chart(ctx2, {
@@ -172,7 +192,7 @@
         data: {
             labels: ["Present", "Absent"],
             datasets: [{
-                data: [50, 50],
+                data: [0, 0],
                 backgroundColor: [
                     // '#28a745', '#dc3545',
                     '#0e5593', '#062743'
@@ -191,17 +211,98 @@
         }
     });
 
-    var delayed; // animation
-    // Footer total number of present & absent for most of the charts
-    const footer = (tooltipItems) => {
-        let sum = 0;
+    // Class-wise attendance [bar chart]
+    var $attendance_by_class = $("#class-bar-chart");
+    var ctx1 = $attendance_by_class[0].getContext("2d");
+    var classwise_chart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Class1', 'Class2', 'Class3', 'Class1', 'Class2', 'Class3'],
+            datasets: [
+                {
+                    label: 'Present',
+                    data: [0],
+                    backgroundColor: '#0e5593',
+                    borderColor: "#ffffff00",
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    borderSkipped: false,
+                    pointStyle: 'star',
+                },
+                {
+                    label: 'Absent',
+                    data: [0],
+                    backgroundColor: "#062743",
+                    borderColor: "#ffffff00",
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    borderSkipped: false,
+                    pointStyle: 'triangle',
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            animation: {
+                onComplete: () => {
+                    delayed = true;
+                },
+                delay: (context) => {
+                    let delay = 0;
+                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                        delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                    }
+                    return delay;
+                },
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'Classes',
+                        color: '#062743',
+                        font: {
+                            family: 'karla',
+                            size: 20,
+                            weight: 'bold',
+                            lineHeight: 1.0,
+                        },
+                        padding: { top: 8, left: 0, right: 0, bottom: 0 }
+                    },
+                    grid: {
+                        display: false,
+                    },
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    grid: {
+                        display: false,
+                    },
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                    },
+                },
+                tooltip: {
+                    position: "nearest",
+                    callbacks: {
+                        footer: footer,
+                    },
+                },
+            },
+        }
+    });
 
-        tooltipItems.forEach(function (tooltipItem) {
-            sum += tooltipItem.parsed.y;
-        });
-        return 'Total: ' + sum;
-    };
-
+    // Daily, weekly, monthly attendance [line chart]
     var $calender_data = $("#calender-line-chart");
     var cal1 = $calender_data[0].getContext("2d");
     var class_chart = new Chart(cal1, {
@@ -337,161 +438,52 @@
         }
     });
 
-    $(function () {
-        // Overall Totals
-        // Total Students
-        var $tot_student = $("#tot_student");
-        $.ajax({
-            url: $tot_student.data("url"),
-            success: function (data1) {
-                $("#tot_student").html(data1.total);
-            }
-        });
-        // Total Staffs
-        var $tot_staff = $("#tot_staff");
-        $.ajax({
-            url: $tot_staff.data("url"),
-            success: function (data1) {
-                $("#tot_staff").html(data1.staff);
-            }
-        });
-        // Total Present
-        var $tot_present = $("#tot_present");
-        $.ajax({
-            url: $tot_present.data("url"),
-            success: function (data1) {
-                $("#tot_present").html(data1.present);
-            }
-        });
-        // Total Absent
-        var $tot_absent = $("#tot_absent");
-        $.ajax({
-            url: $tot_absent.data("url"),
-            success: function (data1) {
-                $("#tot_absent").html(data1.absent);
-            }
-        });
-        // Class-wise attendance in stacked bar chart
-        var $attendance_by_class = $("#class-bar-chart");
-        $.ajax({
-            url: $attendance_by_class.data("url"),
-            success: function (data1) {
-
-                var ctx1 = $attendance_by_class[0].getContext("2d");
-
-                new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: data1.labels,
-                        datasets: [
-                            {
-                                label: 'Present',
-                                data: data1.present,
-                                backgroundColor: '#0e5593',
-                                borderColor: "#ffffff00",
-                                borderWidth: 2,
-                                borderRadius: 5,
-                                borderSkipped: false,
-                                pointStyle: 'star',
-                            },
-                            {
-                                label: 'Absent',
-                                data: data1.absent,
-                                // backgroundColor: 'cyan',
-                                // borderColor: "#daeaf6",
-                                backgroundColor: "#062743",
-                                borderColor: "#ffffff00",
-                                borderWidth: 2,
-                                borderRadius: 5,
-                                borderSkipped: false,
-                                pointStyle: 'triangle',
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        animation: {
-                            onComplete: () => {
-                                delayed = true;
-                            },
-                            delay: (context) => {
-                                let delay = 0;
-                                if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
-                                }
-                                return delay;
-                            },
-                        },
-                        scales: {
-                            x: {
-                                stacked: true,
-                                title: {
-                                    display: true,
-                                    text: 'Classes',
-                                    color: '#062743',
-                                    font: {
-                                        family: 'karla',
-                                        size: 20,
-                                        weight: 'bold',
-                                        lineHeight: 1.0,
-                                    },
-                                    padding: { top: 8, left: 0, right: 0, bottom: 0 }
-                                },
-                                grid: {
-                                    display: false,
-                                },
-                            },
-                            y: {
-                                stacked: true,
-                                beginAtZero: true,
-                                grid: {
-                                    display: false,
-                                },
-                            }
-                        },
-                        interaction: {
-                            intersect: false,
-                            mode: 'index',
-                        },
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    usePointStyle: true,
-                                },
-                            },
-                            tooltip: {
-                                position: "nearest",
-                                callbacks: {
-                                    footer: footer,
-                                },
-                            },
-                        },
-                    }
-                });
-
-            }
-        });
-        // Overall percentage of Present & Absent in doughnut pie chart 
-        var $overall_perc = $("#doughnut-chart");
-        $.ajax({
-            url: $overall_perc.data("url"),
-            success: function (data1) {
-                // Updating the data for overall percentage
-                mychart.data.datasets[0].data = data1.overall_perc;
-                mychart.update('show');
-            }
-        });
-        // Overall percentage of Present & Absent in doughnut pie chart 
-        var $calender_all = $("#calender-line-chart");
-        var current_date = $('#datePicker').val()
+    $(document).ready(function () {
+        // Default data for first time
         $.ajax({
             headers: {
                 "X-CSRFTOKEN": "{{ csrf_token }}",
                 'contentType': 'application/json;charset=utf-8',
             },
+            url: "{% url 'dashboard:all_data' %}",
+            type: 'get',
+            success: function (data1) {
+                // Overall Totals
+                $("#tot_student").html(data1.total);
+                $("#tot_staff").html(data1.staff);
+                $("#tot_present").html(data1.present);
+                $("#tot_absent").html(data1.absent);
+                // Overall percentage of Present & Absent in doughnut pie chart 
+                // Updating the percentage for particular classroom
+                mychart.data.datasets[0].data = data1.overall_perc;
+                mychart.update('show');
+            }
+        });
+
+        // Class-wise attendance in stacked bar chart
+        var $attendance_by_class = $("#class-bar-chart");
+        $.ajax({
+            headers: {
+                "X-CSRFTOKEN": "{{ csrf_token }}",
+            },
+            url: $attendance_by_class.data("url"),
+            type: 'post',
+            success: function (data1) {
+                // Updating the data for Bar chart
+                classwise_chart.data.labels = data1.labels;
+                classwise_chart.data.datasets[0].data = data1.present;
+                classwise_chart.data.datasets[1].data = data1.absent;
+                classwise_chart.update('show');
+            }
+        });
+        // Daily, weekly, monthly line chart data entry
+        var $calender_all = $("#calender-line-chart");
+        $.ajax({
+            headers: {
+                "X-CSRFTOKEN": "{{ csrf_token }}",
+            },
             url: $calender_all.data("url"),
             type: 'post',
-            data: { 'current_date': current_date },
             success: function (data1) {
                 // Updating the data for Line chart
                 class_chart.data.labels = data1.labels;
@@ -500,9 +492,6 @@
                 class_chart.update('show');
             }
         });
-    });
-
-    $(document).ready(function () {
 
         $("#student-rollno").click(function () {
             var rollno = $("#rollno").val();
@@ -525,7 +514,7 @@
             $("#class_list .nav-item button").removeClass("active font-weight-bold");
             $(this).addClass("active font-weight-bold");
             var $class_id = $(this).data("classid");
-            // $("#tot_student").html($class_id);
+            var current_date = $('#datePicker').val();
             $.ajax({
                 headers: {
                     "X-CSRFTOKEN": "{{ csrf_token }}",
@@ -533,7 +522,7 @@
                 },
                 url: "{% url 'dashboard:all_data' %}",
                 type: 'post',
-                data: { 'class_id': $class_id },
+                data: { 'class_id': $class_id, 'current_date': current_date },
                 dataType: 'json',
                 success: function (data1) {
                     // Overall Totals

@@ -75,13 +75,13 @@ def all_day_calender(request):
     dates = []
     present = []
     absent = []
-    given_date = request.POST['current_date']
+    given_date = request.POST.get('current_date', date.today())
 
     # collecting previous date list-
     sdate = datetime.strptime(
-        given_date, "%Y-%m-%d").date() - timedelta(days=4)
+        str(given_date), "%Y-%m-%d").date() - timedelta(days=4)
     edate = datetime.strptime(
-        given_date, "%Y-%m-%d").date() + timedelta(days=3)
+        str(given_date), "%Y-%m-%d").date() + timedelta(days=3)
 
     list_of_dates = [
         sdate+timedelta(days=x) for x in range((edate-sdate).days) if datetime.strptime(str(sdate+timedelta(days=x)), "%Y-%m-%d").date().strftime("%A") != "Sunday"
@@ -112,7 +112,7 @@ def all_week_calender(request):
     present = []
     absent = []
     list_of_dates = []
-    given_date = request.POST['current_date'] or date.today()
+    given_date = request.POST.get('current_date', date.today())
 
     # change str of date to date type
     dt = datetime.strptime(str(given_date), '%Y-%m-%d').date()
@@ -169,7 +169,7 @@ def all_month_calender(request):
     present = []
     absent = []
     list_of_dates = []
-    given_date = request.POST['current_date'] or date.today()
+    given_date = request.POST.get('current_date', date.today())
 
     # change str of date to date type
     dt = datetime.strptime(str(given_date), '%Y-%m-%d').date()
@@ -293,8 +293,10 @@ def all_data(request):
 
     elif request.method == "POST":
         classroom_id = request.POST.get('class_id', None)
+        current_date = request.POST.get('current_date', None)
+
         Attendance_id_obj = AttendanceIdModel.objects.filter(
-            classroom__id=classroom_id)
+            classroom__id__icontains=classroom_id, date__icontains=current_date)
         attend_id = []
         for attendance in Attendance_id_obj:
             attend_id.append(attendance.id)

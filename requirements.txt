@@ -5,3 +5,5 @@ django-livereload-server==0.3.2
 django-extensions
 django-formset-bootstrap==1.4.0.dev3	#temporary
 django-querysetsequence==0.14
+xhtml2pdf==0.2.5
+whitenoise==5.1.0

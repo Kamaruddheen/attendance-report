@@ -26,12 +26,13 @@ SECRET_KEY = '8!vyuqsf0@*#307ic)##6=i3dtl752k@x2zojt9g1ge*(h42tf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,6 +55,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -132,9 +134,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+if DEBUG:
+    STATICFILES_DIRS = [BASE_DIR/"static/", ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static_files'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR/"static/", ]
 STATIC_DIR = BASE_DIR  # for classroom app configuration
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Development Only

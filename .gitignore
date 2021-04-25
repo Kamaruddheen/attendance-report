@@ -2,7 +2,6 @@
 *.pyc
 # Vscode custom settings
 .vscode
-*.json
 # layout sample file
 sample.html
 # node_modules
