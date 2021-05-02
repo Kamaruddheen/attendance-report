@@ -4,6 +4,7 @@ from django.conf import settings
 
 class ClassroomModel(models.Model):
     course = models.CharField(max_length=50)
+    batch = models.CharField(max_length=10)
     year = models.PositiveSmallIntegerField(
         choices=((1, 'I'), (2, 'II'), (3, 'III')))
     sec = models.CharField(choices=(('a', 'A'), ('b', 'B')),

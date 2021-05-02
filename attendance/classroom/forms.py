@@ -10,6 +10,8 @@ class ClassroomForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['course'].widget.attrs.update(
             {'class': 'input_cust', 'placeholder': 'eg..BSC Computer Science,...'})
+        self.fields['batch'].widget.attrs.update(
+            {'class': 'input_cust capitalize', 'placeholder': 'eg.. 2018, 2019, 2020'})
         self.fields['year'].widget.attrs.update(
             {'class': 'input_cust capitalize'})
         self.fields['sec'].widget.attrs.update(
@@ -22,7 +24,7 @@ class ClassroomForm(forms.ModelForm):
 
     class Meta:
         model = ClassroomModel
-        fields = ['course', 'year', 'sec', 'tutor']
+        fields = ['course', 'batch', 'year', 'sec', 'tutor']
 
 
 class AddStudentCSVForm(forms.Form):
@@ -60,10 +62,10 @@ class AddStudentForm(forms.ModelForm):
 
 class BaseStudentFormSet(forms.BaseModelFormSet):
     def __init__(self, *args, **kwargs):
-        super(BaseStudentFormSet,self).__init__(*args, **kwargs)
+        super(BaseStudentFormSet, self).__init__(*args, **kwargs)
         self.queryset = User.objects.none()
         for form in self.forms:
-            form.empty_permitted=False
+            form.empty_permitted = False
 
     def clean(self):
         if any(self.errors):

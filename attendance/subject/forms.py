@@ -8,7 +8,7 @@ class CreateSubjectForm(forms.ModelForm):
 
     class Meta:
         model = SubjectModel
-        fields = ['sub_name', 'handled_by']
+        fields = ['sub_name', 'handled_by', 'sub_code']
 
     def __init__(self, *args, **kwargs):
         # staff = kwargs.pop('staff')
@@ -26,19 +26,22 @@ class CreateSubjectForm(forms.ModelForm):
         #     {'class': 'input_cust capitalize'})
         self.fields['handled_by'].widget.attrs.update(
             {'class': 'input_cust capitalize'})
+        self.fields['sub_code'].widget.attrs.update(
+            {'class': 'input_cust capitalize', 'placeholder': 'eg..19CMU05, 19CMU05A'})
         # self.fields['classroom'].widget.attrs.update(
         #     {'class': 'input_cust capitalize'})
         # self.fields['hour_name'].label = "Hour Name"
         self.fields['sub_name'].label = "Subject Name"
         # self.fields['sub_type'].label = "Subject Type"
         self.fields['handled_by'].label = "Handled By"
+        self.fields['sub_code'].label = "Subject Code"
 
 
 class CreateHourForm(forms.ModelForm):
 
     class Meta:
         model = HourModel
-        fields = ['name', 'hour_type']
+        fields = ['name', 'hour_type', 'semester']
 
     def __init__(self, *args, **kwargs):
         super(CreateHourForm, self).__init__(*args, **kwargs)
@@ -46,7 +49,10 @@ class CreateHourForm(forms.ModelForm):
             {'class': 'input_cust', 'placeholder': 'eg.Lang, EDC, SE, C++'})
         self.fields['hour_type'].widget.attrs.update(
             {'class': 'input_cust capitalize'})
+        self.fields['semester'].widget.attrs.update(
+            {'class': 'input_cust capitalize'})
         self.fields['name'].label = "Hour"
+        self.fields['semester'].label = "Select your Semester"
         self.fields['hour_type'].label = "Select your hour type"
 
 

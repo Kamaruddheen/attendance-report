@@ -8,6 +8,15 @@ from classroom.models import ClassroomModel
 class HourModel(models.Model):
     name = models.CharField(max_length=50)  # Lang, EDC, SE, PCD...
     classroom = models.ForeignKey(ClassroomModel, on_delete=models.CASCADE)
+    sem_choice = (
+        (1, 'I'),
+        (2, 'II'),
+        (3, 'III'),
+        (4, 'IV'),
+        (5, 'V'),
+        (6, 'VI')
+    )
+    semester = models.CharField(max_length=20, choices=sem_choice)
     hour_type = models.CharField(max_length=10, choices=(
         ('core', 'Core'), ('noncore', 'Non-Core'), ('sel', 'Selective'), ('lab', 'Lab')))
 
@@ -30,6 +39,7 @@ class SubjectModel(models.Model):
     # Software Engineering, Tamil, French
     sub_name = models.CharField(max_length=50)
     hour = models.ForeignKey(HourModel, on_delete=models.CASCADE, null=True)
+    sub_code = models.CharField(max_length=15)
     handled_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,

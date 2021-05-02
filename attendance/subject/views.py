@@ -54,7 +54,7 @@ def HourEditView(request, class_id, hour_id):
     class_obj = get_object_or_404(ClassroomModel, id=class_id)
     hour_obj = get_object_or_404(HourModel, id=hour_id, classroom__id=class_id)
     SubjectFormset = forms.inlineformset_factory(HourModel, SubjectModel, fields=(
-        'sub_name', 'handled_by',), formset=HourFormSet, extra=0, can_delete=False)
+        'sub_name', 'handled_by','sub_code'), formset=HourFormSet, extra=0, can_delete=False)
     if request.method == "POST":
         formset = SubjectFormset(
             request.POST, instance=hour_obj, prefix="subject_edit")

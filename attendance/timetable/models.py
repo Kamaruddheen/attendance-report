@@ -9,6 +9,7 @@ class TimetablesetModel(models.Model):
     classroom = models.ForeignKey(ClassroomModel, on_delete=models.CASCADE)
     from_date = models.DateField()
     to_date = models.DateField()
+    finished = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'set'

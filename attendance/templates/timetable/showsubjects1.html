@@ -28,9 +28,16 @@
     }
 </style>
 
-<div class="d-flex justify-content-center justify-content-md-start">
+<div class="d-flex justify-content-center justify-content-md-between mb-2">
     <a href="{% url 'timetable:edit_set' s_object.id %}"
         class="btn border_white btn-cust neu_icon text-info align-self-center my-3">Edit Set</a>
+    <div>
+        {% if s_object.finished %}
+        <span class="badge badge_box_shadow border_white text-success float-right">Finished</span>
+        {% else %}
+        <span class="badge badge_box_shadow border_white text-danger float-right">Not Finished</span>
+        {% endif %}
+    </div>
 </div>
 
 
