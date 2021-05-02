@@ -11,44 +11,46 @@
     integrity="sha512-dnUg2JxjlVoXHVdSMWDYm2Y5xcIrJg1N+juOuRi0yLVkku/g26rwHwysJDAMwahaDfRpr1AxFz43ktuMPr/l1A=="
     crossorigin="anonymous"></script>
 <style>
-    .nav .nav-item .active {
-        color: #062743 !important;
-        background-color: #daeaf6 !important;
-        border: 1px solid #c9d7e2;
-        border-color: #daeaf6 !important;
-        border-top-left-radius: .50rem !important;
-        border-top-right-radius: .50rem !important;
-        border-bottom-left-radius: 0rem !important;
-        border-bottom-right-radius: 0rem !important;
-        background: #daeaf6;
-        box-shadow: inset 5px 5px 10px #c2d0db,
-            inset -5px -5px 10px #daeaf6;
-    }
-
-    .nav-tabs {
-        border-top-left-radius: .50rem !important;
-        border-top-right-radius: .50rem !important;
-        border-bottom-left-radius: 0rem !important;
-        border-bottom-right-radius: 0rem !important;
-    }
-
-    .nav-tabs:hover {
-        font-weight: 700 !important;
+    .cur_none {
+        cursor: not-allowed;
     }
 
     .cur_pointer {
-        cursor: pointer;
+        cursor: pointer !important;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Date -->
-<article class="form d-flex flex-column flex-md-row mt-3">
-    <div class="form-group mb-md-0 pl-md-4 d-flex justify-content-center justify-content-md-start text_d_blue">
-        <input class="btn mx-md-0 cust_date" type="date" id="datePicker" name="date" data-toggle="tooltip"
-            title="Click the Date Icon" />
-    </div>
+<!-- Date, Classroom -->
+<article class="d-flex flex-column flex-md-row mt-3 mt-md-0 justify-content-center justify-content-md-end mr-md-5">
+    <section class="form-row mb-md-0 text_d_blue mr-md-2">
+        <!-- Date -->
+        <div class="form-group mx-2" id="div_id_date">
+            <input class="btn mx-md-0 cust_date upper_case" type="date" id="datePicker" name="date"
+                data-toggle="tooltip" title="Click the Date Icon" />
+        </div>
+        <!-- List of Classes -->
+        <div class="form-group mx-2" id="div_id_classroom">
+            <select class="input_cust capitalize select form-control" name="classes" id="classroom_id">
+                <option value=""> -- Select Classroom -- </option>
+                {% for class in classes %}
+                <option value="{{ class.id }}">{{ class }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- List of Subjects -->
+        <div class="form-group mx-2" id="div_id_subject">
+            <select class="input_cust capitalize select form-control" name="classes" id="subject_id">
+                <option value=""> -- Select Subject -- </option>
+                {% for sub in subjects %}
+                <option class="d-none clas{{ sub.classroom.id }} subjects" value="{{ sub.id }}">
+                    {{ sub }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </section>
 </article>
 <article class="row d-none justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
     <label for="">Student Roll No.</label>
@@ -56,24 +58,6 @@
     <button type="button" class="btn border_white btn-cust neu_icon align-self-center text-primary ml-2"
         id="student-rollno">Submit</button>
 </article>
-<!-- List of Classes Menu -->
-<ul class="nav nav-tabs my-4 mx-0 mx-md-4 mt-md-0 d-flex justify-content-center justify-content-md-start align-items-center"
-    style="border-color: #c9d7e2;" id="class_list">
-    <li class="nav-item">
-        <button type="button"
-            class="nav-link nav-tabs m-2 btn border_white btn-cust neu_icon text_d_blue align-self-center active font-weight-bold"
-            id="class_all">All</button>
-    </li>
-    {% for class in classes %}
-    <li class="nav-item">
-        <button type="button"
-            class="nav-link nav-tabs btn border_white btn-cust neu_icon text_d_blue align-self-center capitalize m-2 classroom"
-            data-classid="{{ class.id }}">
-            {{ class }}
-        </button>
-    </li>
-    {% endfor %}
-</ul>
 <!-- * Dashboard -->
 <!-- Overall Totals -->
 <article class="row d-none justify-content-center justify-content-md-start my-3 mx-0 mx-md-4">
@@ -123,18 +107,21 @@
 <!-- Calender-wise Line Chart -->
 <section class="card card_box_shadow border_white mb-4 mx-2 m-md-2" style="width: 40rem;">
     <div class="card-header border_color_white bg-transparent text-center text_d_blue py-3">
-        <span class="badge badge_box_shadow border_white text-primary float-right mx-2 cur_pointer">
+        <span class="badge calender_wise badge_box_shadow border_white text-primary float-right mx-2 cur_pointer"
+            value="month">
             Month
         </span>
-        <span class="badge badge_box_shadow border_white text-primary float-right mx-2 cur_pointer">
+        <span class="badge calender_wise badge_box_shadow border_white text-primary float-right mx-2 cur_pointer"
+            value="week">
             Week
         </span>
-        <span class="badge badge_box_shadow border_white text_d_blue float-right mx-2">
+        <span class="badge calender_wise badge_box_shadow border_white text_d_blue float-right mx-2 cur_none"
+            value="day">
             Day
         </span>
     </div>
     <div class="card-body">
-        <canvas id="calender-line-chart" data-url="{% url 'dashboard:attendance_calender' %}"></canvas>
+        <canvas id="calender-line-chart"></canvas>
     </div>
 </section>
 <!-- Statistical Data -->
@@ -227,7 +214,6 @@
                     borderWidth: 2,
                     borderRadius: 5,
                     borderSkipped: false,
-                    pointStyle: 'star',
                 },
                 {
                     label: 'Absent',
@@ -237,7 +223,6 @@
                     borderWidth: 2,
                     borderRadius: 5,
                     borderSkipped: false,
-                    pointStyle: 'triangle',
                 }
             ]
         },
@@ -258,18 +243,6 @@
             scales: {
                 x: {
                     stacked: true,
-                    title: {
-                        display: true,
-                        text: 'Classes',
-                        color: '#062743',
-                        font: {
-                            family: 'karla',
-                            size: 20,
-                            weight: 'bold',
-                            lineHeight: 1.0,
-                        },
-                        padding: { top: 8, left: 0, right: 0, bottom: 0 }
-                    },
                     grid: {
                         display: false,
                     },
@@ -372,11 +345,10 @@
                         color: '#062743',
                         font: {
                             family: 'karla',
-                            size: 20,
-                            // weight: 'bold',
+                            size: 15,
                             lineHeight: 1.0,
                         },
-                        padding: { top: 8, left: 0, right: 0, bottom: 0 }
+                        padding: { top: 5, left: 0, right: 0, bottom: 0 }
                     },
                     beginAtZero: true,
                     grid: {
@@ -384,18 +356,6 @@
                     }
                 },
                 y: {
-                    title: {
-                        display: true,
-                        text: 'Attendance',
-                        color: '#062743',
-                        font: {
-                            family: 'karla',
-                            size: 20,
-                            // weight: 'bold',
-                            lineHeight: 1.0,
-                        },
-                        padding: { top: 8, left: 0, right: 0, bottom: 0 }
-                    },
                     beginAtZero: true,
                     grid: {
                         display: false,
@@ -456,40 +416,17 @@
                 // Overall percentage of Present & Absent in doughnut pie chart 
                 // Updating the percentage for particular classroom
                 mychart.data.datasets[0].data = data1.overall_perc;
-                mychart.update('show');
-            }
-        });
-
-        // Class-wise attendance in stacked bar chart
-        var $attendance_by_class = $("#class-bar-chart");
-        $.ajax({
-            headers: {
-                "X-CSRFTOKEN": "{{ csrf_token }}",
-            },
-            url: $attendance_by_class.data("url"),
-            type: 'post',
-            success: function (data1) {
+                mychart.update();
+                // Updating the classdata for Line chart
+                class_chart.data.labels = data1.calender_labels;
+                class_chart.data.datasets[0].data = data1.calender_present;
+                class_chart.data.datasets[1].data = data1.calender_absent;
+                class_chart.update();
                 // Updating the data for Bar chart
-                classwise_chart.data.labels = data1.labels;
-                classwise_chart.data.datasets[0].data = data1.present;
-                classwise_chart.data.datasets[1].data = data1.absent;
-                classwise_chart.update('show');
-            }
-        });
-        // Daily, weekly, monthly line chart data entry
-        var $calender_all = $("#calender-line-chart");
-        $.ajax({
-            headers: {
-                "X-CSRFTOKEN": "{{ csrf_token }}",
-            },
-            url: $calender_all.data("url"),
-            type: 'post',
-            success: function (data1) {
-                // Updating the data for Line chart
-                class_chart.data.labels = data1.labels;
-                class_chart.data.datasets[0].data = data1.present;
-                class_chart.data.datasets[1].data = data1.absent;
-                class_chart.update('show');
+                classwise_chart.data.labels = data1.classwise_labels;
+                classwise_chart.data.datasets[0].data = data1.classwise_present;
+                classwise_chart.data.datasets[1].data = data1.classwise_absent;
+                classwise_chart.update();
             }
         });
 
@@ -510,11 +447,12 @@
             });
         });
 
-        $(".classroom").click(function () {
-            $("#class_list .nav-item button").removeClass("active font-weight-bold");
-            $(this).addClass("active font-weight-bold");
-            var $class_id = $(this).data("classid");
+        $("#classroom_id, #datePicker, #subject_id").change(function () {
+            var $class_id = $("#classroom_id").val();
             var current_date = $('#datePicker').val();
+            var subject_id = $('#subject_id').val();
+            var calender_mode = $(".cur_none").attr("value");
+
             $.ajax({
                 headers: {
                     "X-CSRFTOKEN": "{{ csrf_token }}",
@@ -522,7 +460,12 @@
                 },
                 url: "{% url 'dashboard:all_data' %}",
                 type: 'post',
-                data: { 'class_id': $class_id, 'current_date': current_date },
+                data: {
+                    'class_id': $class_id,
+                    'current_date': current_date,
+                    'subject_id': subject_id,
+                    'calender_mode': calender_mode,
+                },
                 dataType: 'json',
                 success: function (data1) {
                     // Overall Totals
@@ -532,17 +475,68 @@
                     $("#tot_absent").html(data1.absent);
                     // Updating the percentage for particular classroom
                     mychart.data.datasets[0].data = data1.overall_perc;
-                    mychart.update('show');
+                    mychart.update();
+                    // Updating the classdata for Line chart
+                    class_chart.data.labels = data1.calender_labels;
+                    class_chart.data.datasets[0].data = data1.calender_present;
+                    class_chart.data.datasets[1].data = data1.calender_absent;
+                    class_chart.update();
+                    // Updating the data for Bar chart
+                    classwise_chart.data.labels = data1.classwise_labels;
+                    classwise_chart.data.datasets[0].data = data1.classwise_present;
+                    classwise_chart.data.datasets[1].data = data1.classwise_absent;
+                    classwise_chart.update();
                 }
             });
         });
+        // For Calender (Week + Month)
+        // Daily, weekly, monthly line chart data entry
+        $(".calender_wise").click(function () {
+            if ($(this).hasClass("cur_pointer")) {
+                var class_id = $("#classroom_id").val();
+                var current_date = $('#datePicker').val();
+                var subject_id = $('#subject_id').val();
+                var calender_mode = $(this).attr("value");
 
-        $("#class_all").click(function () {
-            $("#class_list .nav-item button").removeClass("active font-weight-bold");
-            $("#class_all").addClass("active font-weight-bold");
+                $.ajax({
+                    headers: {
+                        "X-CSRFTOKEN": "{{ csrf_token }}",
+                        'contentType': 'application/json;charset=utf-8',
+                    },
+                    url: "{% url 'dashboard:all_data' %}",
+                    type: 'post',
+                    data: {
+                        'class_id': class_id,
+                        'current_date': current_date,
+                        'subject_id': subject_id,
+                        'calender_mode': calender_mode,
+                        'calender': true
+                    },
+                    dataType: 'json',
+                    success: function (data1) {
+                        // Updating the classdata for Line chart
+                        class_chart.data.labels = data1.calender_labels;
+                        class_chart.data.datasets[0].data = data1.calender_present;
+                        class_chart.data.datasets[1].data = data1.calender_absent;
+                        class_chart.update();
+                    }
+                });
+                $(".calender_wise").removeClass("cur_none").addClass("cur_pointer");
+                $(this).removeClass("cur_pointer").addClass("cur_none");
+            }
 
-            location.reload();
         });
+        // Showing list of subject based on classroom
+        $("#classroom_id").change(function () {
+            // Enabling the subject based on the class
+            var $class_id = $("#classroom_id").val();
+            $(".subjects").addClass("d-none");
+            $(".clas" + $class_id).each(function () {
+                $(this).removeClass("d-none");
+            });
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
 
