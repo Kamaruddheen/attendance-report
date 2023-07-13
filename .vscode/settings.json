@@ -1,5 +1,15 @@
 {
     "terminal.integrated.cwd": "${workspaceFolder}/attendance/",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "path": "C:\\WINDOWS\\System32\\cmd.exe"
+        },
+        "Command Prompt": {
+            "icon": "terminal",
+            "path": "C:\\WINDOWS\\System32\\cmd.exe",
+            "args": []
+        }
+    },
     "liveSassCompile.settings.formats": [
         {
             "format": "expanded",

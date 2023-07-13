@@ -40,8 +40,8 @@
             "label": "launch-chrome",
             "type": "shell",
             "command": "chrome.exe http://localhost:8000/",
-            "options": {
-                "cwd": "C:\\Program Files (x86)\\Google\\Chrome\\Application"
+            "options": { //C:\Program Files\Google\Chrome\Application
+                "cwd": "C:\\Program Files\\Google\\Chrome\\Application"
             },
             "problemMatcher": [],
             "presentation": {
@@ -50,6 +50,48 @@
             "runOptions": {
                 "runOn": "folderOpen"
             }
+        },
+        // makemigrations
+        {
+            "label": "makemigrations",
+            "type": "shell",
+            "command": "python manage.py makemigrations",
+            "options": {
+                "cwd": "${workspaceFolder}/attendance/",
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            },
+        },
+        // migrate
+        {
+            "label": "migrate",
+            "type": "shell",
+            "command": "python manage.py migrate",
+            "options": {
+                "cwd": "${workspaceFolder}/attendance/",
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            },
+        },
+        // migrate
+        {
+            "label": "createsuperuser",
+            "type": "shell",
+            "command": "python manage.py",
+            "args": [
+                "createsuperuser"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/attendance/",
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            },
         },
         // [3 in 1] Short Cut Key : Ctrl + Shift + B
         {
