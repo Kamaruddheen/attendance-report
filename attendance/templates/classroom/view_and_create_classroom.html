@@ -28,6 +28,7 @@
 <article class="container w-100 h-100 p-0 px-md-3">
     <nav class="navbar navbar-expand-md p-0 pl-md-3">
         <section class="container-fluid justify-content-md-between justify-content-center">
+            {% if mylist %}
             <button type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static"
                 class="btn border_white btn-cust neu_icon text-dark align-self-center my-2 mr-md-2 order-1 order-md-0">
                 Create
@@ -59,6 +60,7 @@
                     </g>
                 </svg>
             </button>
+            {% endif %}
         </section>
     </nav>
 
@@ -136,8 +138,13 @@
     </article>
 
     {% else %}
-    <section class="h-75 w-100 d-flex justify-content-center align-items-center my-5 py-5 px-3 my-md-0 p-md-0">
-        <h2 class="text_d_blue">No Classrooms created yet..</h2>
+    <section
+        class="h-75 w-100 d-flex flex-column justify-content-center align-items-center my-5 py-5 px-3 my-md-0 p-md-0">
+        <h2 class="text_d_blue text-center">No Classroom created yet..</h2>&nbsp;
+        <button type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static"
+            class="btn border_white btn-cust neu_icon text-primary align-self-center">
+            Create Classroom
+        </button>
     </section>
     {% endif %}
 

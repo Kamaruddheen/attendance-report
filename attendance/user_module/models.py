@@ -22,6 +22,7 @@ class StaffModel(models.Model):
         on_delete=models.PROTECT,
         limit_choices_to=models.Q(user_type=2))
     is_hod = models.BooleanField(default=False)
+    
 
     class Meta:
         db_table = 'staff'

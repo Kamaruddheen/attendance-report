@@ -35,7 +35,9 @@ def CreateClass(request):
     mylist = zip(all_classrooms, files)
 
     # if no. of subjects is greater than the no. of images
-    if len(all_classrooms) > len(files):
+    if len(all_classrooms) == 0:
+        mylist = False
+    elif len(all_classrooms) > len(files):
         value = None
         value = len(all_classrooms) - len(files)
         for i in range(0, value):
