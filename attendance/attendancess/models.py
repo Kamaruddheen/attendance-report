@@ -11,12 +11,40 @@ hour_choices = (
     (5, 'V')
 )
 
+day_order_choices = (
+    (1, 'I'),
+    (2, 'II'),
+    (3, 'III'),
+    (4, 'IV'),
+    (5, 'V'),
+    (6, 'VI')
+)
+
+
+class DayOrderModel(models.Model):
+    order = models.PositiveIntegerField(choices=day_order_choices)
+    date = models.DateField()
+
+    class Meta:
+        db_table = 'dayorder'
+        verbose_name = 'Day Order'
+        verbose_name_plural = 'Day Orders'
+
+
+class LeaveDateModel(models.Model):
+    leave_date = models.DateField()
+    name = models.CharField(max_length=50, null=True, blank=True)
+    
+    class Meta:
+        db_table = 'leavedate'
+        verbose_name = 'Leave Date'
+        verbose_name_plural = 'Leave Dates'
+
 
 class AttendanceIdModel(models.Model):
     date = models.DateField()
     hour_fk = models.ForeignKey(HourModel, on_delete=models.CASCADE)
     subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE)
-
     status_choice = (('reject', 'Reject'),
                      ('cancel', 'Cancel'), ('calloff', 'Call Off'))
     status = models.CharField(max_length=10, choices=status_choice, blank=True)

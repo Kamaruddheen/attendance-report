@@ -4,19 +4,20 @@ from django.db import models
 
 from classroom.models import ClassroomModel
 
+sem_choice = (
+    (1, 'I'),
+    (2, 'II'),
+    (3, 'III'),
+    (4, 'IV'),
+    (5, 'V'),
+    (6, 'VI')
+)
+
 
 class HourModel(models.Model):
     name = models.CharField(max_length=50)  # Lang, EDC, SE, PCD...
     classroom = models.ForeignKey(ClassroomModel, on_delete=models.CASCADE)
-    sem_choice = (
-        (1, 'I'),
-        (2, 'II'),
-        (3, 'III'),
-        (4, 'IV'),
-        (5, 'V'),
-        (6, 'VI')
-    )
-    semester = models.CharField(max_length=20, choices=sem_choice)
+    semester = models.PositiveBigIntegerField(choices=sem_choice)
     hour_type = models.CharField(max_length=10, choices=(
         ('core', 'Core'), ('noncore', 'Non-Core'), ('sel', 'Selective'), ('lab', 'Lab')))
 

@@ -50,6 +50,11 @@
     </section>
     {% endfor %}
 </article>
+{% elif status %}
+<article class="h-75 w-100 d-flex justify-content-center align-items-center my-5 py-5 px-3 my-md-0 p-md-0">
+    <h2 class="text_d_blue">{{status}}</h2>
+</article>
+
 {% else %}
 <article class="d-flex flex-column flex-md-row pt-md-2">
     <small class="form-text pt-2 pl-md-5 text-muted d-flex justify-content-center justify-content-md-start">

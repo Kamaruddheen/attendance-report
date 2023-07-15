@@ -8,7 +8,7 @@ from django.contrib import messages
 import datetime
 from subject.models import SubjectModel, HourModel
 from timetable.models import TimetablesetModel, TimetableModel
-from attendancess.models import AttendanceModel, AttendanceIdModel
+from attendancess.models import AttendanceModel, AttendanceIdModel, DayOrderModel, LeaveDateModel
 from classroom.models import ClassroomModel
 
 
@@ -26,20 +26,49 @@ class ClassesView(LoginRequiredMixin, View):
             # Getting the date from user
             date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
 
-        # Finding the Day
-        day = date.strftime("%A")
+        # checks for leave
+        if LeaveDateModel.objects.filter(leave_date=date).exists():
+            leave = LeaveDateModel.objects.get(leave_date=date)
+            date = date.strftime("%Y-%m-%d")
+            request.session['date'] = date
+            context = {
+                "status": leave.name,
+                "date": date
+            }
+            return render(request, 'attendancess/classes.html', context)
 
-        days = {
-            "Sunday": 0,
-            "Monday": 1,
-            "Tuesday": 2,
-            "Wednesday": 3,
-            "Thursday": 4,
-            "Friday": 5,
-            "Saturday": 6
-        }
-        # Setting day for backend purpose
-        day = days[day]
+        if not DayOrderModel.objects.filter(date=date).exists():
+            prev = date - datetime.timedelta(days=1)
+            # * checks the date is leave or not and also checks the continuous previous leave dates bringing the previous date to last working date
+            while prev:
+                if LeaveDateModel.objects.filter(leave_date=prev).exists():
+                    prev -= datetime.timedelta(days=1)
+                else:
+                    # * found a working date
+                    break
+
+            if not DayOrderModel.objects.filter(date=prev).exists():
+                # No Previous Day so no attendance today
+                messages.error(
+                    request, 'Try contacting your admin... Attendance Date are not entered properly')
+                date = date.strftime("%Y-%m-%d")
+                request.session['date'] = date
+                context = {
+                    "status": "Day order not entered for this date",
+                    "date": date
+                }
+                return render(request, 'attendancess/classes.html', context)
+            else:
+                # Once previous working date is found will day order, then today will be updated
+                day_obj = DayOrderModel.objects.latest('date')
+                tmp = day_obj.order + 1
+                if day_obj.order == 6:
+                    tmp = 1
+                DayOrderModel.objects.update_or_create(
+                    date=date, order=tmp)
+
+        # Finding day order
+        day = DayOrderModel.objects.get(date=date)
 
         # Get all the active time tables and extract the classes
         active_sets = []
@@ -61,7 +90,7 @@ class ClassesView(LoginRequiredMixin, View):
 
         # active_sets are in TimetableSet filter of Timetablemodel
         classes.append(TimetableModel.objects.filter(
-            set_name__in=active_sets, day=day, subject__id__in=tuple(sub_id)).order_by('hour'))
+            set_name__in=active_sets, day=day.order, subject__id__in=tuple(sub_id)).order_by('hour'))
 
         date = date.strftime("%Y-%m-%d")
         request.session['date'] = date
