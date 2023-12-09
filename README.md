@@ -1,14 +1,49 @@
-## **Basic SetUp**
+# Student Attendance Management System (SAMS)
 
-| Done ✅                 | Not Done  ❌        |
-| ---------------------- | ------------------ |
-| Index  Page            | DB - PostgreSQL    |
-| User Module(user_type) | Classroom module   |
-| Templates              | timetable module   |
-| Static (SetUp)         | attendance module  |
-| Settings (updated)     | stu & staff module |
+Digitally tracks student attendance across any number of courses and classrooms. Automates timetable creation and attendance recording to save teachers time. Intuitive neumorphic UI design provides administrators, staff and students with accessible visibility. Manage schedules and attendance without hassle.
 
-## **Getting Started**
+## Key Features
+
+- Record and track daily student attendance 
+- Multiple user roles with different permissions (admins, teachers, student)
+- Modern, visually appealing Neumorphic UI design
+
+## Tools & Technologies
+
+### Frontend:
+
+<a src="https://www.w3schools.com/html/"><img src="https://img.icons8.com/color/48/000000/html-5.png"/></a>
+<a src="https://www.w3schools.com/css/"><img src="https://img.icons8.com/color/48/000000/css3.png"/></a>
+<a src="https://www.javascript.com/"><img style="border-radius:50%;" src="https://img.icons8.com/color/48/000000/javascript.png"/></a>
+<a src="https://sass-lang.com/">&nbsp;<img height="40" src="https://sass-lang.com/assets/img/logos/logo.svg"/></a>
+<a src="https://github.com/"><img src="https://img.icons8.com/color/48/000000/github--v1.png"/></a>
+
+### Framework & Library
+
+<a src="https://getbootstrap.com/"><img src="https://img.icons8.com/color/48/000000/bootstrap.png"/></a>
+<a src="https://www.djangoproject.com/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/27804"/></a>
+<a src="https://jquery.com/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/70142"/></a>
+<a src="https://api.jquery.com/jQuery.ajax/">&nbsp;<img style="border-radius:50%;" height="45" src="https://raw.githubusercontent.com/github/explore/8be26d91eb231fec0b8856359979ac09f27173fd/topics/ajax/ajax.png"/></a>
+<a src="https://www.chartjs.org/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/10342521"/></a>
+
+### Backend:
+
+<a src="https://www.python.org/"><img src="https://img.icons8.com/color/48/000000/python.png"/></a>
+<a src="https://sqlite.org/">&nbsp;<img style="border-radius:10%;" height="45" src="https://avatars.githubusercontent.com/u/48680494"/></a>
+
+## Usage
+
+The application has three core user interfaces:
+
+**Admin Panel:** Allows administrative users to configure system settings and manage other users. Can generate timetables and review attendance metrics.
+
+**Teacher Portal:** Teachers can take attendance for each class and submit it to the system. Review class rosters and download attendance reports.  
+
+**Student View:** Students are able to view their personal attendance record for all classes along with their schedule.
+
+## Getting Started
+
+### To run locally
 
 Once you downloaded project, Run this following command
 ```
@@ -18,7 +53,10 @@ Next
 ```
 python manage.py runserver
 ```
-In order to start livereload, run below command in first terminal
+
+(Optional) 
+
+In order to start livereload, run below command in first terminal 
 ```
 python manage.py livereload
 ```
@@ -28,21 +66,35 @@ python manage.py runserver
 ```
 Then, Go to: https://localhost:8000 or http://127.0.0.1:8000
 
-## **Authentication Details**
+### Login Credentials
+
+The easiest way to test the system is to login with the demo accounts:
+
  - #### Admin Account(type 1)
     - username : testadmin
     - password : testpass
+
  - #### Hod Account(type 2)
     - username : hod1
     - password : Testpass123
     
  - #### Staff accounts
-    - username : All Normal Staff account
+    - username : --all staff account--
     - password : teststaff
 
- - #### Student accounts
-    <!-- - username : 18BCM552	
+<!-- - #### Student accounts
+     - username : 18BCM552	
     - password : test4321
 
     - username : 18BCM516
     - password : test4321 -->
+
+## Contributing
+
+Pull requests are welcome! Feel free to browse open issues to find areas for improvement.
+
+## Authors
+
+<a href="https://github.com/Kamaruddheen/attendance-report/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Kamaruddheen/attendance-report" />
+</a>
