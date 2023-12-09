@@ -1,5 +1,7 @@
 # Python bytecode files can be omitted
 *.pyc
+# virtual environment
+.venv
 # Vscode custom settings
 .vscode
 *.json
