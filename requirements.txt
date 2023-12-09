@@ -2,6 +2,15 @@ django==3.1.1
 django-crispy-forms==1.9.2
 # livereload not for production
 django-livereload-server==0.3.2
-django-extensions
+django-extensions==3.1.5
 django-formset-bootstrap==1.4.0.dev3	#temporary
 django-querysetsequence==0.14
+## The following requirements were added by pip freeze:
+asgiref==3.2.10
+beautifulsoup4==4.12.2
+pytz==2023.3.post1
+six==1.16.0
+soupsieve==2.5
+sqlparse==0.4.4
+tornado==6.4
+# psycopg2==2.9.9 # Postgres
