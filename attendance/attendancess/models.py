@@ -14,8 +14,9 @@ hour_choices = (
 
 class AttendanceIdModel(models.Model):
     date = models.DateField()
-    hour_fk = models.ForeignKey(HourModel, on_delete=models.CASCADE)
-    subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE)
+    # For now hour and subject allows null/blank
+    hour_fk = models.ForeignKey(HourModel, on_delete=models.CASCADE, blank=True, null=True)
+    subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE, blank=True, null=True)
 
     status_choice = (('reject', 'Reject'),
                      ('cancel', 'Cancel'), ('calloff', 'Call Off'))
