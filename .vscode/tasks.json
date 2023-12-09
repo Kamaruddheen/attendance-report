@@ -41,7 +41,7 @@
             "type": "shell",
             "command": "chrome.exe http://localhost:8000/",
             "options": {
-                "cwd": "C:\\Program Files (x86)\\Google\\Chrome\\Application"
+                "cwd": "C:\\Program Files\\Google\\Chrome\\Application"
             },
             "problemMatcher": [],
             "presentation": {
