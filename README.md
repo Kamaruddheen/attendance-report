@@ -10,17 +10,9 @@ Digitally tracks student attendance across any number of courses and classrooms.
 
 ## Tools & Technologies
 
-| Frontend | Backend |
-| -- | -- |
-| <a src="https://www.w3schools.com/html/"><img src="https://img.icons8.com/color/48/000000/html-5.png"/></a><a src="https://www.w3schools.com/css/"><img src="https://img.icons8.com/color/48/000000/css3.png"/></a><a src="https://www.javascript.com/"><img style="border-radius:50%;" src="https://img.icons8.com/color/48/000000/javascript.png"/></a><a src="https://sass-lang.com/">&nbsp;<img height="40" src="https://sass-lang.com/assets/img/logos/logo.svg"/></a><a src="https://github.com/"><img src="https://img.icons8.com/color/48/000000/github--v1.png"/></a> | <a src="https://www.python.org/"><img src="https://img.icons8.com/color/48/000000/python.png"/></a><a src="https://sqlite.org/">&nbsp;<img style="border-radius:10%;" height="45" src="https://avatars.githubusercontent.com/u/48680494"/></a> |
-
-#### **Framework & Library**
-
-<a src="https://getbootstrap.com/"><img src="https://img.icons8.com/color/48/000000/bootstrap.png"/></a>
-<a src="https://www.djangoproject.com/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/27804"/></a>
-<a src="https://jquery.com/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/70142"/></a>
-<a src="https://api.jquery.com/jQuery.ajax/">&nbsp;<img style="border-radius:50%;" height="45" src="https://raw.githubusercontent.com/github/explore/8be26d91eb231fec0b8856359979ac09f27173fd/topics/ajax/ajax.png"/></a>
-<a src="https://www.chartjs.org/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/10342521"/></a>
+| Frontend | Backend | Framework + Library |
+| -- | -- | -- |
+| <a src="https://www.w3schools.com/html/"><img src="https://img.icons8.com/color/48/000000/html-5.png"/></a><a src="https://www.w3schools.com/css/"><img src="https://img.icons8.com/color/48/000000/css3.png"/></a><a src="https://www.javascript.com/"><img style="border-radius:50%;" src="https://img.icons8.com/color/48/000000/javascript.png"/></a><a src="https://sass-lang.com/">&nbsp;<img height="40" src="https://sass-lang.com/assets/img/logos/logo.svg"/></a><a src="https://github.com/"><img src="https://img.icons8.com/color/48/000000/github--v1.png"/></a> | <a src="https://www.python.org/"><img src="https://img.icons8.com/color/48/000000/python.png"/></a><a src="https://sqlite.org/">&nbsp;<img style="border-radius:10%;" height="45" src="https://avatars.githubusercontent.com/u/48680494"/></a> | <a src="https://getbootstrap.com/"><img src="https://img.icons8.com/color/48/000000/bootstrap.png"/></a><a src="https://www.djangoproject.com/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/27804"/></a><a src="https://jquery.com/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/70142"/></a><a src="https://api.jquery.com/jQuery.ajax/">&nbsp;<img style="border-radius:50%;" height="45" src="https://raw.githubusercontent.com/github/explore/8be26d91eb231fec0b8856359979ac09f27173fd/topics/ajax/ajax.png"/></a><a src="https://www.chartjs.org/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/10342521"/></a> |
 
 ## Usage
 
