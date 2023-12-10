@@ -5,31 +5,22 @@ Digitally tracks student attendance across any number of courses and classrooms.
 ## Key Features
 
 - Record and track daily student attendance 
-- Multiple user roles with different permissions (admins, teachers, student)
-- Modern, visually appealing Neumorphic UI design
+- Multiple user roles with different permissions (admin, teachers and students)
+- Modern, visually appealing Neumorphism UI design
 
 ## Tools & Technologies
 
-### Frontend:
+| Frontend | Backend |
+| -- | -- |
+| <a src="https://www.w3schools.com/html/"><img src="https://img.icons8.com/color/48/000000/html-5.png"/></a><a src="https://www.w3schools.com/css/"><img src="https://img.icons8.com/color/48/000000/css3.png"/></a><a src="https://www.javascript.com/"><img style="border-radius:50%;" src="https://img.icons8.com/color/48/000000/javascript.png"/></a><a src="https://sass-lang.com/">&nbsp;<img height="40" src="https://sass-lang.com/assets/img/logos/logo.svg"/></a><a src="https://github.com/"><img src="https://img.icons8.com/color/48/000000/github--v1.png"/></a> | <a src="https://www.python.org/"><img src="https://img.icons8.com/color/48/000000/python.png"/></a><a src="https://sqlite.org/">&nbsp;<img style="border-radius:10%;" height="45" src="https://avatars.githubusercontent.com/u/48680494"/></a> |
 
-<a src="https://www.w3schools.com/html/"><img src="https://img.icons8.com/color/48/000000/html-5.png"/></a>
-<a src="https://www.w3schools.com/css/"><img src="https://img.icons8.com/color/48/000000/css3.png"/></a>
-<a src="https://www.javascript.com/"><img style="border-radius:50%;" src="https://img.icons8.com/color/48/000000/javascript.png"/></a>
-<a src="https://sass-lang.com/">&nbsp;<img height="40" src="https://sass-lang.com/assets/img/logos/logo.svg"/></a>
-<a src="https://github.com/"><img src="https://img.icons8.com/color/48/000000/github--v1.png"/></a>
-
-### Framework & Library
+#### **Framework & Library**
 
 <a src="https://getbootstrap.com/"><img src="https://img.icons8.com/color/48/000000/bootstrap.png"/></a>
 <a src="https://www.djangoproject.com/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/27804"/></a>
 <a src="https://jquery.com/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/70142"/></a>
 <a src="https://api.jquery.com/jQuery.ajax/">&nbsp;<img style="border-radius:50%;" height="45" src="https://raw.githubusercontent.com/github/explore/8be26d91eb231fec0b8856359979ac09f27173fd/topics/ajax/ajax.png"/></a>
 <a src="https://www.chartjs.org/">&nbsp;<img height="45" src="https://avatars.githubusercontent.com/u/10342521"/></a>
-
-### Backend:
-
-<a src="https://www.python.org/"><img src="https://img.icons8.com/color/48/000000/python.png"/></a>
-<a src="https://sqlite.org/">&nbsp;<img style="border-radius:10%;" height="45" src="https://avatars.githubusercontent.com/u/48680494"/></a>
 
 ## Usage
 
@@ -68,19 +59,12 @@ Then, Go to: https://localhost:8000 or http://127.0.0.1:8000
 
 ### Login Credentials
 
-The easiest way to test the system is to login with the demo accounts:
+The easiest way to test the application is to login with the demo accounts:
 
- - #### Admin Account(type 1)
-    - username : testadmin
-    - password : testpass
-
- - #### Hod Account(type 2)
-    - username : hod1
-    - password : Testpass123
-    
- - #### Staff accounts
-    - username : --all staff account--
-    - password : teststaff
+| Account | Admin | Hod | Staff |
+|--|--|--|--|
+|Username| testadmin | hod1 | --all staff account-- |
+|Password| testpass | Testpass123 | teststaff |
 
 <!-- - #### Student accounts
      - username : 18BCM552	
@@ -89,11 +73,9 @@ The easiest way to test the system is to login with the demo accounts:
     - username : 18BCM516
     - password : test4321 -->
 
-## Contributing
+## Contributions
 
 Pull requests are welcome! Feel free to browse open issues to find areas for improvement.
-
-## Authors
 
 <a href="https://github.com/Kamaruddheen/attendance-report/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Kamaruddheen/attendance-report" />
