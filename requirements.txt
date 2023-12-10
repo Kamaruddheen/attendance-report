@@ -6,7 +6,8 @@ django-extensions==3.1.5
 django-formset-bootstrap==1.4.0.dev3
 django-livereload-server==0.3.2
 django-querysetsequence==0.14
-psycopg2==2.9.9
+# psycopg2==2.9.9
+psycopg2-binary==2.9.9
 python-dotenv==1.0.0
 pytz==2023.3.post1
 six==1.16.0
