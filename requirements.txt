@@ -13,4 +13,4 @@ six==1.16.0
 soupsieve==2.5
 sqlparse==0.4.4
 tornado==6.4
-# psycopg2==2.9.9 # Postgres
+psycopg2==2.9.9 # Postgres
