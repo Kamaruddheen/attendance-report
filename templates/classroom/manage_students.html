@@ -1,3 +1,4 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
@@ -5,214 +6,191 @@
 <title>SAMS | List of Students</title>
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block head %}
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <style>
-	/* Custom CSS */
-	#app .table td {
-		border-color: #ffffff;
-		vertical-align: middle !important;
-	}
+    /* Custom CSS */
+    #app .table td {
+        border-color: #ffffff;
+        vertical-align: middle !important;
+    }
 
-	#app .table th {
-		border: 0;
-	}
+    #app .table th {
+        border: 0;
+    }
 
-	#main_content {
-		overflow-x: auto;
-	}
+    #main_content {
+        overflow-x: auto;
+    }
 </style>
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block content %}
-
 
 {% if request.user.staffmodel.is_hod or class_obj.tutor == request.user %}
 <div class="text-center text_d_blue arvo mb-3">
-	<h3 class="m-0">Manage Student Details</h3>
+    <h3 class="m-0">Manage Student Details</h3>
 </div>
 <div class="row d-flex justify-content-center justify-content-md-start my-3 mx-0 ml-md-3 ml-lg-4">
-	<a class="btn border_white btn-cust neu_icon text-primary align-self-center"
-		href="{% url 'classroom:add_students' class_obj.id %}">Add Students</a>
+    <a class="btn border_white btn-cust neu_icon text-primary align-self-center" href="{% url 'classroom:add_students' class_obj.id %}">Add Students</a>
 </div>
 {% else %}
 <div class="text-center text_d_blue arvo mb-3">
-	<h3 class="m-0">Students</h3>
+    <h3 class="m-0">Students</h3>
 </div>
 {% endif %}
 <section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 my-3 mt-md-0">
-	<h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
-		Classroom :
-	</h5>
-	<h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-		{{ class_obj }}
-	</h5>
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">Classroom :</h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">{{ class_obj }}</h5>
 </section>
 <section class="container">
-	<div data-simplebar class="table-responsive table_wrapper table_box_shadow border_white" id="app">
-		<table class="table my-1 my-md-2">
-			<thead>
-				<tr class="text-center text_d_blue">
-					<th scope="col" class="upper_case">Roll</th>
-					<th scope="col" class="upper_case">First&nbsp;Name</th>
-					<th scope="col" class="upper_case">Last&nbsp;Name</th>
-					<th scope="col" class="upper_case">Email</th>
-					{% if request.user.staffmodel.is_hod or class_obj.tutor == request.user %}
-					<th scope="col" class="upper_case" colspan="2">Options</th>
-					{% endif %}
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="(s,index) in student" scope="row" class="text-center">
-					<td>
-						<span v-if="!s.edit">[[ s.username ]]</span>
-						<input v-else type="text" name="username"
-							class="form-control input_cust transition_4s capitalize" v-model="s.username"
-							v-bind:class="{'is-invalid': s.username_error}" v-bind:disabled="!s.edit">
-						<div class="invalid-feedback"><strong>[[ s.username_error_msg ]]</strong></div>
-					</td>
-					<td>
-						<span v-if="!s.edit">[[ s.first_name ]]</span>
-						<input v-else type="text" name="first_name" class="form-control input_cust transition_4s"
-							v-model="s.first_name" v-bind:class="{'is-invalid': s.first_name_error}"
-							v-bind:disabled="!s.edit">
-						<div class="invalid-feedback"><strong>[[ s.first_name_error_msg ]]</strong></div>
-					</td>
-					<td>
-						<span v-if="!s.edit">[[ s.last_name ]]</span>
-						<input v-else type="text" name="last_name" class="form-control input_cust transition_4s"
-							v-model="s.last_name" v-bind:class="{'is-invalid': s.last_name_error}"
-							v-bind:disabled="!s.edit">
-						<div class="invalid-feedback"><strong>[[ s.last_name_error_msg ]]</strong></div>
-					</td>
-					<td>
-						<span v-if="!s.edit">[[ s.email ]]</span>
-						<input v-else type="text" name="email" class="form-control input_cust transition_4s"
-							v-model="s.email" v-bind:class="{'is-invalid': s.email_error}" v-bind:disabled="!s.edit">
-						<div class="invalid-feedback"><strong>[[ s.email_error_msg ]]</strong></div>
-					</td>
-					{% if request.user.staffmodel.is_hod or class_obj.tutor == request.user %}
-					<td class="text-right">
-						<button class="btn border_white btn-cust neu_icon text-success align-self-center"
-							v-bind:key="s.id" v-on:click="ajax_update(index)" v-if="s.edit">Update</button>
-						<button class="btn border_white btn-cust neu_icon text-success align-self-center"
-							v-bind:key="s.id" v-on:click="toggle_edit(index)" v-else>Edit</button>
-					</td>
-					<td class="text-left">
-						<button class="btn border_white btn-cust neu_icon text-danger align-self-center"
-							data-toggle="modal" v-bind:data-target="'#confirm_delete_student_'+index">Delete</button>
-						<div class="modal fade" v-bind:id="'confirm_delete_student_'+index">
-							<div class="modal-dialog modal-dialog-centered">
-								<div class="modal-content border_white modal_box_shadow">
-									<form class="form" method="POST">
-										<div class="modal-header ml-1 text_d_blue border_color_white">
-											<h3 class="modal-title">Confirm&nbsp;Delete&nbsp;Student</h3>
-											<button type="button" class="close btn-cust pr-4 pt-4"
-												data-dismiss="modal">&times;</button>
-										</div>
-										<div class="modal-body text-center">
-											Are you sure you want to delete [[s.username]]?<br>Instead you can edit the
-											username.
-											<input type="text" name="username" hidden v-model="s.username">
-											{% csrf_token %}
-										</div>
-										<div class="modal-footer border_color_white">
-											<div class="col-12 d-flex justify-content-end">
-												<input type="submit" value="Yes, Delete"
-													class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
-												<button
-													class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2"
-													data-dismiss="modal" type="button">Cancel</button>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</td>
-					{% endif %}
-				</tr>
-			</tbody>
-		</table>
-	</div>
+    <div data-simplebar class="table-responsive table_wrapper table_box_shadow border_white" id="app">
+        <table class="table my-1 my-md-2">
+            <thead>
+                <tr class="text-center text_d_blue">
+                    <th scope="col" class="upper_case">Roll</th>
+                    <th scope="col" class="upper_case">First&nbsp;Name</th>
+                    <th scope="col" class="upper_case">Last&nbsp;Name</th>
+                    <th scope="col" class="upper_case">Email</th>
+                    {% if request.user.staffmodel.is_hod or class_obj.tutor == request.user %}
+                    <th scope="col" class="upper_case" colspan="2">Options</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(s,index) in student" scope="row" class="text-center">
+                    <td>
+                        <span v-if="!s.edit">[[ s.username ]]</span>
+                        <input v-else type="text" name="username" class="form-control input_cust transition_4s capitalize" v-model="s.username" v-bind:class="{'is-invalid': s.username_error}" v-bind:disabled="!s.edit" />
+                        <div class="invalid-feedback"><strong>[[ s.username_error_msg ]]</strong></div>
+                    </td>
+                    <td>
+                        <span v-if="!s.edit">[[ s.first_name ]]</span>
+                        <input v-else type="text" name="first_name" class="form-control input_cust transition_4s" v-model="s.first_name" v-bind:class="{'is-invalid': s.first_name_error}" v-bind:disabled="!s.edit" />
+                        <div class="invalid-feedback"><strong>[[ s.first_name_error_msg ]]</strong></div>
+                    </td>
+                    <td>
+                        <span v-if="!s.edit">[[ s.last_name ]]</span>
+                        <input v-else type="text" name="last_name" class="form-control input_cust transition_4s" v-model="s.last_name" v-bind:class="{'is-invalid': s.last_name_error}" v-bind:disabled="!s.edit" />
+                        <div class="invalid-feedback"><strong>[[ s.last_name_error_msg ]]</strong></div>
+                    </td>
+                    <td>
+                        <span v-if="!s.edit">[[ s.email ]]</span>
+                        <input v-else type="text" name="email" class="form-control input_cust transition_4s" v-model="s.email" v-bind:class="{'is-invalid': s.email_error}" v-bind:disabled="!s.edit" />
+                        <div class="invalid-feedback"><strong>[[ s.email_error_msg ]]</strong></div>
+                    </td>
+                    {% if request.user.staffmodel.is_hod or class_obj.tutor == request.user %}
+                    <td class="text-right">
+                        <button class="btn border_white btn-cust neu_icon text-success align-self-center" v-bind:key="s.id" v-on:click="ajax_update(index)" v-if="s.edit">Update</button>
+                        <button class="btn border_white btn-cust neu_icon text-success align-self-center" v-bind:key="s.id" v-on:click="toggle_edit(index)" v-else>Edit</button>
+                    </td>
+                    <td class="text-left">
+                        <button class="btn border_white btn-cust neu_icon text-danger align-self-center" data-toggle="modal" v-bind:data-target="'#confirm_delete_student_'+index">Delete</button>
+                        <div class="modal fade" v-bind:id="'confirm_delete_student_'+index">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content border_white modal_box_shadow">
+                                    <form class="form" method="POST">
+                                        <div class="modal-header ml-1 text_d_blue border_color_white">
+                                            <h3 class="modal-title">Confirm&nbsp;Delete&nbsp;Student</h3>
+                                            <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            Are you sure you want to delete [[s.username]]?<br />Instead you can edit the username.
+                                            <input type="text" name="username" hidden v-model="s.username" />
+                                            {% csrf_token %}
+                                        </div>
+                                        <div class="modal-footer border_color_white">
+                                            <div class="col-12 d-flex justify-content-end">
+                                                <input type="submit" value="Yes, Delete" class="btn border_white btn-cust neu_icon text-success align-self-center mr-2" />
+                                                <button class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2" data-dismiss="modal" type="button">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 
 <script type="text/javascript">
-	$(document).ready(function () {
-		var stud_obj = '{{ stds_obj|safe }}';
-		stud_obj = JSON.parse(stud_obj);
-		var app = new Vue({
-			el: '#app',
-			delimiters: ['[[', ']]'],
-			data: {
-				message: 'Hello Vue!',
-				student: stud_obj,
-			},
-			methods: {
-				toggle_edit: function (index) {
-					this.student[index].edit = !this.student[index].edit;
-				},
-				ajax_update: function (index) {
-					$.ajax({
-						url: "{% url 'classroom:update_student' class_obj.id %}",
-						type: "POST",
-						headers: { 'X-CSRFToken': '{{ csrf_token }}' },
-						data: {
-							'obj': this.student[index],
-							'index': index,
-							'csrfmiddlewaretoken': "{{ csrf_token }}",
-						},
-						success: function (result, status) {
-							_index = parseInt(result.index)
-							if (result.valid) {
-								app.student[_index].username_error_msg = ""
-								app.student[_index].username_error = false
-								app.student[_index].email_error_msg = ""
-								app.student[_index].email_error = false
-								app.student[_index].first_name_error_msg = ""
-								app.student[_index].first_name_error = false
-								app.student[_index].edit = false
-							}
-							else if (result.valid == false) {
-								result = JSON.parse(result.errors)
-								if (result.username) {
-									app.student[_index].username_error_msg = result.username[0].message
-									app.student[_index].username_error = true
-								}
-								else {
-									app.student[_index].username_error_msg = ""
-									app.student[_index].username_error = false
-								}
-								if (result.email) {
-									app.student[_index].email_error_msg = result.email[0].message
-									app.student[_index].email_error = true
-								}
-								else {
-									app.student[_index].email_error_msg = ""
-									app.student[_index].email_error = false
-								}
-								if (result.first_name) {
-									app.student[_index].first_name_error_msg = result.first_name[0].message
-									app.student[_index].first_name_error = true
-								}
-								else {
-									app.student[_index].first_name_error_msg = ""
-									app.student[_index].first_name_error = false
-								}
-							}
-						},
-						error: function (status) {
-							alert(status.responseJSON.status + ' Refresh and Try Again')
-							console.log(status);
-						},
-					});
-				},
-			},
-		});
+    $(document).ready(function () {
+        var stud_obj = "{{ stds_obj|safe }}";
+        stud_obj = JSON.parse(stud_obj);
+        var app = new Vue({
+            el: "#app",
+            delimiters: ["[[", "]]"],
+            data: {
+                message: "Hello Vue!",
+                student: stud_obj,
+            },
+            methods: {
+                toggle_edit: function (index) {
+                    this.student[index].edit = !this.student[index].edit;
+                },
+                ajax_update: function (index) {
+                    $.ajax({
+                        url: "{% url 'classroom:update_student' class_obj.id %}",
+                        type: "POST",
+                        headers: { "X-CSRFToken": "{{ csrf_token }}" },
+                        data: {
+                            obj: this.student[index],
+                            index: index,
+                            csrfmiddlewaretoken: "{{ csrf_token }}",
+                        },
+                        success: function (result, status) {
+                            _index = parseInt(result.index);
+                            if (result.valid) {
+                                app.student[_index].username_error_msg = "";
+                                app.student[_index].username_error = false;
+                                app.student[_index].email_error_msg = "";
+                                app.student[_index].email_error = false;
+                                app.student[_index].first_name_error_msg = "";
+                                app.student[_index].first_name_error = false;
+                                app.student[_index].edit = false;
+                            } else if (result.valid == false) {
+                                result = JSON.parse(result.errors);
+                                if (result.username) {
+                                    app.student[_index].username_error_msg = result.username[0].message;
+                                    app.student[_index].username_error = true;
+                                } else {
+                                    app.student[_index].username_error_msg = "";
+                                    app.student[_index].username_error = false;
+                                }
+                                if (result.email) {
+                                    app.student[_index].email_error_msg = result.email[0].message;
+                                    app.student[_index].email_error = true;
+                                } else {
+                                    app.student[_index].email_error_msg = "";
+                                    app.student[_index].email_error = false;
+                                }
+                                if (result.first_name) {
+                                    app.student[_index].first_name_error_msg = result.first_name[0].message;
+                                    app.student[_index].first_name_error = true;
+                                } else {
+                                    app.student[_index].first_name_error_msg = "";
+                                    app.student[_index].first_name_error = false;
+                                }
+                            }
+                        },
+                        error: function (status) {
+                            alert(status.responseJSON.status + " Refresh and Try Again");
+                            console.log(status);
+                        },
+                    });
+                },
+            },
+        });
 
-		$()
-	})
+        $();
+    });
 </script>
 
 {% endblock %}

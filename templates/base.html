@@ -2,264 +2,239 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  {% block title %}
-  {% endblock %}
-  <meta charset="utf-8">
-  <meta name="theme-color" content="#daeaf6">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Student Attendance Management System">
-  <link rel="icon" type="img/png" href="{% static 'img/profile.png' %}">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!-- Popper JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <!-- Bootstrap JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  <!-- Jquery Complete -->
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    <head>
+        <!-- prettier-ignore -->
+        {% block title %}
+        {% endblock %}
+        <meta charset="utf-8" />
+        <meta name="theme-color" content="#daeaf6" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Student Attendance Management System" />
+        <link rel="icon" type="img/png" href="{% static 'img/profile.png' %}" />
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <!-- Jquery Complete -->
+        <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
-  <!-- animate css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
-  <!-- Google Fonts : Karla + Arvo -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Arvo&family=Karla&display=swap" rel="stylesheet">
-  <!-- Bootstrap toggle-->
-  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
-    rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-  <!-- Simple Scroll Bar -->
-  <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css" />
-  <!--https://gitbrent.github.io/bootstrap4-toggle/-->
-  <!-- Custom Css -->
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-  {% block head %}
-  {% endblock %}
-</head>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
+        <!-- animate css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+        <!-- Google Fonts : Karla + Arvo -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Arvo&family=Karla&display=swap" rel="stylesheet" />
+        <!-- Bootstrap toggle-->
+        <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+        <!-- Simple Scroll Bar -->
+        <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css" />
+        <!--https://gitbrent.github.io/bootstrap4-toggle/-->
+        <!-- Custom Css -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+        <!-- prettier-ignore -->
+        {% block head %}
+        {% endblock %}
+    </head>
 
-<body>
-  <header>
-    {% include 'messages.html' %}
-    <!-- Navbar (Top) -->
-    {% include 'header.html' %}
-  </header>
+    <body>
+        <header>
+            {% include 'messages.html' %}
+            <!-- Navbar (Top) -->
+            {% include 'header.html' %}
+        </header>
 
-  <main>
-    <article class="container-fluid p-0 max_95">
-      <div class="d-flex flex-row mx-0">
-        <!-- Side Nav bar -->
-        <section id="left_side_bar" class="card metismenu p-0 m-md-2 animate__animated">
-          <!-- Left Side Bar - Detached -->
-          <ul class="p-0 side_bar">
-            <!-- Mobile View Menu -->
-            <div class="d-md-none">
-              <!-- Sidebar close button for mobile -->
-              <li class="list-group-item bg_d_blue border-0">
-                <span id="left_side_bar_close" class="float-right">
-                  <a href="#" class="text_l_bluish_white">
-                    <svg width="1.3em" height="1.3em" viewBox="0 0 320 512" class="bi bi-x" fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path fill="currentColor"
-                        d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z">
-                      </path>
-                    </svg>
-                  </a>
-                </span>
-              </li>
-              <li class="side_bar_title list-group mt-3">Account</li>
-              {% if user.is_authenticated %}
-              <li class="list-group">
-                <a href="{% url 'logout' %}" class="side_bar_link fill_d_blue">
-                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img"
-                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em" class="mr-2">
-                    <path fill="currentColor"
-                      d="M180 448H96c-53 0-96-43-96-96V160c0-53 43-96 96-96h84c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H96c-17.7 0-32 14.3-32 32v192c0 17.7 14.3 32 32 32h84c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm117.9-303.1l77.6 71.1H184c-13.3 0-24 10.7-24 24v32c0 13.3 10.7 24 24 24h191.5l-77.6 71.1c-10.1 9.2-10.4 25-.8 34.7l21.9 21.9c9.3 9.3 24.5 9.4 33.9.1l152-150.8c9.5-9.4 9.5-24.7 0-34.1L353 88.3c-9.4-9.3-24.5-9.3-33.9.1l-21.9 21.9c-9.7 9.6-9.3 25.4.7 34.6z">
-                    </path>
-                  </svg>
-                  LogOut
-                </a>
-              </li>
-              {% else %}
-              <li class="list-group">
-                <a href="{% url 'login' %}" class="side_bar_link fill_d_blue">
-                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img"
-                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em" class="mr-2">
-                    <path fill="currentColor"
-                      d="M137.2 110.3l21.9-21.9c9.3-9.3 24.5-9.4 33.9-.1L344.9 239c9.5 9.4 9.5 24.7 0 34.1L193 423.7c-9.4 9.3-24.5 9.3-33.9-.1l-21.9-21.9c-9.7-9.7-9.3-25.4.8-34.7l77.6-71.1H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h191.5l-77.6-71.1c-10-9.1-10.4-24.9-.7-34.5zM512 352V160c0-53-43-96-96-96h-84c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h84c17.7 0 32 14.3 32 32v192c0 17.7-14.3 32-32 32h-84c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h84c53 0 96-43 96-96z">
-                    </path>
-                  </svg>
-                  Login
-                </a>
-              </li>
-              {% endif %}
-            </div>
-            <!-- All View -->
-            <li class="side_bar_title list-group mt-md-3">Navigation</li>
-            <li class="list-group">
-              <a href="{% url 'homepage' %}" class="side_bar_link fill_d_blue">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img"
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em" class="mr-2">
-                  <path fill="currentColor"
-                    d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z">
-                  </path>
-                </svg>
-                Home
-              </a>
-            </li>
-            {% if user.is_authenticated %}
-            <li class="list-group">
-              <a href="{% url 'my_account' %}" class="side_bar_link fill_d_blue">
-                <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2" xmlns="http://www.w3.org/2000/svg">
-                  <g>
-                    <path
-                      d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
-                    <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    <path fill-rule="evenodd"
-                      d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" />
-                  </g>
-                </svg>
-                My&nbsp;Account
-              </a>
-            </li>
-            <li class="list-group">
-              <a href="{% url 'dashboard:view' %}" class="side_bar_link fill_d_blue">
-                <!-- dashboard logo 1 -->
-                <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2 d-"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z" />
-                </svg>
-                Dashboard
-              </a>
-            </li>
-            <li class="list-group">
-              <a href="{% url 'attendancess:classes' %}" class="side_bar_link fill_d_blue">
-                <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="ballot-check" role="img"
-                  xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 448 512" class="mr-2">
-                  <path fill="currentColor"
-                    d="M112 432h32c17.7 0 32-14.4 32-32v-32c0-17.6-14.3-32-32-32h-32c-17.7 0-32 14.4-32 32v32c0 17.6 14.3 32 32 32zm0-64h32v32h-32v-32zm0-192h32c17.7 0 32-14.4 32-32v-32c0-17.6-14.3-32-32-32h-32c-17.7 0-32 14.4-32 32v32c0 17.6 14.3 32 32 32zm0-64h32v32h-32v-32zM416 0H32C14.3 0 0 14.4 0 32v448c0 17.6 14.3 32 32 32h384c17.7 0 32-14.4 32-32V32c0-17.6-14.3-32-32-32zm0 480H32V32h384v448zM216 144h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0 128h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0 128h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm-97.4-113.6c2.1 2.1 5.5 2.1 7.6 0l64.2-63.6c2.1-2.1 2.1-5.5 0-7.6l-12.6-12.7c-2.1-2.1-5.5-2.1-7.6 0l-47.6 47.2-20.6-20.9c-2.1-2.1-5.5-2.1-7.6 0l-12.7 12.6c-2.1 2.1-2.1 5.5 0 7.6l36.9 37.4z">
-                  </path>
-                </svg>
-                Attendance
-              </a>
-            </li>
-            <li class="list-group">
-              <a href="{% url 'classroom:createclass' %}" class="side_bar_link fill_d_blue">
-                <svg aria-hidden=" true" focusable="false" data-prefix="fas" data-icon="users-class" role="img"
-                  xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 640 512" class="mr-2">
-                  <path fill="currentColor"
-                    d="M256 288c0 35.35 28.66 64 64 64 35.35 0 64-28.65 64-64s-28.65-64-64-64c-35.34 0-64 28.65-64 64zm224 0c0 35.35 28.66 64 64 64 35.35 0 64-28.65 64-64s-28.65-64-64-64c-35.34 0-64 28.65-64 64zM96 352c35.35 0 64-28.65 64-64s-28.65-64-64-64c-35.34 0-64 28.65-64 64s28.66 64 64 64zm480 32h-64c-35.34 0-64 28.65-64 64v32c0 17.67 14.33 32 32 32h128c17.67 0 32-14.33 32-32v-32c0-35.35-28.66-64-64-64zm-224 0h-64c-35.34 0-64 28.65-64 64v32c0 17.67 14.33 32 32 32h128c17.67 0 32-14.33 32-32v-32c0-35.35-28.66-64-64-64zm-224 0H64c-35.34 0-64 28.65-64 64v32c0 17.67 14.33 32 32 32h128c17.67 0 32-14.33 32-32v-32c0-35.35-28.66-64-64-64zM96 64h448v128c24.68 0 46.98 9.62 64 24.97V49.59C608 22.25 586.47 0 560 0H80C53.53 0 32 22.25 32 49.59v167.38C49.02 201.62 71.33 192 96 192V64z">
-                  </path>
-                </svg>
-                Classroom
-              </a>
-            </li>
-            <li class="list-group">
-              <a href="#" class="side_bar_link fill_d_blue">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="book-open" role="img"
-                  xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 576 512" class="mr-2">
-                  <path fill="currentColor"
-                    d="M542.22 32.05c-54.8 3.11-163.72 14.43-230.96 55.59-4.64 2.84-7.27 7.89-7.27 13.17v363.87c0 11.55 12.63 18.85 23.28 13.49 69.18-34.82 169.23-44.32 218.7-46.92 16.89-.89 30.02-14.43 30.02-30.66V62.75c.01-17.71-15.35-31.74-33.77-30.7zM264.73 87.64C197.5 46.48 88.58 35.17 33.78 32.05 15.36 31.01 0 45.04 0 62.75V400.6c0 16.24 13.13 29.78 30.02 30.66 49.49 2.6 149.59 12.11 218.77 46.95 10.62 5.35 23.21-1.94 23.21-13.46V100.63c0-5.29-2.62-10.14-7.27-12.99z">
-                  </path>
-                </svg>
-                Subject
-              </a>
-            </li>
-            <li class="list-group">
-              <a href="#" class="side_bar_link fill_d_blue">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-graduate" role="img"
-                  xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 448 512"
-                  class=" fa-user-graduate mr-2">
-                  <path fill="currentColor"
-                    d="M319.4 320.6L224 416l-95.4-95.4C57.1 323.7 0 382.2 0 454.4v9.6c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-9.6c0-72.2-57.1-130.7-128.6-133.8zM13.6 79.8l6.4 1.5v58.4c-7 4.2-12 11.5-12 20.3 0 8.4 4.6 15.4 11.1 19.7L3.5 242c-1.7 6.9 2.1 14 7.6 14h41.8c5.5 0 9.3-7.1 7.6-14l-15.6-62.3C51.4 175.4 56 168.4 56 160c0-8.8-5-16.1-12-20.3V87.1l66 15.9c-8.6 17.2-14 36.4-14 57 0 70.7 57.3 128 128 128s128-57.3 128-128c0-20.6-5.3-39.8-14-57l96.3-23.2c18.2-4.4 18.2-27.1 0-31.5l-190.4-46c-13-3.1-26.7-3.1-39.7 0L13.6 48.2c-18.1 4.4-18.1 27.2 0 31.6z">
-                  </path>
-                </svg>
-                Student
-              </a>
-            </li>
-            <li class="list-group">
-              <a href="{% url 'view_all_staff' %}" class="side_bar_link fill_d_blue">
-                <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="chalkboard-teacher" role="img"
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em" height="1.2em" class="mr-2">
-                  <g class="fa-group">
-                    <path fill="currentColor"
-                      d="M640 49.59v316.82c0 27.34-21.53 49.59-48 49.59H343.79c-.9-2.53-1.86-5.05-2.9-7.54A144.52 144.52 0 0 0 298.51 352H576V64H224v49.1a127 127 0 0 0-59.46-17h-.33c-1.4 0-2.8-.08-4.21-.08V49.59C160 22.25 181.53 0 208 0h384c26.47 0 48 22.25 48 49.59z"
-                      class="fa-secondary"></path>
-                    <path fill="currentColor"
-                      d="M208 352a22.88 22.88 0 0 0-7.06 1.09A131.91 131.91 0 0 1 160 360a132 132 0 0 1-40.95-6.91 22.82 22.82 0 0 0-7-1.09A112 112 0 0 0 0 464.62C.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38A112 112 0 0 0 208 352zm-48-32a96 96 0 1 0-96-96 96 96 0 0 0 96 96zm64-256v49.09a129 129 0 0 1 26.51 20.4 128 128 0 0 1 0 181 132.13 132.13 0 0 1-10.14 9.14A143.89 143.89 0 0 1 298.51 352H384v-64h128v64h64V64z"
-                      class="fa-primary"></path>
-                  </g>
-                </svg>
-                Staffs
-              </a>
-            </li>
-            {% endif %}
-            <li class="list-group mb-3">
-              <a href="#" class="side_bar_link fill_d_blue">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="users" role="img"
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em" height="1.2em" class="mr-2">
-                  <path fill="currentColor"
-                    d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z">
-                  </path>
-                </svg>
-                About&nbsp;Us
-              </a>
-            </li>
-          </ul>
-        </section>
-        <!-- Overlay Effect -->
-        <div class="overlay d-md-none" id="overlay"></div>
-        <!-- Main Content Area -->
-        <section id="main_content" class="p-0 m-md-2">
-          {% block content %}
-          {% endblock %}
-        </section>
-      </div>
-    </article>
-  </main>
+        <main>
+            <article class="container-fluid p-0 max_95">
+                <div class="d-flex flex-row mx-0">
+                    <!-- Side Nav bar -->
+                    <section id="left_side_bar" class="card metismenu p-0 m-md-2 animate__animated">
+                        <!-- Left Side Bar - Detached -->
+                        <ul class="p-0 side_bar">
+                            <!-- Mobile View Menu -->
+                            <div class="d-md-none">
+                                <!-- Sidebar close button for mobile -->
+                                <li class="list-group-item bg_d_blue border-0">
+                                    <span id="left_side_bar_close" class="float-right">
+                                        <a href="#" class="text_l_bluish_white">
+                                            <svg width="1.3em" height="1.3em" viewBox="0 0 320 512" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill="currentColor" d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z"></path>
+                                            </svg>
+                                        </a>
+                                    </span>
+                                </li>
+                                <li class="side_bar_title list-group mt-3">Account</li>
+                                {% if user.is_authenticated %}
+                                <li class="list-group">
+                                    <a href="{% url 'logout' %}" class="side_bar_link fill_d_blue">
+                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em" class="mr-2">
+                                            <path fill="currentColor" d="M180 448H96c-53 0-96-43-96-96V160c0-53 43-96 96-96h84c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H96c-17.7 0-32 14.3-32 32v192c0 17.7 14.3 32 32 32h84c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm117.9-303.1l77.6 71.1H184c-13.3 0-24 10.7-24 24v32c0 13.3 10.7 24 24 24h191.5l-77.6 71.1c-10.1 9.2-10.4 25-.8 34.7l21.9 21.9c9.3 9.3 24.5 9.4 33.9.1l152-150.8c9.5-9.4 9.5-24.7 0-34.1L353 88.3c-9.4-9.3-24.5-9.3-33.9.1l-21.9 21.9c-9.7 9.6-9.3 25.4.7 34.6z"></path>
+                                        </svg>
+                                        LogOut
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li class="list-group">
+                                    <a href="{% url 'login' %}" class="side_bar_link fill_d_blue">
+                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em" class="mr-2">
+                                            <path fill="currentColor" d="M137.2 110.3l21.9-21.9c9.3-9.3 24.5-9.4 33.9-.1L344.9 239c9.5 9.4 9.5 24.7 0 34.1L193 423.7c-9.4 9.3-24.5 9.3-33.9-.1l-21.9-21.9c-9.7-9.7-9.3-25.4.8-34.7l77.6-71.1H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h191.5l-77.6-71.1c-10-9.1-10.4-24.9-.7-34.5zM512 352V160c0-53-43-96-96-96h-84c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h84c17.7 0 32 14.3 32 32v192c0 17.7-14.3 32-32 32h-84c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h84c53 0 96-43 96-96z"></path>
+                                        </svg>
+                                        Login
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </div>
+                            <!-- All View -->
+                            <li class="side_bar_title list-group mt-md-3">Navigation</li>
+                            <li class="list-group">
+                                <a href="{% url 'homepage' %}" class="side_bar_link fill_d_blue">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em" class="mr-2">
+                                        <path fill="currentColor" d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path>
+                                    </svg>
+                                    Home
+                                </a>
+                            </li>
+                            {% if user.is_authenticated %}
+                            <li class="list-group">
+                                <a href="{% url 'my_account' %}" class="side_bar_link fill_d_blue">
+                                    <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2" xmlns="http://www.w3.org/2000/svg">
+                                        <g>
+                                            <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
+                                            <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" />
+                                        </g>
+                                    </svg>
+                                    My&nbsp;Account
+                                </a>
+                            </li>
+                            <li class="list-group">
+                                <a href="{% url 'dashboard:view' %}" class="side_bar_link fill_d_blue">
+                                    <!-- dashboard logo 1 -->
+                                    <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2 d-" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z" />
+                                    </svg>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="list-group">
+                                <a href="{% url 'attendancess:classes' %}" class="side_bar_link fill_d_blue">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="ballot-check" role="img" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 448 512" class="mr-2">
+                                        <path
+                                            fill="currentColor"
+                                            d="M112 432h32c17.7 0 32-14.4 32-32v-32c0-17.6-14.3-32-32-32h-32c-17.7 0-32 14.4-32 32v32c0 17.6 14.3 32 32 32zm0-64h32v32h-32v-32zm0-192h32c17.7 0 32-14.4 32-32v-32c0-17.6-14.3-32-32-32h-32c-17.7 0-32 14.4-32 32v32c0 17.6 14.3 32 32 32zm0-64h32v32h-32v-32zM416 0H32C14.3 0 0 14.4 0 32v448c0 17.6 14.3 32 32 32h384c17.7 0 32-14.4 32-32V32c0-17.6-14.3-32-32-32zm0 480H32V32h384v448zM216 144h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0 128h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0 128h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm-97.4-113.6c2.1 2.1 5.5 2.1 7.6 0l64.2-63.6c2.1-2.1 2.1-5.5 0-7.6l-12.6-12.7c-2.1-2.1-5.5-2.1-7.6 0l-47.6 47.2-20.6-20.9c-2.1-2.1-5.5-2.1-7.6 0l-12.7 12.6c-2.1 2.1-2.1 5.5 0 7.6l36.9 37.4z"
+                                        ></path>
+                                    </svg>
+                                    Attendance
+                                </a>
+                            </li>
+                            <li class="list-group">
+                                <a href="{% url 'classroom:createclass' %}" class="side_bar_link fill_d_blue">
+                                    <svg aria-hidden=" true" focusable="false" data-prefix="fas" data-icon="users-class" role="img" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 640 512" class="mr-2">
+                                        <path
+                                            fill="currentColor"
+                                            d="M256 288c0 35.35 28.66 64 64 64 35.35 0 64-28.65 64-64s-28.65-64-64-64c-35.34 0-64 28.65-64 64zm224 0c0 35.35 28.66 64 64 64 35.35 0 64-28.65 64-64s-28.65-64-64-64c-35.34 0-64 28.65-64 64zM96 352c35.35 0 64-28.65 64-64s-28.65-64-64-64c-35.34 0-64 28.65-64 64s28.66 64 64 64zm480 32h-64c-35.34 0-64 28.65-64 64v32c0 17.67 14.33 32 32 32h128c17.67 0 32-14.33 32-32v-32c0-35.35-28.66-64-64-64zm-224 0h-64c-35.34 0-64 28.65-64 64v32c0 17.67 14.33 32 32 32h128c17.67 0 32-14.33 32-32v-32c0-35.35-28.66-64-64-64zm-224 0H64c-35.34 0-64 28.65-64 64v32c0 17.67 14.33 32 32 32h128c17.67 0 32-14.33 32-32v-32c0-35.35-28.66-64-64-64zM96 64h448v128c24.68 0 46.98 9.62 64 24.97V49.59C608 22.25 586.47 0 560 0H80C53.53 0 32 22.25 32 49.59v167.38C49.02 201.62 71.33 192 96 192V64z"
+                                        ></path>
+                                    </svg>
+                                    Classroom
+                                </a>
+                            </li>
+                            <li class="list-group">
+                                <a href="#" class="side_bar_link fill_d_blue">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="book-open" role="img" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 576 512" class="mr-2">
+                                        <path fill="currentColor" d="M542.22 32.05c-54.8 3.11-163.72 14.43-230.96 55.59-4.64 2.84-7.27 7.89-7.27 13.17v363.87c0 11.55 12.63 18.85 23.28 13.49 69.18-34.82 169.23-44.32 218.7-46.92 16.89-.89 30.02-14.43 30.02-30.66V62.75c.01-17.71-15.35-31.74-33.77-30.7zM264.73 87.64C197.5 46.48 88.58 35.17 33.78 32.05 15.36 31.01 0 45.04 0 62.75V400.6c0 16.24 13.13 29.78 30.02 30.66 49.49 2.6 149.59 12.11 218.77 46.95 10.62 5.35 23.21-1.94 23.21-13.46V100.63c0-5.29-2.62-10.14-7.27-12.99z"></path>
+                                    </svg>
+                                    Subject
+                                </a>
+                            </li>
+                            <li class="list-group">
+                                <a href="#" class="side_bar_link fill_d_blue">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-graduate" role="img" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 448 512" class="fa-user-graduate mr-2">
+                                        <path
+                                            fill="currentColor"
+                                            d="M319.4 320.6L224 416l-95.4-95.4C57.1 323.7 0 382.2 0 454.4v9.6c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-9.6c0-72.2-57.1-130.7-128.6-133.8zM13.6 79.8l6.4 1.5v58.4c-7 4.2-12 11.5-12 20.3 0 8.4 4.6 15.4 11.1 19.7L3.5 242c-1.7 6.9 2.1 14 7.6 14h41.8c5.5 0 9.3-7.1 7.6-14l-15.6-62.3C51.4 175.4 56 168.4 56 160c0-8.8-5-16.1-12-20.3V87.1l66 15.9c-8.6 17.2-14 36.4-14 57 0 70.7 57.3 128 128 128s128-57.3 128-128c0-20.6-5.3-39.8-14-57l96.3-23.2c18.2-4.4 18.2-27.1 0-31.5l-190.4-46c-13-3.1-26.7-3.1-39.7 0L13.6 48.2c-18.1 4.4-18.1 27.2 0 31.6z"
+                                        ></path>
+                                    </svg>
+                                    Student
+                                </a>
+                            </li>
+                            <li class="list-group">
+                                <a href="{% url 'view_all_staff' %}" class="side_bar_link fill_d_blue">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="chalkboard-teacher" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em" height="1.2em" class="mr-2">
+                                        <g class="fa-group">
+                                            <path fill="currentColor" d="M640 49.59v316.82c0 27.34-21.53 49.59-48 49.59H343.79c-.9-2.53-1.86-5.05-2.9-7.54A144.52 144.52 0 0 0 298.51 352H576V64H224v49.1a127 127 0 0 0-59.46-17h-.33c-1.4 0-2.8-.08-4.21-.08V49.59C160 22.25 181.53 0 208 0h384c26.47 0 48 22.25 48 49.59z" class="fa-secondary"></path>
+                                            <path fill="currentColor" d="M208 352a22.88 22.88 0 0 0-7.06 1.09A131.91 131.91 0 0 1 160 360a132 132 0 0 1-40.95-6.91 22.82 22.82 0 0 0-7-1.09A112 112 0 0 0 0 464.62C.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38A112 112 0 0 0 208 352zm-48-32a96 96 0 1 0-96-96 96 96 0 0 0 96 96zm64-256v49.09a129 129 0 0 1 26.51 20.4 128 128 0 0 1 0 181 132.13 132.13 0 0 1-10.14 9.14A143.89 143.89 0 0 1 298.51 352H384v-64h128v64h64V64z" class="fa-primary"></path>
+                                        </g>
+                                    </svg>
+                                    Staffs
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li class="list-group mb-3">
+                                <a href="#" class="side_bar_link fill_d_blue">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="users" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em" height="1.2em" class="mr-2">
+                                        <path
+                                            fill="currentColor"
+                                            d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"
+                                        ></path>
+                                    </svg>
+                                    About&nbsp;Us
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                    <!-- Overlay Effect -->
+                    <div class="overlay d-md-none" id="overlay"></div>
+                    <!-- Main Content Area -->
+                    <section id="main_content" class="p-0 m-md-2">
+                        <!-- prettier-ignore -->
+                        {% block content %}
+                        {% endblock %}
+                    </section>
+                </div>
+            </article>
+        </main>
 
-  <footer>
-    <!-- Footer -->
-    {% include 'footer.html' %}
-  </footer>
+        <footer>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+        </footer>
 
-  <script>
-    $(document).ready(function () {
+        <script>
+            $(document).ready(function () {
+                var $window = $(window),
+                    $html = $("html");
 
-      var $window = $(window), $html = $('html');
+                $window
+                    .resize(function resize() {
+                        if ($window.width() > 768) {
+                            return $("#left_side_bar").removeClass("animate__slideOutLeft").addClass("d-block");
+                        }
+                        $("#left_side_bar").addClass("animate__slideOutLeft").addClass("d-block");
+                        // $("#overlay").addClass("d-block").removeClass("d-none");
+                    })
+                    .trigger("resize");
 
-      $window.resize(function resize() {
-        if ($window.width() > 768) {
-          return $("#left_side_bar").removeClass("animate__slideOutLeft").addClass("d-block");
-        }
-        $("#left_side_bar").addClass("animate__slideOutLeft").addClass("d-block");
-        // $("#overlay").addClass("d-block").removeClass("d-none");
-      }).trigger('resize');
+                // While clicking Hamburger Button Icon in navigation
+                $("#btn_ham").click(function () {
+                    $("#left_side_bar").css("display", "block");
+                    $("#left_side_bar").removeClass("animate__slideOutLeft");
+                    $("#left_side_bar").addClass("animate__slideInLeft");
+                    $("#overlay").css("display", "block");
+                });
 
-      // While clicking Hamburger Button Icon in navigation
-      $("#btn_ham").click(function () {
-        $("#left_side_bar").css("display", "block");
-        $("#left_side_bar").removeClass("animate__slideOutLeft");
-        $("#left_side_bar").addClass("animate__slideInLeft");
-        $("#overlay").css("display", "block");
-      });
-
-      // closing side nav bar
-      $("#left_side_bar_close,#overlay").click(function () {
-        $("#left_side_bar").removeClass("animate__slideInLeft");
-        $("#left_side_bar").addClass("animate__slideOutLeft");
-        $("#overlay").css("display", "none");
-      });
-
-    });
-  </script>
-</body>
-
+                // closing side nav bar
+                $("#left_side_bar_close,#overlay").click(function () {
+                    $("#left_side_bar").removeClass("animate__slideInLeft");
+                    $("#left_side_bar").addClass("animate__slideOutLeft");
+                    $("#overlay").css("display", "none");
+                });
+            });
+        </script>
+    </body>
 </html>

@@ -1,3 +1,4 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -6,7 +7,9 @@
 <title>SAMS | Manage Timetable</title>
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block head %}
+
 <style>
     /* Custom CSS */
     #view_table .table td {
@@ -34,9 +37,12 @@
         overflow-x: auto;
     }
 </style>
+
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block content %}
+
 <section class="text-center text_d_blue arvo mt-3 mb-3 mt-md-0" style="margin-bottom: 35px;">
     <h1>Manage Timetable</h1>
 </section>
@@ -227,6 +233,7 @@
 
     });
 </script>
+
 {% endblock %}
 
 <!--$("td").each(function () {

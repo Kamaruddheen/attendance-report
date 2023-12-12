@@ -1,0 +1,6 @@
+{
+    "tabWidth": 4,
+    "printWidth": 600,
+    "html.format.wrapLineLength": 600,
+    "prettier.singleAttributePerLine": false
+}

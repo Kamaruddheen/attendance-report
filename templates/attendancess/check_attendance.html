@@ -1,10 +1,13 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %}
 
 {% block title %}
 <title>SAMS | Attendance | Attendance Report</title>
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block head %}
+
 <style>
     /* Custom CSS */
     #tab_res .table td {
@@ -15,48 +18,35 @@
         border: 0;
     }
 </style>
+
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block content %}
-<section class="text-center text_d_blue arvo mt-2 mb-3 mt-md-0" style="margin-bottom: 35px;">
+
+<section class="text-center text_d_blue arvo mt-2 mb-3 mt-md-0" style="margin-bottom: 35px">
     <h1>Attendance Report</h1>
     <small class="upper_case text-body">{{ date }}</small>
 </section>
 <section class="pl-md-5 d-flex flex-column flex-md-row pt-md-2 mt-md-0">
-    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
-        Classroom&nbsp;:
-    </h5>
-    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        {{ class_obj }}
-    </h5>
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">Classroom&nbsp;:</h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">{{ class_obj }}</h5>
 </section>
 <section class="pl-md-5 d-flex flex-column flex-md-row pt-md-2">
-    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
-        Subject :
-    </h5>
-    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        {{ attendance_id.subject.sub_name }} ({{ hour.hour.name|upper }})
-    </h5>
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">Subject :</h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">{{ attendance_id.subject.sub_name }} ({{ hour.hour.name|upper }})</h5>
 </section>
 <section class="ml-4 pl-md-4 d-flex flex-column flex-md-row pt-md-2">
-    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        Hour : {{ hour_number }}
-    </h5>
+    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">Hour : {{ hour_number }}</h5>
 </section>
 <section class="ml-4 pl-md-4 d-flex flex-column flex-md-row pt-md-2">
-    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        Total No. of Students : {{ total }}
-    </h5>
+    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">Total No. of Students : {{ total }}</h5>
 </section>
 <section class="ml-4 pl-md-4 d-flex flex-column flex-md-row pt-md-2">
-    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        Total No. of Present : {{ present }}
-    </h5>
+    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">Total No. of Present : {{ present }}</h5>
 </section>
 <section class="ml-4 pl-md-4 d-flex flex-column flex-md-row pt-md-2">
-    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        Total No. of Absent : {{ absent }}
-    </h5>
+    <h5 class="capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">Total No. of Absent : {{ absent }}</h5>
 </section>
 <section class="container px-0 px-md-5 mx-auto d-flex d-md-block justify-content-center">
     <div data-simplebar class="table-responsive table_wrapper table_box_shadow border_white my-3" id="tab_res">
@@ -69,22 +59,17 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- prettier-ignore -->
                 {% if data %}
                 {% for student in data %}
                 <tr scope="row" class="text-center text_d_blue">
-                    <td class="upper_case"> {{ forloop.counter }} </td>
-                    <td class="capitalize"> {{ student.rollno }} </td>
+                    <td class="upper_case">{{ forloop.counter }}</td>
+                    <td class="capitalize">{{ student.rollno }}</td>
                     <td>
-                        <span class="capitalize badge badge_box_shadow border_white
-                            {% if student.status == 'Present' %}
-                            text-success
-                            {% elif student.status == 'Absent' %}
-                            text-danger
-                            {% endif %}">
-                            {{ student.status }}
-                        </span>
+                        <span class="capitalize badge badge_box_shadow border_white {% if student.status == 'Present' %} text-success {% elif student.status == 'Absent' %} text-danger {% endif %}"> {{ student.status }} </span>
                     </td>
                 </tr>
+                <!-- prettier-ignore -->
                 {% endfor %}
                 {% else %}
                 <tr scope="row" class="text-center text_d_blue">
@@ -95,4 +80,5 @@
         </table>
     </div>
 </section>
+
 {% endblock %}
