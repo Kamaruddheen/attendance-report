@@ -1,3 +1,4 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -7,55 +8,41 @@
 <title>SAMS | Classroom | View and Create</title>
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block head %}
+
 <!-- Jquery UI -->
-<link href="http://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+<link href="http://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     // Change JQueryUI plugin names to fix name collision with Bootstrap.
-    $.widget.bridge('uitooltip', $.ui.tooltip);
-    $.widget.bridge('uibutton', $.ui.button);
+    $.widget.bridge("uitooltip", $.ui.tooltip);
+    $.widget.bridge("uibutton", $.ui.button);
 </script>
 <!-- Bootstrap JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <!-- Custom Css -->
-<link rel="stylesheet" type="text/css" href="{% static 'css/flip_card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/flip_card.css' %}" />
 <!-- Lazy Image Load -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> -->
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block content %}
+
 <article class="container w-100 h-100 p-0 px-md-3">
     <nav class="navbar navbar-expand-md p-0 pl-md-3">
         <section class="container-fluid justify-content-md-between justify-content-center">
-            <button type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static"
-                class="btn border_white btn-cust neu_icon text-dark align-self-center my-2 mr-md-2 order-1 order-md-0">
-                Create
-            </button>
-            <button type="button"
-                class="btn border_white btn-cust neu_icon text-success flex-row d-none d-md-block order-md-1"
-                id="drag-and-select" data-value="drag" value="drag" data-toggle="tooltip"
-                title="Drag and Select your classrooms to delete">
-                Select
-            </button>
+            <button type="button" data-toggle="modal" data-target="#create-class-modal" data-backdrop="static" class="btn border_white btn-cust neu_icon text-dark align-self-center my-2 mr-md-2 order-1 order-md-0">Create</button>
+            <button type="button" class="btn border_white btn-cust neu_icon text-success flex-row d-none d-md-block order-md-1" id="drag-and-select" data-value="drag" value="drag" data-toggle="tooltip" title="Drag and Select your classrooms to delete">Select</button>
             <div class="input-group mx-2 order-0 order-md-2">
-                <input type="text" class="form-control search_cust border_white w-75"
-                    placeholder="Search your classroom . . . ." id="search-class">
+                <input type="text" class="form-control search_cust border_white w-75" placeholder="Search your classroom . . . ." id="search-class" />
             </div>
-            <button type="button" class="btn border_white btn-cust neu_icon text-danger d-none d-md-block order-md-3"
-                id="delete-more-button" disabled>
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" role="img" id="delete-more"
-                    class="bi bi-trash" fill="currentColor" height="1.2em" viewBox="0 0 16 16" width="1.2em"
-                    data-toggle="tooltip" title="Delete more classes at once" data-placement="bottom"
-                    xmlns="http://www.w3.org/2000/svg">
+            <button type="button" class="btn border_white btn-cust neu_icon text-danger d-none d-md-block order-md-3" id="delete-more-button" disabled>
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" role="img" id="delete-more" class="bi bi-trash" fill="currentColor" height="1.2em" viewBox="0 0 16 16" width="1.2em" data-toggle="tooltip" title="Delete more classes at once" data-placement="bottom" xmlns="http://www.w3.org/2000/svg">
                     <g>
-                        <path
-                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z">
-                        </path>
-                        <path
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                            fill-rule="evenodd">
-                        </path>
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" fill-rule="evenodd"></path>
                     </g>
                 </svg>
             </button>
@@ -64,42 +51,34 @@
 
     {% if mylist %}
     <section class="form-check mx-4 pl-md-5 mt-1 d-none d-md-block">
-        <input type="checkbox" class="form-check-input" id="select-all" style="width: 18px;height: 18px;">
-        <label class="form-check-label font_size_normal ml-2 text-primary" for="select-all">
-            Select all
-        </label>
+        <input type="checkbox" class="form-check-input" id="select-all" style="width: 18px; height: 18px" />
+        <label class="form-check-label font_size_normal ml-2 text-primary" for="select-all"> Select all </label>
     </section>
     <article class="row mx-0 d-flex justify-content-center mt-md-4" id="selectable">
         {% for class,img in mylist %}
         <section class="flip-card my-2 my-sm-3 my-md-4 mx-4">
             <div class="card cards border-0">
-                <div class="card-front" class-obj="{{ class }}" class-id="{{ class.id }}" id="front{{ class.id }}"
-                    data-value="select">
+                <div class="card-front" class-obj="{{ class }}" class-id="{{ class.id }}" id="front{{ class.id }}" data-value="select">
                     <div class="card-header border-0 bg-transparent p-3">
                         {% with "img/classrooms/"|add:img|default:"classroom11.jpg" as image_static %}
-                        <img src="{% static image_static %}" class="card-img-top img_border_radius"
-                            alt="&nbsp;&nbsp;{{class|title }}">
+                        <img src="{% static image_static %}" class="card-img-top img_border_radius" alt="&nbsp;&nbsp;{{class|title }}" />
                         {% endwith %}
                     </div>
                     <div class="card-body py-0 pb-1 text_d_blue">
                         <h3 class="text-center font-weight-bold pb-1">
+                            <!-- prettier-ignore -->
                             {{class.get_year_display|upper}}
                             {{class.course|upper}}
-                            {{class.sec|upper}}</h3>
+                            {{class.sec|upper}}
+                        </h3>
                     </div>
                     <div class="card-footer d-flex flex-row border_color_white bg-transparent text_d_blue">
                         <h6 class="capitalize font_size_normal font-weight-bold mb-0">Tutor&nbsp;:</h6>
                         <h6 class="input-group capitalize font_size_normal ml-2 mb-0">
-                            <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="chalkboard-teacher"
-                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em"
-                                height="1.2em" class="mr-1 mr-md-2 text-body">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="chalkboard-teacher" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em" height="1.2em" class="mr-1 mr-md-2 text-body">
                                 <g class="fa-group">
-                                    <path fill="currentColor"
-                                        d="M640 49.59v316.82c0 27.34-21.53 49.59-48 49.59H343.79c-.9-2.53-1.86-5.05-2.9-7.54A144.52 144.52 0 0 0 298.51 352H576V64H224v49.1a127 127 0 0 0-59.46-17h-.33c-1.4 0-2.8-.08-4.21-.08V49.59C160 22.25 181.53 0 208 0h384c26.47 0 48 22.25 48 49.59z"
-                                        class="fa-secondary"></path>
-                                    <path fill="currentColor"
-                                        d="M208 352a22.88 22.88 0 0 0-7.06 1.09A131.91 131.91 0 0 1 160 360a132 132 0 0 1-40.95-6.91 22.82 22.82 0 0 0-7-1.09A112 112 0 0 0 0 464.62C.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38A112 112 0 0 0 208 352zm-48-32a96 96 0 1 0-96-96 96 96 0 0 0 96 96zm64-256v49.09a129 129 0 0 1 26.51 20.4 128 128 0 0 1 0 181 132.13 132.13 0 0 1-10.14 9.14A143.89 143.89 0 0 1 298.51 352H384v-64h128v64h64V64z"
-                                        class="fa-primary"></path>
+                                    <path fill="currentColor" d="M640 49.59v316.82c0 27.34-21.53 49.59-48 49.59H343.79c-.9-2.53-1.86-5.05-2.9-7.54A144.52 144.52 0 0 0 298.51 352H576V64H224v49.1a127 127 0 0 0-59.46-17h-.33c-1.4 0-2.8-.08-4.21-.08V49.59C160 22.25 181.53 0 208 0h384c26.47 0 48 22.25 48 49.59z" class="fa-secondary"></path>
+                                    <path fill="currentColor" d="M208 352a22.88 22.88 0 0 0-7.06 1.09A131.91 131.91 0 0 1 160 360a132 132 0 0 1-40.95-6.91 22.82 22.82 0 0 0-7-1.09A112 112 0 0 0 0 464.62C.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38A112 112 0 0 0 208 352zm-48-32a96 96 0 1 0-96-96 96 96 0 0 0 96 96zm64-256v49.09a129 129 0 0 1 26.51 20.4 128 128 0 0 1 0 181 132.13 132.13 0 0 1-10.14 9.14A143.89 143.89 0 0 1 298.51 352H384v-64h128v64h64V64z" class="fa-primary"></path>
                                 </g>
                             </svg>
                             {{ class.tutor }}
@@ -109,21 +88,13 @@
                 <div class="card-back pb-0" data-value="select" id="back{{ class.id }}" data-place="{{ class.id }}">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center h-100">
                         {% if request.user.staffmodel.is_hod or class.tutor == request.user %}
-                        <a href="{% url 'classroom:editclass' class.id %}" type="submit"
-                            class="btn border_white btn-cust neu_icon text-body align-self-center my-2  d-none d-md-block">
-                            Manage
-                        </a>
-                        <a type="submit"
-                            class="btn border_white btn-cust neu_icon text-danger align-self-center my-2  d-none d-md-block">
-                            Delete
-                        </a>
+                        <a href="{% url 'classroom:editclass' class.id %}" type="submit" class="btn border_white btn-cust neu_icon text-body align-self-center my-2 d-none d-md-block"> Manage </a>
+                        <a type="submit" class="btn border_white btn-cust neu_icon text-danger align-self-center my-2 d-none d-md-block"> Delete </a>
                         {% else %}
-                        <a href="{% url 'classroom:editclass' class.id %}" type="submit"
-                            class="btn border_white btn-cust neu_icon text-primary align-self-center my-2">
-                            View
-                        </a>
+                        <a href="{% url 'classroom:editclass' class.id %}" type="submit" class="btn border_white btn-cust neu_icon text-primary align-self-center my-2"> View </a>
                         {% endif %}
                         <small class="upper_case mt-3">
+                            <!-- prettier-ignore -->
                             {{class.get_year_display}}
                             {{class.course}}
                             {{class.sec}}
@@ -142,8 +113,7 @@
     {% endif %}
 
     <!--Modal to display create class form-->
-    <div class="modal fade" id="create-class-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-hidden="true">
+    <div class="modal fade" id="create-class-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border_white modal_box_shadow">
                 <div class="modal-header ml-1 text_d_blue border_color_white">
@@ -151,18 +121,16 @@
                     <button type="button" class="close btn-cust pr-4 pt-4" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form class="form needs-validation" method="POST" id="classroom_create_form"
-                        action="{% url 'classroom:createclass' %}" novalidate>
+                    <form class="form needs-validation" method="POST" id="classroom_create_form" action="{% url 'classroom:createclass' %}" novalidate>
+                        <!-- prettier-ignore -->
                         {% csrf_token %}
                         {{ form|crispy }}
                     </form>
                 </div>
                 <div class="modal-footer border_color_white">
                     <div class="col-12 d-flex justify-content-end">
-                        <input type="submit" value="Create" name="submit" form="classroom_create_form"
-                            class="btn border_white btn-cust neu_icon text-success align-self-center mr-2">
-                        <a href="{% url 'classroom:createclass' %}"
-                            class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2">Cancel</a>
+                        <input type="submit" value="Create" name="submit" form="classroom_create_form" class="btn border_white btn-cust neu_icon text-success align-self-center mr-2" />
+                        <a href="{% url 'classroom:createclass' %}" class="btn border_white btn-cust neu_icon text-warning align-self-center ml-2">Cancel</a>
                     </div>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -6,32 +7,32 @@
 <title>SAMS | Create Timetable Set</title>
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block head %}
+
 <style>
     #create_timetable_set_form label {
         color: #062743;
         font-size: 1.1rem;
-        font-family: 'arvo';
+        font-family: "arvo";
     }
 </style>
+
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block content %}
+
 <section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 justify-content-center my-3 mt-md-0">
-    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
-        Classroom :
-    </h5>
-    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        {{ c_object }}
-    </h5>
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">Classroom :</h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">{{ c_object }}</h5>
 </section>
 <div class="row d-flex justify-content-center align-items-center m-3 m-md-0 mb-md-4">
     <section class="container col-lg-6 col-xl-5 body_box_shadow border_white p-4 mx-md-3">
         <div class="text-center text_d_blue arvo my-4">
             <h3 class="m-0">Create&nbsp;Timetable Set Form</h3>
         </div>
-        <form method="POST" action="{% url 'timetable:createtimetableset' c_object.id %}"
-            id="create_timetable_set_form">
+        <form method="POST" action="{% url 'timetable:createtimetableset' c_object.id %}" id="create_timetable_set_form">
             {% csrf_token %}
             <div class="form-row">
                 {% if t_set.non_field_errors %}
@@ -41,27 +42,17 @@
                     </ul>
                 </div>
                 {% endif %}
+                <div class="form-group col-md-12">{{t_set.name|as_crispy_field}}</div>
+                <div class="form-group col-md-12">{{t_set.from_date|as_crispy_field}}</div>
+                <div class="form-group col-md-12">{{t_set.to_date|as_crispy_field}}</div>
                 <div class="form-group col-md-12">
-                    {{t_set.name|as_crispy_field}}
-                </div>
-                <div class="form-group col-md-12">
-                    {{t_set.from_date|as_crispy_field}}
-                </div>
-                <div class="form-group col-md-12">
-                    {{t_set.to_date|as_crispy_field}}
-                </div>
-                <div class="form-group col-md-12">
-                    <a href="{% url 'timetable:setchoose' c_object.id %}"
-                        class="btn border_white btn-cust neu_icon text-primary align-self-center float-left">Back to
-                        choosing set</a>
-                    <input type="submit"
-                        class="btn border_white btn-cust neu_icon text-success align-self-center float-right"
-                        value="Submit">
+                    <a href="{% url 'timetable:setchoose' c_object.id %}" class="btn border_white btn-cust neu_icon text-primary align-self-center float-left">Back to choosing set</a>
+                    <input type="submit" class="btn border_white btn-cust neu_icon text-success align-self-center float-right" value="Submit" />
                 </div>
             </div>
         </form>
     </section>
 </div>
-<a href="{% url 'classroom:editclass' c_object.id %}"
-    class="btn border_white btn-cust neu_icon text-primary align-self-center float-right">Back to classroom info</a>
+<a href="{% url 'classroom:editclass' c_object.id %}" class="btn border_white btn-cust neu_icon text-primary align-self-center float-right">Back to classroom info</a>
+
 {% endblock %}

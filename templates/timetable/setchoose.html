@@ -1,3 +1,4 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -6,57 +7,57 @@
 <title>SAMS | View Timetable</title>
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block head %}
+
 <style>
     #div_id_set_choose label {
         color: #062743;
         font-size: 1.1rem;
-        font-family: 'arvo';
+        font-family: "arvo";
         margin-top: 10px;
     }
 </style>
+
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block content %}
-<section class="text-center text_d_blue arvo mt-3 mb-3 mt-md-0" style="margin-bottom: 35px;">
+
+<section class="text-center text_d_blue arvo mt-3 mb-3 mt-md-0" style="margin-bottom: 35px">
     <h1>Timetable</h1>
     <small class="upper_case text-body">{{ date }}</small>
 </section>
 <section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2">
-    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
-        Classroom :
-    </h5>
-    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-        {{ c_object }}
-    </h5>
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">Classroom :</h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">{{ c_object }}</h5>
 </section>
 <section class="container d-flex flex-column flex-md-row mt-md-3 px-3" id="div_id_set_choose">
     {{choose_set_object|crispy}}
     <div class="my-3 mt-md-0 mx-auto mx-md-0 ml-md-auto">
-        <a href="{% url 'timetable:createtimetableset' c_object.id %}"
-            class="btn border_white btn-cust neu_icon text-primary align-self-center mx-2 mb-3">Create&nbsp;Set</a>
+        <a href="{% url 'timetable:createtimetableset' c_object.id %}" class="btn border_white btn-cust neu_icon text-primary align-self-center mx-2 mb-3">Create&nbsp;Set</a>
     </div>
 </section>
-<a href="{% url 'classroom:editclass' c_object.id %}"
-                        class="ml-2 btn border_white btn-cust neu_icon text-primary align-self-center">Back to classroom info</a>  
+<a href="{% url 'classroom:editclass' c_object.id %}" class="ml-2 btn border_white btn-cust neu_icon text-primary align-self-center">Back to classroom info</a>
 <section id="timetable-section" class="container"></section>
 
 <script>
     $(document).ready(function () {
         $("#id_choose_set").change(function () {
-            var set_id = $(this).val()
+            var set_id = $(this).val();
             $.ajax({
                 headers: {
                     "X-CSRFTOKEN": "{{ csrf_token }}",
                 },
                 url: "{% url 'timetable:showsubjects1' c_object.id 12345 %}".replace(12345, set_id.toString()),
                 //it should be an integer '12345 because of the inner django process which is unknown to users'
-                type: 'post',
+                type: "post",
                 success: function (response) {
-                    $('#timetable-section').html(response)
-                }
+                    $("#timetable-section").html(response);
+                },
             });
         });
     });
 </script>
+
 {% endblock %}

@@ -1,3 +1,4 @@
+<!-- prettier-ignore -->
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
@@ -6,82 +7,70 @@
 <title>SAMS | Create Hour & its Subject</title>
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block head %}
 
 <script src="{% static 'formset_bootstrap/js/jquery.formset.js' %}" type="text/javascript"></script>
 
 {% endblock %}
 
+<!-- prettier-ignore -->
 {% block content %}
+
 <section class="pl-md-4 d-flex flex-column flex-md-row pt-md-2 my-3 mt-md-0">
-	<h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">
-		Classroom&nbsp;:
-	</h5>
-	<h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">
-		{{ class_obj }}
-	</h5>
+    <h5 class="text-muted d-none d-md-flex justify-content-center justify-content-md-start">Classroom&nbsp;:</h5>
+    <h5 class="ml-2 capitalize text-muted text-muted d-flex justify-content-center justify-content-md-start">{{ class_obj }}</h5>
 </section>
 <section class="container px-md-4 pb-4 body_box_shadow border_white mx-md-3">
-	<div class="text-center text_d_blue arvo my-4">
-		<h3 class="m-0">Create&nbsp;Hour&nbsp;& Subject Form</h3>
-	</div>
-	<form class="container form needs-validation" method="POST" novalidate>
-		<section class="form-row">
-			<div class="form-group col-md-12 text_d_blue arvo upper_case">Hour Details&nbsp;:</div>
-			<div class="form-group col-md-6 pr-md-2">
-				{{ form.name|as_crispy_field }}
-			</div>
-			<div class="form-group col-md-6 pl-md-2">
-				{{ form.hour_type|as_crispy_field }}
-			</div>
-		</section>
-		{% csrf_token %}
-		{{ formset.management_form }}
-		{% for f in formset %}
-		<section id="{{ f.prefix }}-row" class="formset_i form-row">
-			<div class="form-group col-md-12 text_d_blue arvo upper_case">Subject Details&nbsp;:</div>
-			<div class="form-group col-md-6 pr-md-2">
-				{{ f.sub_name|as_crispy_field }}
-			</div>
-			<div class="form-group col-md-6 pl-md-2">
-				{{ f.handled_by|as_crispy_field }}
-			</div>
-		</section>
-		{% endfor %}
-		<button class="btn border_white btn-cust neu_icon text-success align-self-center" type="submit">
-			Submit
-		</button>
-	</form>
+    <div class="text-center text_d_blue arvo my-4">
+        <h3 class="m-0">Create&nbsp;Hour&nbsp;& Subject Form</h3>
+    </div>
+    <form class="container form needs-validation" method="POST" novalidate>
+        <section class="form-row">
+            <div class="form-group col-md-12 text_d_blue arvo upper_case">Hour Details&nbsp;:</div>
+            <div class="form-group col-md-6 pr-md-2">{{ form.name|as_crispy_field }}</div>
+            <div class="form-group col-md-6 pl-md-2">{{ form.hour_type|as_crispy_field }}</div>
+        </section>
+        <!-- prettier-ignore -->
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for f in formset %}
+        <section id="{{ f.prefix }}-row" class="formset_i form-row">
+            <div class="form-group col-md-12 text_d_blue arvo upper_case">Subject Details&nbsp;:</div>
+            <div class="form-group col-md-6 pr-md-2">{{ f.sub_name|as_crispy_field }}</div>
+            <div class="form-group col-md-6 pl-md-2">{{ f.handled_by|as_crispy_field }}</div>
+        </section>
+        {% endfor %}
+        <button class="btn border_white btn-cust neu_icon text-success align-self-center" type="submit">Submit</button>
+    </form>
 </section>
 
 <script type="text/javascript">
-	$(function () {
-		$('.formset_i').formset({
-			prefix: "{{ formset.prefix }}",
-		});
-	});
+    $(function () {
+        $(".formset_i").formset({
+            prefix: "{{ formset.prefix }}",
+        });
+    });
 
-	$(document).ready(function () {
-		$('[data-toggle="tooltip"]').tooltip();
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
 
-		$(".add-row").addClass("d-none btn border_white btn-cust neu_icon text-primary align-self-center capitalize");
-		$(".delete-row").addClass("btn border_white btn-cust neu_icon text-danger align-self-center mb-5 capitalize")
+        $(".add-row").addClass("d-none btn border_white btn-cust neu_icon text-primary align-self-center capitalize");
+        $(".delete-row").addClass("btn border_white btn-cust neu_icon text-danger align-self-center mb-5 capitalize");
 
-		$(".add-row").on('click', function () {
-			$(".delete-row").addClass("btn border_white btn-cust neu_icon text-danger align-self-center mb-5 capitalize")
-		});
+        $(".add-row").on("click", function () {
+            $(".delete-row").addClass("btn border_white btn-cust neu_icon text-danger align-self-center mb-5 capitalize");
+        });
 
-		$("#id_hour_type").on('change', function () {
-			var hour_type = $("#id_hour_type").val();
-			if (hour_type === "sel") {
-				$(".add-row").removeClass("d-none");
-			}
-			else {
-				$(".add-row").addClass("d-none");
-			}
-		});
-
-	});
+        $("#id_hour_type").on("change", function () {
+            var hour_type = $("#id_hour_type").val();
+            if (hour_type === "sel") {
+                $(".add-row").removeClass("d-none");
+            } else {
+                $(".add-row").addClass("d-none");
+            }
+        });
+    });
 </script>
 
 {% endblock %}
