@@ -31,7 +31,7 @@ def CreateClass(request):
     ClassroomObject = ClassroomForm()
     # image
     files = os.listdir(os.path.join(
-        settings.STATIC_DIR, "static\\img\\classrooms\\"))
+        settings.STATIC_DIR, "static/img/classrooms"))
     mylist = zip(all_classrooms, files)
 
     # if no. of subjects is greater than the no. of images

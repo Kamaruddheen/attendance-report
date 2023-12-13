@@ -30,7 +30,7 @@ def HourDetailView(request, class_id, hour_id):
     hour_obj = get_object_or_404(HourModel, id=hour_id, classroom__id=class_id)
     subjects = SubjectModel.objects.filter(hour=hour_obj)
     files = os.listdir(os.path.join(
-        settings.STATIC_DIR, "static\\img\\books\\"))
+        settings.STATIC_DIR, "static/img/books"))
     mylist = zip(subjects, files)
 
     # if no. of subjects is greater than the no. of images
