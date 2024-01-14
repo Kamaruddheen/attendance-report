@@ -193,6 +193,21 @@ body {
     width: 40%;
 }
 
+.icon-holder {
+    position: absolute;
+    left: 50%;
+    top: -18px;
+    margin-left: -18px;
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    background: #062743;
+    color: #daeaf6;
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 11px;
+}
+
 @media screen and (max-width: 767px) {
     .calendar_svg {
         width: 85%;
