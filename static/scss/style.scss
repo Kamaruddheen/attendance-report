@@ -190,7 +190,7 @@ body {
 }
 
 .benefit_svg {
-    width: 40%;
+    width: 30%;
 }
 
 .icon-holder {
@@ -227,7 +227,9 @@ body {
     }
 }
 
-
+.list-style-square li {
+    list-style-type: square;
+}
 
 /* Main Content */
 

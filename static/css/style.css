@@ -171,7 +171,7 @@ body {
 }
 
 .benefit_svg {
-  width: 40%;
+  width: 30%;
 }
 
 .icon-holder {
@@ -205,6 +205,10 @@ body {
     width: 25%;
   }
 }
+.list-style-square li {
+  list-style-type: square;
+}
+
 /* Main Content */
 .neu_icon {
   transition: all 0.4s;
