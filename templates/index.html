@@ -58,8 +58,8 @@
                             <!-- Sidebar close button for mobile -->
                             <li class="list-group-item bg_d_blue border-0">
                                 <span id="left_side_bar_close" class="float-right">
-                                    <a href="#" class="text_l_bluish_white">
-                                        <svg width="1.3em" height="1.3em" viewBox="0 0 320 512" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <a href="#" class="text_l_bluish_white" rel="noreferrer">
+                                        <svg role="img" width="1.3em" height="1.3em" viewBox="0 0 320 512" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill="currentColor" d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z"></path>
                                         </svg>
                                     </a>
@@ -86,7 +86,7 @@
                             </a>
                         </li>
                         <li class="list-group mb-3">
-                            <a href="#" class="side_bar_link fill_d_blue">
+                            <a href="#" class="side_bar_link fill_d_blue" rel="noreferrer">
                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="users" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em" height="1.2em" class="mr-2">
                                     <path
                                         fill="currentColor"
@@ -101,9 +101,243 @@
                 <!-- Overlay Effect -->
                 <div class="overlay d-md-none" id="overlay"></div>
                 <!-- Main Content Area -->
-                <section id="main_content" class="p-0 m-4 m-md-2 min-vh-100">
-                    <!-- Card -->
-                    <section class="card card_box_shadow border_white m-3 h-75 bg">
+                <section id="main_content" class="p-0 m-4 m-md-2">
+                    <!-- Hero Section -->
+                    <section class="d-flex flex-md-row flex-column justify-content-center align-items-center mx-0">
+                        <div class="col">
+                            <h1 class="text-md-right text-center arvo font_size_big">Track Student Attendance with Ease</h1>
+                            <h6 class="text-center text-muted">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.</h6>
+                        </div>
+                        <!-- SVG Calendar -->
+                        <div class="calendar_svg">
+                            <img class="img-fluid my-4" width="100%" src="{% static 'svg/month_calendar.svg' %}" alt="Attendance Month Calendar " />
+                        </div>
+                    </section>
+                    <!-- Features -->
+                    <section class="container-fluid px-0">
+                        <h1 class="arvo mx-md-5">Key Features</h1>
+                        <p class="mx-md-5">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.</p>
+                        <!-- feature row 1 -->
+                        <section class="row justify-content-center mb-md-4 mx-auto mx-md-0">
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-0 mr-md-4">
+                                <div class="card-body text_d_blue py-5 py-md-5 vh-25">
+                                    <!-- Icon -->
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bi bi-calendar3" role="img" xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                                        <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"></path>
+                                        <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path>
+                                    </svg>
+                                    <h3 class="pt-3">Automated Timetable</h3>
+                                    <p class="mb-0">Intelligently generate timetables for classes based on your schedule requirements and room availability. Customize period names, sizes and more.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-0 ml-md-4">
+                                <div class="card-body text_d_blue py-5 py-md-5 vh-25">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="ballot-check" role="img" xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 448 512" class="mr-2">
+                                        <path
+                                            fill="currentColor"
+                                            d="M112 432h32c17.7 0 32-14.4 32-32v-32c0-17.6-14.3-32-32-32h-32c-17.7 0-32 14.4-32 32v32c0 17.6 14.3 32 32 32zm0-64h32v32h-32v-32zm0-192h32c17.7 0 32-14.4 32-32v-32c0-17.6-14.3-32-32-32h-32c-17.7 0-32 14.4-32 32v32c0 17.6 14.3 32 32 32zm0-64h32v32h-32v-32zM416 0H32C14.3 0 0 14.4 0 32v448c0 17.6 14.3 32 32 32h384c17.7 0 32-14.4 32-32V32c0-17.6-14.3-32-32-32zm0 480H32V32h384v448zM216 144h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0 128h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0 128h128c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm-97.4-113.6c2.1 2.1 5.5 2.1 7.6 0l64.2-63.6c2.1-2.1 2.1-5.5 0-7.6l-12.6-12.7c-2.1-2.1-5.5-2.1-7.6 0l-47.6 47.2-20.6-20.9c-2.1-2.1-5.5-2.1-7.6 0l-12.7 12.6c-2.1 2.1-2.1 5.5 0 7.6l36.9 37.4z"
+                                        ></path>
+                                    </svg>
+                                    <h3 class="pt-3">Attendance Tracking</h3>
+                                    <p class="mb-0">Record daily student attendance digitally via CSV import or manual entry for each class. Timestamps provide verification.</p>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- feature row 2 -->
+                        <section class="row justify-content-center mb-md-4 mx-auto mx-md-0">
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-0 mr-md-4">
+                                <div class="card-body text_d_blue py-5 py-md-5 vh-25">
+                                    <svg xmlns="http://www.w3.org/2000/svg" role="img" width="3em" height="3em" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
+                                        <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1zm1 12h2V2h-2zm-3 0V7H7v7zm-5 0v-3H2v3z" />
+                                    </svg>
+                                    <h3 class="pt-3">Data Analytics</h3>
+                                    <p class="mb-0">Visualize attendance statistics through interactive charts by date range, student, class or school-wide. Gain insights into absenteeism.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-0 ml-md-4">
+                                <div class="card-body text_d_blue py-5 py-md-5 vh-25">
+                                    <svg xmlns="http://www.w3.org/2000/svg" role="img" width="3em" height="3em" fill="currentColor" class="bi bi-person-lock" viewBox="0 0 16 16">
+                                        <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m0 5.996V14H3s-1 0-1-1 1-4 6-4c.564 0 1.077.038 1.544.107a4.524 4.524 0 0 0-.803.918A10.46 10.46 0 0 0 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664zM9 13a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1" />
+                                    </svg>
+                                    <h3 class="pt-3">Access Controls</h3>
+                                    <p class="mb-0">Manage role-based access for teachers, administrators, students. Restrict permissions to guarantee privacy and compliance.</p>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- feature row 3 -->
+                        <section class="row justify-content-center mb-md-4 mx-auto mx-md-0">
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-0 mr-md-4">
+                                <div class="card-body text_d_blue py-5 py-md-5 vh-25">
+                                    <svg xmlns="http://www.w3.org/2000/svg" role="img" width="3em" height="3em" fill="currentColor" class="bi bi-sliders2" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                                    </svg>
+                                    <h3 class="pt-3">Custom Settings</h3>
+                                    <p class="mb-0">Administrators can configure absence thresholds, class names, hours per day and other rules. Fine-tune to your policies.</p>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                    <!-- Benefits -->
+                    <section class="container-fluid px-0 my-5">
+                        <h1 class="text-center arvo mx-md-5">Benefits</h1>
+                        <p class="text-center mx-md-5">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.</p>
+                        <!-- Teachers & Faculty -->
+                        <section class="row justify-content-center align-items-center mx-1 mb-md-4 mx-md-0">
+                            <div class="card col-md-8 flex-md-row align-items-center card_box_shadow border_white my-3 my-md-0 mr-md-4">
+                                <div class="card-body text_d_blue pt-3 pb-0 py-md-4 pl-0 vh-25">
+                                    <h3 class="text-center text-md-left pl-md-3 pt-3 pt-md-0">Teachers and Faculty</h3>
+                                    <ul class="list-style-square pl-4 pl-md-5">
+                                        <li>Save 4+ hours per week on manual attendance with digital tracking</li>
+                                        <li>Get instant visibility into student absenteeism with analytical dashboards</li>
+                                        <li>Download detailed attendance reports in PDF or CSV format</li>
+                                        <li>Ensure accuracy of records with student verification</li>
+                                    </ul>
+                                </div>
+                                <img class="img-fluid benefit_svg mb-4 my-md-4" src="{% static 'svg/professor-illustration.svg' %}" alt="An illustrated professor passionately teaching at a whiteboard, engaging with students in a dynamic educational setting." />
+                            </div>
+                        </section>
+                        <!-- School Administrators -->
+                        <section class="row justify-content-center align-items-center mx-1 mb-md-4 mx-md-0">
+                            <div class="card col-md-8 flex-md-row align-items-center card_box_shadow border_white my-3 my-md-0 mr-md-4">
+                                <img class="img-fluid mt-4 my-md-4 benefit_svg" src="{% static 'svg/cloud-computing.svg' %}" alt="An depicting school administrators collaborating and managing administrative tasks in an educational setting." />
+                                <div class="card-body text_d_blue py-3 py-md-4 pl-0 vh-25">
+                                    <h3 class="text-center text-md-left pl-md-3">School Administrators</h3>
+                                    <ul class="list-style-square">
+                                        <li>School/university-wide visibility into attendance metrics</li>
+                                        <li>Easily configure an unlimited number of classes and rooms</li>
+                                        <li>Add and manage teachers or staff accounts</li>
+                                        <li>Customize absence thresholds for notifications</li>
+                                        <li>Guarantee privacy compliance with role-based permissions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- Students & Parents -->
+                        <section class="row justify-content-center align-items-center mx-1 mb-md-4 mx-md-0">
+                            <div class="card col-md-8 flex-md-row align-items-center card_box_shadow border_white my-3 my-md-0 mr-md-4">
+                                <div class="card-body text_d_blue pt-3 pb-0 py-md-4 pl-0 vh-25">
+                                    <h3 class="text-center text-md-left pl-md-3 pt-3 pt-md-0">Students and Parents</h3>
+                                    <ul class="list-style-square pl-4 pl-md-5">
+                                        <li>Students can view personal attendance digitally</li>
+                                        <li>Automated notifications for unverified absences by SMS and email</li>
+                                        <li>Raise attendance discrepancies with a verification system</li>
+                                        <li>Parent portal to also track student attendance</li>
+                                    </ul>
+                                </div>
+                                <img class="img-fluid benefit_svg mb-4 my-md-4" src="{% static 'svg/social-update.svg' %}" alt="Visual of digital attendance tracking for students, featuring automated absence notifications via SMS and email. Parent portal allows monitoring and verification of student attendance." />
+                            </div>
+                        </section>
+                    </section>
+                    <!-- Testimonials -->
+                    <section class="container-fluid px-0">
+                        <h1 class="arvo mx-md-5">Testimonials</h1>
+                        <p class="mx-md-5">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.</p>
+                        <!-- testimonials -->
+                        <section class="row justify-content-center mb-md-4 mx-auto mx-md-0">
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-3 mx-md-4">
+                                <!-- Quote Symbol -->
+                                <div class="icon-holder">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="quote-right" role="img" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 448 512">
+                                        <path fill="currentColor" d="M448 296c0 66.3-53.7 120-120 120h-8c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H320c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72zm-256 0c0 66.3-53.7 120-120 120H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H64c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72z"></path>
+                                    </svg>
+                                </div>
+                                <!-- Testimony -->
+                                <div class="card-body text_d_blue pt-5 pb-0">
+                                    <blockquote>“We went from tracking attendance using paper sheets to having beautiful graphical reports for the entire school with a click of a button. It has made managing our student attendance incredibly smooth.”</blockquote>
+                                </div>
+                                <!-- Name & Positions -->
+                                <div class="modal-footer border_color_white">
+                                    <div class="col-12 col-md-auto text-center text-md-start p-0">
+                                        <img src="{% static 'img/JamieScott.jpg' %}" width="50" class="rounded-circle" alt="Image of Jamie Scott" />
+                                    </div>
+                                    <div class="col text-md-left text-center">
+                                        <div class="arvo">Jamie Scott</div>
+                                        <div class="font-italic">High School Principal</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-3 mx-md-4">
+                                <!-- Quote Symbol -->
+                                <div class="icon-holder">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="quote-right" role="img" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 448 512">
+                                        <path fill="currentColor" d="M448 296c0 66.3-53.7 120-120 120h-8c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H320c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72zm-256 0c0 66.3-53.7 120-120 120H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H64c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72z"></path>
+                                    </svg>
+                                </div>
+                                <!-- Testimony -->
+                                <div class="card-body text_d_blue pt-5 pb-0">
+                                    <blockquote>“The automatic timetables and insightful attendance analytics have been an absolute game changer. We can now easily identify student absenteeism patterns.”</blockquote>
+                                </div>
+                                <!-- Name & Positions -->
+                                <div class="modal-footer border_color_white">
+                                    <div class="col-12 col-md-auto text-center text-md-start p-0">
+                                        <img src="{% static 'img/AlexThomas.jpg' %}" width="50" class="rounded-circle" alt="Image of Alex Thomas" />
+                                    </div>
+                                    <div class="col text-md-left text-center">
+                                        <div class="arvo">Alex Thomas</div>
+                                        <div class="font-italic">University Dean</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-3 mx-md-4">
+                                <!-- Quote Symbol -->
+                                <div class="icon-holder">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="quote-right" role="img" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 448 512">
+                                        <path fill="currentColor" d="M448 296c0 66.3-53.7 120-120 120h-8c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H320c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72zm-256 0c0 66.3-53.7 120-120 120H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H64c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72z"></path>
+                                    </svg>
+                                </div>
+                                <!-- Testimony -->
+                                <div class="card-body text_d_blue pt-5 pb-0">
+                                    <blockquote>“The ability to handle attendance digitally has given our teachers back 4 hours per week previously spent on manual work. We are now using this time for more meaningful student interactions.”</blockquote>
+                                </div>
+                                <!-- Name & Positions -->
+                                <div class="modal-footer border_color_white">
+                                    <div class="col-12 col-md-auto text-center text-md-start p-0">
+                                        <img src="{% static 'img/JessicaWong.jpg' %}" width="50" class="rounded-circle" alt="Image of Jessica Wong" />
+                                    </div>
+                                    <div class="col text-md-left text-center">
+                                        <div class="arvo">Jessica Wong</div>
+                                        <div class="font-italic">STEM Teacher</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 card card_box_shadow border_white my-4 my-md-3 mx-md-4">
+                                <!-- Quote Symbol -->
+                                <div class="icon-holder">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="quote-right" role="img" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 448 512">
+                                        <path fill="currentColor" d="M448 296c0 66.3-53.7 120-120 120h-8c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H320c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72zm-256 0c0 66.3-53.7 120-120 120H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H64c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72z"></path>
+                                    </svg>
+                                </div>
+                                <!-- Testimony -->
+                                <div class="card-body text_d_blue pt-5 pb-0">
+                                    <blockquote>“As a parent, I love being able to log in and instantly view my children's attendance record from home. The notifications for missed classes are also very proactive.”</blockquote>
+                                </div>
+                                <!-- Name & Positions -->
+                                <div class="modal-footer border_color_white">
+                                    <div class="col-12 col-md-auto text-center text-md-start p-0">
+                                        <img src="{% static 'img/DavidKim.jpg' %}" width="50" class="rounded-circle" alt="Image of David Kim" />
+                                    </div>
+                                    <div class="col text-md-left text-center">
+                                        <div class="arvo">David Kim</div>
+                                        <div class="font-italic">Parent at Pinecrest Elementary</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                    <!-- Content Breaking Line -->
+                    <section class="container-fluid my-5 d-none">
+                        <div class="px-xl-8 px-md-7">
+                            <hr class="mt-7 text-1000 border_color_white" />
+                        </div>
+                    </section>
+                    <!-- Dummy Image -->
+                    <section class="d-none">
+                        <div class="col-9 text-center">
+                            <img class="img-fluid rounded my-3" src="https://dummyimage.com/1000x600/062743/daeaf6&text=Image1" alt="..." />
+                        </div>
+                    </section>
+                    <!-- Coming Soon Card -->
+                    <section class="d-none card card_box_shadow border_white m-3 h-75 bg">
                         <div class="card-body d-flex justify-content-center flex-column text_d_blue py-5">
                             <!-- Coming Soon  -->
                             <h1 class="text-center arvo">Hey!</h1>
@@ -139,8 +373,8 @@
                             <!-- Sidebar close button for mobile -->
                             <li class="list-group-item bg_d_blue border-0">
                                 <span id="left_side_bar_close" class="float-right">
-                                    <a href="#" class="text_l_bluish_white">
-                                        <svg width="1.3em" height="1.3em" viewBox="0 0 320 512" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <a href="#" class="text_l_bluish_white" rel="noreferrer">
+                                        <svg role="img" width="1.3em" height="1.3em" viewBox="0 0 320 512" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill="currentColor" d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z"></path>
                                         </svg>
                                     </a>
@@ -170,16 +404,8 @@
                         <!-- All View -->
                         <li class="side_bar_title list-group mt-md-3">Navigation</li>
                         <li class="list-group">
-                            <a href="{% url 'homepage' %}" class="side_bar_link fill_d_blue">
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.2em" height="1.2em" class="mr-2">
-                                    <path fill="currentColor" d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path>
-                                </svg>
-                                Home
-                            </a>
-                        </li>
-                        <li class="list-group">
                             <a href="{% url 'my_account' %}" class="side_bar_link fill_d_blue">
-                                <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2" xmlns="http://www.w3.org/2000/svg">
+                                <svg role="img" width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2" xmlns="http://www.w3.org/2000/svg">
                                     <g>
                                         <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
                                         <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -192,7 +418,7 @@
                         <li class="list-group">
                             <a href="{% url 'dashboard:view' %}" class="side_bar_link fill_d_blue">
                                 <!-- dashboard logo 1 -->
-                                <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2 d-" xmlns="http://www.w3.org/2000/svg">
+                                <svg role="img" width="1.3em" height="1.3em" viewBox="0 0 16 16" class="mr-2 d-" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z" />
                                 </svg>
                                 Dashboard
@@ -221,7 +447,7 @@
                             </a>
                         </li>
                         <li class="list-group">
-                            <a href="#" class="side_bar_link fill_d_blue">
+                            <a href="#" class="side_bar_link fill_d_blue" rel="noreferrer">
                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="book-open" role="img" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 576 512" class="mr-2">
                                     <path fill="currentColor" d="M542.22 32.05c-54.8 3.11-163.72 14.43-230.96 55.59-4.64 2.84-7.27 7.89-7.27 13.17v363.87c0 11.55 12.63 18.85 23.28 13.49 69.18-34.82 169.23-44.32 218.7-46.92 16.89-.89 30.02-14.43 30.02-30.66V62.75c.01-17.71-15.35-31.74-33.77-30.7zM264.73 87.64C197.5 46.48 88.58 35.17 33.78 32.05 15.36 31.01 0 45.04 0 62.75V400.6c0 16.24 13.13 29.78 30.02 30.66 49.49 2.6 149.59 12.11 218.77 46.95 10.62 5.35 23.21-1.94 23.21-13.46V100.63c0-5.29-2.62-10.14-7.27-12.99z"></path>
                                 </svg>
@@ -229,7 +455,7 @@
                             </a>
                         </li>
                         <li class="list-group">
-                            <a href="#" class="side_bar_link fill_d_blue">
+                            <a href="#" class="side_bar_link fill_d_blue" rel="noreferrer">
                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-graduate" role="img" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 448 512" class="fa-user-graduate mr-2">
                                     <path
                                         fill="currentColor"
@@ -251,7 +477,7 @@
                             </a>
                         </li>
                         <li class="list-group mb-3">
-                            <a href="#" class="side_bar_link fill_d_blue">
+                            <a href="#" class="side_bar_link fill_d_blue" rel="noreferrer">
                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="users" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1.2em" height="1.2em" class="mr-2">
                                     <path
                                         fill="currentColor"

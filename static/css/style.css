@@ -82,6 +82,20 @@ body {
   font-size: 1.2rem;
 }
 
+.font_size_big {
+  font-size: 3rem;
+}
+
+@media screen and (max-width: 500px) {
+  .font_size_big {
+    font-size: 1.5rem !important;
+  }
+}
+@media screen and (max-width: 767px) {
+  .font_size_big {
+    font-size: 2rem;
+  }
+}
 /* Customizing Bootstrap */
 .nav-link {
   color: #062743;
@@ -149,6 +163,50 @@ body {
   box-shadow: 5px 5px 10px #c2d0db, -5px -5px 10px #e5f6ff;
   border: 1px solid #c9d7e2;
   cursor: pointer;
+}
+
+/* HomePage */
+.calendar_svg {
+  width: 40%;
+}
+
+.benefit_svg {
+  width: 30%;
+}
+
+.icon-holder {
+  position: absolute;
+  left: 50%;
+  top: -18px;
+  margin-left: -18px;
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  background: #062743;
+  color: #daeaf6;
+  text-align: center;
+  border-radius: 50%;
+  padding-top: 11px;
+}
+
+@media screen and (max-width: 767px) {
+  .calendar_svg {
+    width: 85%;
+  }
+  .benefit_svg {
+    width: 100% !important;
+  }
+}
+@media only screen and (min-width: 2000px) {
+  .calendar_svg {
+    width: 30%;
+  }
+  .benefit_svg {
+    width: 25%;
+  }
+}
+.list-style-square li {
+  list-style-type: square;
 }
 
 /* Main Content */
